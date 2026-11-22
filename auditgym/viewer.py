@@ -12,7 +12,22 @@ import html
 import json
 
 from .env import AuditEnv
+from .analysis import fp_cause
+from .matcher import validate_submission
 from .policies.scripted import POLICIES
+
+CAUSE_RU = {
+    "trap: legitimate recurring / repeated amount": "Ловушка: законно повторяющаяся сумма (подписка или вторая услуга), строки счетов разные.",
+    "trap: same customer and amount, different line items": "Ловушка: тот же клиент и сумма, но разные позиции в счетах.",
+    "trap: printed/UTC date differs from company-local date": "Ловушка: напечатанная/UTC-дата не совпадает с датой в поясе компании, курс на самом деле верный.",
+    "trap: no rate that day (weekend/holiday) -> previous business day": "Ловушка: в этот день курс не публиковался, политика берёт прошлый рабочий день.",
+    "trap: period boundary in another time zone": "Ловушка: документ на границе периода в другом часовом поясе, по времени компании период верный.",
+    "trap: legitimate unapplied receipt / advance / refund": "Ловушка: аванс, неопознанное поступление или возврат законно не распределены.",
+    "right documents, wrong type": "Документы верные, но тип ошибки другой.",
+    "right issue, wrong amount": "Ошибка найдена, но сумма неверная.",
+    "right issue, wrong currency": "Ошибка найдена, но валюта неверная.",
+    "right issue, incomplete evidence": "Ошибка найдена, но доказательств недостаточно.",
+}
 
 TYPE_RU = {
     "duplicate_invoice": "Дубль счёта",
@@ -79,7 +94,7 @@ td.n{text-align:right;white-space:nowrap}
 .mark{font:700 18px/1 var(--serif);width:34px;text-align:center}
 .m-ok{color:var(--tick)}.m-bad{color:var(--red)}.m-miss{color:var(--blue)}
 .why{color:var(--mute);font-size:13px}
-.ids{word-break:break-all}
+.ids span{white-space:nowrap}
 .err-msg{color:var(--red)}
 .foot{margin-top:48px;font-size:13px;color:var(--mute);max-width:72ch}
 @media (max-width:640px){.budget{grid-template-columns:repeat(10,1fr)}.reward{font-size:42px}main{padding:28px 16px 60px}}
@@ -92,6 +107,9 @@ const T = {duplicate_invoice:'Дубль счёта',unallocated_payment:'Нер
 const el = (t,a={},...c)=>{const e=document.createElement(t);for(const[k,v]of Object.entries(a)){if(k==='class')e.className=v;else if(k==='text')e.textContent=v;else e.setAttribute(k,v)}for(const x of c)e.append(x);return e};
 const fmt = n => typeof n==='number' ? n.toLocaleString('ru-RU') : (n===null?'—':String(n));
 let run = Object.keys(D.runs)[0], sel = null;
+const H = new URLSearchParams(location.hash.slice(1));
+if (H.get('run') in D.runs) run = H.get('run');
+if (+H.get('step') > 0 && +H.get('step') <= D.runs[run].steps.length) sel = +H.get('step');
 
 function renderTabs(){
   const box=document.getElementById('tabs');box.innerHTML='';
@@ -143,10 +161,10 @@ function renderFindings(){
   const tb=document.getElementById('findings');tb.innerHTML='';
   const R=D.runs[run];
   const rows=[];
-  R.findings.forEach(f=>rows.push({m:f.tp?'✓':'✗',cls:f.tp?'m-ok':'m-bad',t:f.type,ids:f.affected_ids.join(', '),amt:fmt(f.claimed_amount_minor)+' '+f.currency,why:f.tp?'Совпало с эталоном: тип, ID, сумма, валюта и доказательства.':'Ложное обвинение: в эталоне такой ошибки нет.'}));
+  R.findings.forEach(f=>rows.push({m:f.tp?'✓':'✗',cls:f.tp?'m-ok':'m-bad',t:f.type,ids:f.affected_ids.join(', '),amt:fmt(f.claimed_amount_minor)+' '+f.currency,why:f.tp?'Совпало с эталоном: тип, ID, сумма, валюта и доказательства.':(f.why||'Ложное обвинение: в эталоне такой ошибки нет.')}));
   D.truth.forEach(t=>{if(!R.found.includes(t.issue_id))rows.push({m:'○',cls:'m-miss',t:t.type,ids:t.affected_ids.join(', '),amt:fmt(t.expected_amount_minor)+' '+t.currency,why:'Пропущено: ошибка есть, агент её не заявил. '+(t.cause||'')})});
   if(!rows.length){tb.append(el('tr',{},el('td',{colspan:'5',class:'why',text:'Книги чистые, и агент правильно ничего не заявил.'})));return}
-  rows.forEach(r=>{const tr=el('tr');tr.append(el('td',{class:'mark '+r.cls,text:r.m}),el('td',{text:T[r.t]||r.t}),el('td',{class:'ids',text:r.ids}),el('td',{class:'n',text:r.amt}),el('td',{class:'why',text:r.why}));tb.append(tr)});
+  rows.forEach(r=>{const tr=el('tr');tr.append(el('td',{class:'mark '+r.cls,text:r.m}),el('td',{text:T[r.t]||r.t}),(()=>{const td=el('td',{class:'ids'});r.ids.split(', ').forEach((x,i)=>{if(i)td.append(', ');td.append(el('span',{text:x}))});return td})(),el('td',{class:'n',text:r.amt}),el('td',{class:'why',text:r.why}));tb.append(tr)});
 }
 function render(){renderTabs();renderScore();renderBudget();renderDetail();renderFindings()}
 render();
@@ -181,8 +199,20 @@ def _run(ep, policy):
         steps.append({"short": short, "label": label, "cls": "sub" if name == "submit" else ("err" if o["error"] else ""),
                       "action": a, "obs": o})
     findings = []
-    for i, f in enumerate(sub.get("findings", []) if isinstance(sub, dict) else []):
-        findings.append(dict(f, tp=i in matched))
+    raw = sub.get("findings", []) if isinstance(sub, dict) else []
+    try:
+        norm = validate_submission(sub, ep.episode_id) if raw else []
+    except Exception:
+        norm = []
+    inv = {d["invoice_id"]: d for d in ep.tables["invoices"]}
+    pay = {d["payment_id"]: d for d in ep.tables["payments"]}
+    idx = (inv, pay, ep.provenance.get("document_tags", {}))
+    for i, f in enumerate(raw):
+        why = None
+        if i not in matched and i < len(norm):
+            c = fp_cause(ep, norm[i], idx)
+            why = CAUSE_RU.get(c, "Ложное обвинение: в эталоне такой ошибки нет (%s)." % c)
+        findings.append(dict(f, tp=i in matched, why=why))
     labels = {"expert": "Скриптовый эксперт", "reconciler": "Простая сверка", "random": "Случайный агент",
               "flag_all": "Атака «пометить всё»"}
     return {"label": labels.get(policy, policy), "steps": steps, "findings": findings,
