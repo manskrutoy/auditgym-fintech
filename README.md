@@ -1,5 +1,7 @@
 # AuditGym — воспроизводимая RL-среда для ИИ-аудитора (FinTech)
 
+[![check](https://github.com/manskrutoy/auditgym-fintech/actions/workflows/check.yml/badge.svg)](https://github.com/manskrutoy/auditgym-fintech/actions/workflows/check.yml)
+
 AuditGym генерирует синтетическую компанию за один отчётный период: скрытую согласованную
 историю, первичные документы, бухгалтерские проводки и **скрытые финансовые ошибки с
 записанной причиной**. Агент расследует книги через узкий набор инструментов и отправляет
