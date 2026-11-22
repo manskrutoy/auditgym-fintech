@@ -14,6 +14,12 @@
           "DOC-84418322",
           "ROW-20755e7b",
           "ROW-9f33300d"
+        ],
+        [
+          "INV-342601",
+          "INV-517243",
+          "ROW-20755e7b",
+          "ROW-9f33300d"
         ]
       ],
       "expected_amount_minor": 270000,
@@ -32,6 +38,11 @@
           "DOC-0a5d9b0d",
           "FX-2025-05-21-CHF-EUR",
           "ROW-1a86ecb6"
+        ],
+        [
+          "FX-2025-05-21-CHF-EUR",
+          "PAY-194331",
+          "ROW-1a86ecb6"
         ]
       ],
       "expected_amount_minor": 777,
@@ -48,6 +59,10 @@
       "evidence_sets": [
         [
           "DOC-b7c95a40",
+          "ROW-9540f495"
+        ],
+        [
+          "INV-237339",
           "ROW-9540f495"
         ]
       ],
@@ -66,6 +81,14 @@
       "evidence_sets": [
         [
           "DOC-af1d20d5",
+          "ROW-369318b8",
+          "ROW-56171de3",
+          "ROW-cc820997"
+        ],
+        [
+          "PAY-015359",
+          "ROW-369318b8",
+          "ROW-56171de3",
           "ROW-cc820997"
         ]
       ],

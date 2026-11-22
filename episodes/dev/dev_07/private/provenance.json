@@ -59,7 +59,7 @@
       ]
     },
     "foreign_share": 0.35,
-    "id_seed": null,
+    "id_seed": 144,
     "interactions": {
       "cutoff_fx_boundary": [
         0,
@@ -82,7 +82,7 @@
       25,
       70
     ],
-    "order_seed": null,
+    "order_seed": 727,
     "preset": "all_types",
     "subsequent_days": 5
   },
@@ -100,66 +100,66 @@
     "payment:unidentified": 1
   },
   "document_tags": {
-    "INV-007180": [
-      "boundary_payment"
-    ],
-    "INV-055416": [
-      "boundary_payment"
-    ],
-    "INV-307267": [
+    "INV-009852": [
       "boundary"
     ],
-    "INV-544974": [
+    "INV-186733": [
+      "recurring"
+    ],
+    "INV-446005": [
+      "recurring"
+    ],
+    "INV-503839": [
       "boundary_payment"
     ],
-    "INV-668640": [
-      "recurring"
-    ],
-    "INV-686137": [
+    "INV-584928": [
       "boundary"
     ],
-    "INV-771205": [
-      "duplicate"
+    "INV-712187": [
+      "boundary_payment"
     ],
-    "INV-912149": [
-      "recurring"
+    "INV-806607": [
+      "boundary_payment"
     ],
-    "INV-912902": [
+    "INV-927865": [
       "recurring",
       "repeated_amount"
     ],
-    "PAY-011316": [
-      "split"
+    "INV-974612": [
+      "duplicate"
     ],
-    "PAY-033021": [
-      "split"
-    ],
-    "PAY-087289": [
-      "partial_open"
-    ],
-    "PAY-114572": [
-      "multi"
-    ],
-    "PAY-217658": [
-      "split"
-    ],
-    "PAY-243282": [
-      "unidentified"
-    ],
-    "PAY-286365": [
+    "PAY-050397": [
       "boundary_payment",
       "multi"
     ],
-    "PAY-770238": [
+    "PAY-094796": [
       "multi"
     ],
-    "PAY-848974": [
+    "PAY-143611": [
+      "partial_open"
+    ],
+    "PAY-459079": [
+      "unidentified"
+    ],
+    "PAY-463264": [
       "multi"
     ],
-    "PAY-933356": [
+    "PAY-665341": [
       "split"
     ],
-    "PAY-961079": [
+    "PAY-696553": [
+      "split"
+    ],
+    "PAY-753596": [
+      "split"
+    ],
+    "PAY-786115": [
+      "multi"
+    ],
+    "PAY-847685": [
+      "split"
+    ],
+    "PAY-868953": [
       "partial_open"
     ]
   },
@@ -186,7 +186,7 @@
         "debit_minor": 119456706,
         "timestamp": "2025-07-24T20:19:20+00:00"
       },
-      "row_id": "ROW-306cffef"
+      "row_id": "ROW-f69aace9"
     },
     {
       "clean": {
@@ -202,7 +202,7 @@
         "debit_minor": 197300000,
         "timestamp": "2025-08-01T10:55:08+00:00"
       },
-      "row_id": "ROW-3effa919"
+      "row_id": "ROW-2632eb5b"
     },
     {
       "clean": {
@@ -218,7 +218,7 @@
         "debit_minor": 726877027,
         "timestamp": "2025-07-09T10:41:37+00:00"
       },
-      "row_id": "ROW-e38fd645"
+      "row_id": "ROW-6e151702"
     },
     {
       "clean": {
@@ -251,7 +251,7 @@
         "debit_minor": 0,
         "timestamp": "2025-07-24T20:19:20+00:00"
       },
-      "row_id": "ROW-4d388a53"
+      "row_id": "ROW-eff9696f"
     },
     {
       "clean": {
@@ -267,7 +267,7 @@
         "debit_minor": 0,
         "timestamp": "2025-08-01T10:55:08+00:00"
       },
-      "row_id": "ROW-f1080057"
+      "row_id": "ROW-71f337e5"
     },
     {
       "clean": {
@@ -283,7 +283,7 @@
         "debit_minor": 0,
         "timestamp": "2025-08-01T10:55:08+00:00"
       },
-      "row_id": "ROW-0bea64f0"
+      "row_id": "ROW-c772bd26"
     },
     {
       "clean": {
@@ -299,7 +299,7 @@
         "debit_minor": 0,
         "timestamp": "2025-08-01T10:55:08+00:00"
       },
-      "row_id": "ROW-54220f48"
+      "row_id": "ROW-2bb5a93b"
     },
     {
       "clean": null,
@@ -310,39 +310,39 @@
         "debit_minor": 0,
         "timestamp": "2025-07-08T13:45:58+00:00"
       },
-      "row_id": "ROW-e83eedc7"
+      "row_id": "ROW-239bce25"
     }
   ],
   "mutations": [
     {
-      "duplicate": "INV-771205",
-      "issue_id": "ep-3dc9895d8942-I01",
+      "duplicate": "INV-974612",
+      "issue_id": "ep-7411ac836a16-I01",
       "issued_delta_minutes": 0,
       "mutation": "duplicate_document_posted",
-      "original": "INV-332691"
+      "original": "INV-979040"
     },
     {
       "correct_rate_date": "2025-07-09",
       "document": "payment",
-      "issue_id": "ep-3dc9895d8942-I02",
+      "issue_id": "ep-7411ac836a16-I02",
       "mutation": "wrong_rate_date",
-      "payment": "PAY-216914",
+      "payment": "PAY-020612",
       "used_rate_date": "2025-07-05",
       "wrong_date_rule": "stale_rate_0d"
     },
     {
       "document_local_date": "2025-07-30",
-      "invoice": "INV-469112",
-      "issue_id": "ep-3dc9895d8942-I03",
+      "invoice": "INV-883245",
+      "issue_id": "ep-7411ac836a16-I03",
       "mutation": "wrong_posting_period",
       "posted_at": "2025-08-01T10:55:08+00:00",
       "variant": "late"
     },
     {
-      "invoice": "INV-731359",
-      "issue_id": "ep-3dc9895d8942-I04",
+      "invoice": "INV-399198",
+      "issue_id": "ep-7411ac836a16-I04",
       "mutation": "allocation_not_applied",
-      "payment": "PAY-401651",
+      "payment": "PAY-547893",
       "ref_index": 0,
       "variant": "missing"
     }

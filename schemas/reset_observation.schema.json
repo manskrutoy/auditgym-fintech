@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "auditgym/reset_observation.schema.json",
+  "title": "reset_observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task",
+    "episode_id",
+    "manifest",
+    "policy",
+    "tools",
+    "step",
+    "remaining_steps"
+  ],
+  "properties": {
+    "task": {
+      "type": "string"
+    },
+    "episode_id": {
+      "type": "string"
+    },
+    "manifest": {
+      "$ref": "manifest.schema.json"
+    },
+    "policy": {
+      "type": "object"
+    },
+    "tools": {
+      "type": "object"
+    },
+    "step": {
+      "const": 0
+    },
+    "remaining_steps": {
+      "type": "integer"
+    }
+  }
+}

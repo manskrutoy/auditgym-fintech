@@ -23,8 +23,7 @@
           "affected_ids",
           "claimed_amount_minor",
           "currency",
-          "evidence_ids",
-          "explanation"
+          "evidence_ids"
         ],
         "properties": {
           "type": {

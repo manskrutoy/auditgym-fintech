@@ -1,8 +1,8 @@
 {
-  "clean_ledger_lines": 401,
+  "clean_ledger_lines": 402,
   "clean_trial_balance": {
-    "credit_minor": 110317294,
-    "debit_minor": 110317294
+    "credit_minor": 110321538,
+    "debit_minor": 110321538
   },
   "config": {
     "base_currency": null,
@@ -86,7 +86,7 @@
     "preset": "clean",
     "subsequent_days": 5
   },
-  "dirty_ledger_lines": 401,
+  "dirty_ledger_lines": 402,
   "distractor_tags": {
     "invoice:boundary": 2,
     "invoice:boundary_payment": 3,

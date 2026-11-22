@@ -21,7 +21,9 @@
       "name": "dev_03",
       "seed": 35849,
       "config": {
-        "preset": "single"
+        "preset": "single",
+        "order_seed": 955,
+        "id_seed": 180
       }
     },
     {
@@ -60,7 +62,9 @@
       "name": "dev_07",
       "seed": 67525,
       "config": {
-        "preset": "all_types"
+        "preset": "all_types",
+        "order_seed": 727,
+        "id_seed": 144
       }
     },
     {

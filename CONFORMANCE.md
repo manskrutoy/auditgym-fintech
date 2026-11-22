@@ -67,7 +67,7 @@
 | Генератор, среда, matcher, траектории без эталона, офлайн без GPU, контейнер и одна команда | `auditgym/`, `Dockerfile`, `python -m auditgym check` |
 | Исходники, лицензия, зафиксированные зависимости | `LICENSE`, `pyproject.toml`, `requirements.txt` (только stdlib) |
 | 10 train + 10 dev эпизодов | `episodes/`, `configs/train.json`, `configs/dev.json`, хэши в `episodes/index.json` |
-| Тесты | `tests/` (58) |
+| Тесты | `tests/` (67) |
 | 4 адаптера базовых политик | `auditgym/policies/scripted.py`, `auditgym/worker.py` |
 | trajectories.jsonl с episode_id, step, action, observation, reward, terminated, truncated | `trajectories/trajectories.jsonl` (+ поле policy), `test_trajectory_fields` |
 | Записка о дизайне и демо | `DESIGN.md`; `python -m auditgym demo`, `reports/demo_dev_09.html` |
@@ -76,7 +76,7 @@
 
 | критерий | где |
 |---|---|
-| Запуск одной командой | `python -m auditgym check`, `docker run ...`, CI `.github/workflows/check.yml` |
+| Запуск одной командой | `python -m auditgym check`, `docker run ...`, CI `.github/workflows/check.yml`; закрытая проверка своими seed: `python -m auditgym jury --episodes-file ...` |
 | Версии конфигураций | `env_version` / `schema_version` / `policy_version`, `configs/*.json`, полный config в provenance |
 | Журналы траекторий | `trajectories/trajectories.jsonl`, `python -m auditgym run` |
 | Измеренный разбор сбоев | `reports/failure_analysis.md` (каждый FP привязан к ловушке, каждый FN к варианту ошибки) |

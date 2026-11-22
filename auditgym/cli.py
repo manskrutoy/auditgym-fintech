@@ -15,12 +15,13 @@ import io
 import json
 import os
 import platform
+import tempfile
 import sys
 import time
 import unittest
 import zlib
 
-from .config import canonical_json
+from .config import canonical_json, open_generation
 from .constants import ENV_VERSION, ISSUE_TYPES
 from .episode import Episode, reexpress_timestamps, relabel
 from .evaluator import WorkerProcess, evaluate, run_episode, summarize
@@ -29,6 +30,27 @@ from .verify import verify_episode
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASELINES = ("random", "reconciler", "flag_all", "oracle")
+
+
+def reports_dir(out=None):
+    """Writable report directory (falls back to /tmp when the project is read-only)."""
+    for d in ([out] if out else []) + [os.path.join(ROOT, "reports"), os.path.join(tempfile.gettempdir(), "auditgym-reports")]:
+        try:
+            os.makedirs(d, exist_ok=True)
+            probe = os.path.join(d, ".write_test")
+            with open(probe, "w") as f:
+                f.write("ok")
+            os.remove(probe)
+            return d
+        except OSError:
+            continue
+    raise SystemExit("no writable report directory")
+
+
+def load_entries(path):
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+    return data["episodes"] if isinstance(data, dict) else data
 
 
 def load_split(name):
@@ -49,6 +71,11 @@ def episodes_for(split, from_disk=True):
 
 # ------------------------------------------------------------------------ commands
 def cmd_generate(a):
+    with open_generation():
+        return _cmd_generate(a)
+
+
+def _cmd_generate(a):
     index = {"env_version": ENV_VERSION, "episodes": []}
     for split in a.split:
         for e in load_split(split):
@@ -66,6 +93,11 @@ def cmd_generate(a):
 
 
 def cmd_verify(a):
+    with open_generation():
+        return _cmd_verify(a)
+
+
+def _cmd_verify(a):
     bad = 0
     for split in a.split:
         for e, ep in zip(load_split(split), episodes_for(split)):
@@ -76,12 +108,21 @@ def cmd_verify(a):
 
 
 def cmd_evaluate(a):
-    eps = [ep for s in a.split for ep in episodes_for(s)]
+    if a.episodes_file:
+        eps = [generate_episode(e["seed"], e["config"]) for e in load_entries(a.episodes_file)]
+    else:
+        with open_generation():
+            eps = [ep for s in a.split for ep in episodes_for(s)]
     rows, _ = evaluate(eps, a.policies, seed=a.seed)
     print(json.dumps(summarize(rows), indent=2))
 
 
 def cmd_run(a):
+    with open_generation():
+        return _cmd_run(a)
+
+
+def _cmd_run(a):
     eps = [ep for s in a.split for ep in episodes_for(s)]
     os.makedirs(os.path.dirname(os.path.abspath(a.trajectories)), exist_ok=True)
     n = 0
@@ -102,6 +143,11 @@ def cmd_run(a):
 
 
 def cmd_demo(a):
+    with open_generation():
+        return _cmd_demo(a)
+
+
+def _cmd_demo(a):
     from .env import AuditEnv
     from .policies.scripted import ExpertAuditor
     split, name = a.episode.split("/")
@@ -155,6 +201,10 @@ def cmd_serve(a):
             elif msg.get("cmd") == "step":
                 obs, r, te, tr, info = env.step(msg.get("action"))
                 out = {"observation": obs, "reward": r, "terminated": te, "truncated": tr, "info": info}
+                if (te or tr) and a.log and env.last_grade is not None:     # evaluator-side grade log
+                    with open(a.log, "a", encoding="utf-8") as lf:
+                        g = {k: v for k, v in env.last_grade.items() if k != "submission"}
+                        lf.write(json.dumps(g, default=str) + "\n")
             elif msg.get("cmd") == "close":
                 break
             else:
@@ -166,6 +216,11 @@ def cmd_serve(a):
 
 
 def cmd_viewer(a):
+    with open_generation():
+        return _cmd_viewer(a)
+
+
+def _cmd_viewer(a):
     from .viewer import build
     split, name = a.episode.split("/")
     e = [x for x in load_split(split) if x["name"] == name][0]
@@ -274,6 +329,11 @@ def leak_scan(path, truths):
 
 
 def cmd_check(a):
+    with open_generation():
+        return _cmd_check(a)
+
+
+def _cmd_check(a):
     t0 = time.time()
     report = {"env_version": ENV_VERSION, "python": platform.python_version(),
               "platform": platform.platform(), "started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
@@ -317,7 +377,6 @@ def cmd_check(a):
     print("      %d episodes, failures=%d" % (len(ver), sum(not v["ok"] for v in ver)))
 
     print("[4/6] baseline policies (separate processes, eval mode) ...", flush=True)
-    os.makedirs(os.path.join(ROOT, "reports"), exist_ok=True)
     base = {}
     for split in ("dev", "local_holdout"):
         rows, _ = evaluate(split_eps[split], BASELINES + ("expert",))
@@ -327,7 +386,7 @@ def cmd_check(a):
     rows_h, _ = evaluate(split_eps["local_holdout"], BASELINES + ("expert",))
     fa = analyse(split_eps["local_holdout"], rows_h)
     report["failure_analysis"] = fa
-    with open(os.path.join(ROOT, "reports", "failure_analysis.md"), "w") as f:
+    with open(os.path.join(reports_dir(), "failure_analysis.md"), "w") as f:
         f.write(render_fa(fa, "local_holdout (20 episodes, eval mode)"))
     hold = base["local_holdout"]
     sanity = {
@@ -358,14 +417,50 @@ def cmd_check(a):
 
     report["ok"] = bool(ok)
     report["duration_s"] = round(time.time() - t0, 1)
-    os.makedirs(os.path.join(ROOT, "reports"), exist_ok=True)
-    with open(os.path.join(ROOT, "reports", "check_report.json"), "w") as f:
+    rdir = reports_dir()
+    with open(os.path.join(rdir, "check_report.json"), "w") as f:
         json.dump(report, f, indent=2, default=str)
         f.write("\n")
-    with open(os.path.join(ROOT, "reports", "check_report.md"), "w") as f:
+    with open(os.path.join(rdir, "check_report.md"), "w") as f:
         f.write(render_md(report))
-    print("\nCHECK %s in %.1fs -> reports/check_report.md" % ("PASSED" if ok else "FAILED", report["duration_s"]))
+    print("\nCHECK %s in %.1fs -> %s" % ("PASSED" if ok else "FAILED", report["duration_s"],
+                                        os.path.join(rdir, "check_report.md")))
     return 0 if ok else 1
+
+
+def cmd_jury(a):
+    """Closed evaluation on the jury's own seeds/configs (uses AUDITGYM_SECRET if set):
+    data verification, 4 baselines (+ expert) in separate processes, failure analysis and
+    paired checks (replay, relabel+permute, offset re-expression, id/order seeds)."""
+    from .analysis import analyse, render as render_fa
+    entries = load_entries(a.episodes_file)
+    t0 = time.time()
+    eps = [generate_episode(e["seed"], e["config"]) for e in entries]
+    ver = [{"name": e.get("name", str(i)), "episode_id": ep.episode_id, "issues": len(ep.truth["issues"]),
+            "errors": verify_episode(ep).errors[:5]} for i, (e, ep) in enumerate(zip(entries, eps))]
+    rows, _ = evaluate(eps, BASELINES + ("expert",), seed=a.seed)
+    summ = summarize(rows)
+    fa = analyse(eps, rows)
+    pc = paired_checks([dict(e, name=e.get("name", str(i))) for i, e in enumerate(entries)], len(entries))
+    rep = {"env_version": ENV_VERSION, "episodes": len(eps), "secret_set": bool(os.environ.get("AUDITGYM_SECRET")),
+           "data_verification": {"failures": sum(1 for v in ver if v["errors"]), "episodes": ver},
+           "baselines": summ, "paired_checks": {"passed": sum(r["ok"] for r in pc), "total": len(pc), "details": pc},
+           "per_episode": [{k: r[k] for k in ("policy", "episode_id", "valid", "tp", "fp", "fn", "precision", "recall",
+                                              "f1", "reward", "experimental_reward", "steps_used", "wall_time_s",
+                                              "terminated_by")} for r in rows],
+           "duration_s": round(time.time() - t0, 1)}
+    d = reports_dir(a.out)
+    with open(os.path.join(d, "jury_report.json"), "w") as f:
+        json.dump(rep, f, indent=2, default=str)
+    with open(os.path.join(d, "failure_analysis.md"), "w") as f:
+        f.write(render_fa(fa, a.episodes_file))
+    print("episodes=%d  data failures=%d  paired=%d/%d" % (len(eps), rep["data_verification"]["failures"],
+                                                         rep["paired_checks"]["passed"], len(pc)))
+    for pol, x in summ.items():
+        print("%-10s P=%.3f R=%.3f F1=%.3f return=%+.3f steps=%.1f time=%.4fs" % (
+            pol, x["mean_precision"], x["mean_recall"], x["mean_f1"], x["mean_return"], x["mean_steps"], x["mean_wall_time_s"]))
+    print("report:", os.path.join(d, "jury_report.json"))
+    return 0 if rep["data_verification"]["failures"] == 0 and rep["paired_checks"]["passed"] == len(pc) else 1
 
 
 def render_md(r):
@@ -407,7 +502,13 @@ def main(argv=None):
     s = sub.add_parser("verify")
     s.add_argument("--split", nargs="+", default=["train", "dev", "local_holdout"])
     s.set_defaults(fn=cmd_verify)
+    s = sub.add_parser("jury")
+    s.add_argument("--episodes-file", required=True, help="JSON: {episodes:[{name,seed,config}]}")
+    s.add_argument("--out", default=None)
+    s.add_argument("--seed", type=int, default=0)
+    s.set_defaults(fn=cmd_jury)
     s = sub.add_parser("evaluate")
+    s.add_argument("--episodes-file", default=None)
     s.add_argument("--split", nargs="+", default=["dev"])
     s.add_argument("--policies", nargs="+", default=list(BASELINES) + ["expert"])
     s.add_argument("--seed", type=int, default=0)
@@ -421,6 +522,7 @@ def main(argv=None):
     s.set_defaults(fn=cmd_run)
     s = sub.add_parser("serve")
     s.add_argument("--mode", default="eval", choices=["train", "eval"])
+    s.add_argument("--log", default=None, help="append each episode's grade (evaluator side) to this JSONL file")
     s.set_defaults(fn=cmd_serve)
     s = sub.add_parser("viewer")
     s.add_argument("--episode", default="dev/dev_09")

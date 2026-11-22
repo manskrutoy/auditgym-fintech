@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "auditgym/observation.schema.json",
-  "title": "step observation",
+  "title": "step observation (the reset observation: reset_observation.schema.json)",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -46,7 +46,8 @@
             "invalid_cursor",
             "calc_error",
             "episode_finished",
-            "time_limit"
+            "time_limit",
+            "policy_error"
           ]
         },
         "message": {

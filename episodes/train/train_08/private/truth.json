@@ -1,75 +1,95 @@
 {
-  "episode_id": "ep-a6cb35e2db92",
+  "episode_id": "ep-b31b90e0fbf4",
   "issues": [
     {
       "affected_ids": [
-        "INV-847234"
+        "INV-884789"
       ],
       "amount_tolerance_minor": 1,
       "currency": "JPY",
       "evidence_sets": [
         [
-          "DOC-2a0b45c2",
+          "DOC-81a6b645",
           "FX-2026-09-01-EUR-JPY",
-          "ROW-a1643882"
+          "ROW-c2034b25"
+        ],
+        [
+          "FX-2026-09-01-EUR-JPY",
+          "INV-884789",
+          "ROW-c2034b25"
         ]
       ],
       "expected_amount_minor": 339,
       "interaction_group": "cutoff_fx_boundary",
-      "issue_id": "ep-a6cb35e2db92-I01",
+      "issue_id": "ep-b31b90e0fbf4-I01",
       "type": "fx_misconversion"
     },
     {
       "affected_ids": [
-        "PAY-970829"
+        "PAY-746324"
       ],
       "amount_tolerance_minor": 1,
       "currency": "JPY",
       "evidence_sets": [
         [
-          "DOC-a61b2273",
+          "DOC-77da11e3",
           "FX-2026-08-31-EUR-JPY",
-          "ROW-c86b23d6"
+          "ROW-315c213f"
+        ],
+        [
+          "FX-2026-08-31-EUR-JPY",
+          "PAY-746324",
+          "ROW-315c213f"
         ]
       ],
       "expected_amount_minor": 789,
       "interaction_group": "fx_partial_payment",
-      "issue_id": "ep-a6cb35e2db92-I02",
+      "issue_id": "ep-b31b90e0fbf4-I02",
       "type": "fx_misconversion"
     },
     {
       "affected_ids": [
-        "INV-847234"
+        "INV-884789"
       ],
       "amount_tolerance_minor": 0,
       "currency": "JPY",
       "evidence_sets": [
         [
-          "DOC-2a0b45c2",
-          "ROW-a1643882"
+          "DOC-81a6b645",
+          "ROW-c2034b25"
+        ],
+        [
+          "INV-884789",
+          "ROW-c2034b25"
         ]
       ],
       "expected_amount_minor": 134829,
       "interaction_group": "cutoff_fx_boundary",
-      "issue_id": "ep-a6cb35e2db92-I03",
+      "issue_id": "ep-b31b90e0fbf4-I03",
       "type": "period_cutoff"
     },
     {
       "affected_ids": [
-        "INV-340222",
-        "PAY-970829"
+        "INV-541386",
+        "PAY-746324"
       ],
       "amount_tolerance_minor": 0,
       "currency": "EUR",
       "evidence_sets": [
         [
-          "DOC-a61b2273",
-          "ROW-a8aa6f17"
+          "DOC-77da11e3",
+          "ROW-56ca8eda",
+          "ROW-5a73a697"
+        ],
+        [
+          "PAY-746324",
+          "ROW-56ca8eda",
+          "ROW-5a73a697"
         ]
       ],
       "expected_amount_minor": 124800,
       "interaction_group": "fx_partial_payment",
-      "issue_id": "ep-a6cb35e2db92-I04",
+      "issue_id": "ep-b31b90e0fbf4-I04",
       "type": "unallocated_payment"
     }
   ],

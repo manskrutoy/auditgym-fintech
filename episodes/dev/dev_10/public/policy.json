@@ -33,11 +33,17 @@
       "period_cutoff": 0,
       "unallocated_payment": 0
     },
+    "definitions": {
+      "duplicate_invoice": "two invoices of the same customer and currency with identical line items (description, quantity, unit price) issued within 3 days, both posted to AR",
+      "fx_misconversion": "a converted base amount differs from the conversion at the policy rate",
+      "period_cutoff": "the AR posting is in a different reporting period than the invoice date",
+      "unallocated_payment": "an invoice_ref of a payment is not applied in the ledger (no 1100 credit for that payment and invoice); the amount sits in 1190"
+    },
     "evidence": {
       "duplicate_invoice": "doc_id of both invoices + row_id of both AR (1100) debit rows",
       "fx_misconversion": "doc_id + row_id of the converted row (AR debit or cash) + fx_id of the rate the policy requires",
       "period_cutoff": "doc_id of the invoice + row_id of its AR (1100) debit row",
-      "unallocated_payment": "doc_id of the payment + row_id of its 1190 suspense row"
+      "unallocated_payment": "doc_id of the payment + row_id of its 1190 suspense row + row_ids of the 1100 credit rows of the refs that WERE applied (none if it has one ref)"
     },
     "types": [
       "duplicate_invoice",
@@ -47,11 +53,13 @@
     ]
   },
   "fx": {
+    "allocation_rounding": "revenue split per line item and pro-rata AR relief use the same rounding mode; the last line / the completing allocation takes the remainder",
     "ar_relief": "AR is relieved at the invoice's recorded base amount (pro rata for partial allocations, remaining balance on the allocation that completes the invoice); the difference to the cash line goes to 7900",
     "conversion": "base_minor = round(amount_minor / 10^exp(source) * rate * 10^exp(base))",
     "quote": "rate = units of target_currency for 1 major unit of source_currency",
-    "rate_date": "calendar date of the document timestamp in manifest.timezone; if no rate is published for that date, use the latest earlier published date",
-    "rounding": "half_even"
+    "rate_date": "calendar date of the document timestamp (invoice: issued_at, payment: timestamp) in manifest.timezone; if no rate is published for that date, use the latest earlier published date. A payment's 1190 and cash rows use the same rate.",
+    "refund_of_advance": "a refund relieves 2300 at the advance's carrying amount; the difference to the cash line goes to 7900",
+    "rounding": "half_up"
   },
   "period": {
     "ledger_window": "ledger.csv holds rows dated period_start..ledger_window_end; rows after period_end are subsequent-period postings shown for cut-off testing. Invoices issued before period_start appear as opening balances (account 3900) posted at period_start.",
@@ -62,7 +70,7 @@
     "expense": "Dr 6xxx / Cr 1000, no documents in this extract",
     "invoice": "Dr 1100 AR (base amount at invoice rate) / Cr 4000 revenue per line item",
     "payment_with_refs": "Dr 1000 cash at payment rate / Cr 1100 for each applied invoice_ref; a ref that is not applied sits in 1190; difference to 7900",
-    "payment_without_refs_known_customer": "Dr 1000 / Cr 2300 customer advance",
+    "payment_without_refs_known_customer": "Dr 1000 / Cr 2300 customer advance (payer = entity_id of the payment's cash row in the ledger)",
     "payment_without_refs_unknown_payer": "Dr 1000 / Cr 1190 unapplied receipt",
     "refund": "negative amount_minor; Dr 2300 / Cr 1000"
   }

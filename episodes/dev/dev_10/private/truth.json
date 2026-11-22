@@ -1,112 +1,117 @@
 {
-  "episode_id": "ep-9128e2997d92",
+  "episode_id": "ep-64bbe1bcc542",
   "issues": [
     {
       "affected_ids": [
-        "INV-073668",
-        "INV-756461"
+        "INV-145869",
+        "INV-335039"
       ],
       "amount_tolerance_minor": 0,
-      "currency": "KWD",
+      "currency": "GBP",
       "evidence_sets": [
         [
-          "DOC-9760a18b",
-          "DOC-db9584ca",
-          "ROW-5c0c7ec3",
-          "ROW-66e881d1"
+          "DOC-335f904e",
+          "DOC-892f3ead",
+          "ROW-7afc7010",
+          "ROW-99e196e3"
+        ],
+        [
+          "INV-145869",
+          "INV-335039",
+          "ROW-7afc7010",
+          "ROW-99e196e3"
         ]
       ],
-      "expected_amount_minor": 7865870,
+      "expected_amount_minor": 557400,
       "interaction_group": null,
-      "issue_id": "ep-9128e2997d92-I01",
+      "issue_id": "ep-64bbe1bcc542-I01",
       "type": "duplicate_invoice"
     },
     {
       "affected_ids": [
-        "INV-511620"
+        "PAY-547267"
       ],
       "amount_tolerance_minor": 1,
-      "currency": "EUR",
+      "currency": "GBP",
       "evidence_sets": [
         [
-          "DOC-1b05eb8f",
-          "FX-2025-10-17-JPY-EUR",
-          "ROW-dbd64236"
+          "DOC-b516d57e",
+          "FX-2025-08-18-CNY-GBP",
+          "ROW-7536c004"
+        ],
+        [
+          "FX-2025-08-18-CNY-GBP",
+          "PAY-547267",
+          "ROW-7536c004"
         ]
       ],
-      "expected_amount_minor": 18711,
+      "expected_amount_minor": 184,
       "interaction_group": null,
-      "issue_id": "ep-9128e2997d92-I02",
+      "issue_id": "ep-64bbe1bcc542-I02",
       "type": "fx_misconversion"
     },
     {
       "affected_ids": [
-        "PAY-085870"
-      ],
-      "amount_tolerance_minor": 1,
-      "currency": "EUR",
-      "evidence_sets": [
-        [
-          "DOC-2a8c636b",
-          "FX-2025-10-17-KWD-EUR",
-          "ROW-d4c72fa2"
-        ]
-      ],
-      "expected_amount_minor": 1843,
-      "interaction_group": null,
-      "issue_id": "ep-9128e2997d92-I03",
-      "type": "fx_misconversion"
-    },
-    {
-      "affected_ids": [
-        "INV-558735"
+        "INV-570859"
       ],
       "amount_tolerance_minor": 0,
-      "currency": "EUR",
+      "currency": "GBP",
       "evidence_sets": [
         [
-          "DOC-7dd1a35f",
-          "ROW-94228e8f"
+          "DOC-e85211a6",
+          "ROW-b3823577"
+        ],
+        [
+          "INV-570859",
+          "ROW-b3823577"
         ]
       ],
-      "expected_amount_minor": 493197,
+      "expected_amount_minor": 1917390,
       "interaction_group": null,
-      "issue_id": "ep-9128e2997d92-I04",
+      "issue_id": "ep-64bbe1bcc542-I03",
       "type": "period_cutoff"
     },
     {
       "affected_ids": [
-        "INV-736957"
+        "INV-835520"
       ],
       "amount_tolerance_minor": 0,
-      "currency": "EUR",
+      "currency": "GBP",
       "evidence_sets": [
         [
-          "DOC-3da71a0f",
-          "ROW-ec1c27b3"
+          "DOC-65f9982e",
+          "ROW-bf45ee39"
+        ],
+        [
+          "INV-835520",
+          "ROW-bf45ee39"
         ]
       ],
-      "expected_amount_minor": 799040,
+      "expected_amount_minor": 1384200,
       "interaction_group": null,
-      "issue_id": "ep-9128e2997d92-I05",
+      "issue_id": "ep-64bbe1bcc542-I04",
       "type": "period_cutoff"
     },
     {
       "affected_ids": [
-        "INV-429433",
-        "PAY-682260"
+        "INV-875648",
+        "PAY-008780"
       ],
       "amount_tolerance_minor": 0,
-      "currency": "KWD",
+      "currency": "GBP",
       "evidence_sets": [
         [
-          "DOC-0c47738a",
-          "ROW-dc4ab69c"
+          "DOC-749d394b",
+          "ROW-39e4486d"
+        ],
+        [
+          "PAY-008780",
+          "ROW-39e4486d"
         ]
       ],
-      "expected_amount_minor": 4495000,
+      "expected_amount_minor": 756200,
       "interaction_group": null,
-      "issue_id": "ep-9128e2997d92-I06",
+      "issue_id": "ep-64bbe1bcc542-I05",
       "type": "unallocated_payment"
     }
   ],

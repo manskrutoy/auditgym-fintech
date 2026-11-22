@@ -196,3 +196,28 @@ class TestFailureAnalysis(unittest.TestCase):
         a = analyse(eps, rows)
         self.assertEqual(a["oracle"]["fp"], {})
         self.assertTrue(any(k.startswith("trap:") for k in a["reconciler"]["fp"]))
+
+
+class TestAccountingFollowUps(unittest.TestCase):
+    def test_refunded_advances_leave_no_balance(self):
+        found = 0
+        for seed in range(60):
+            ep = generate_episode(9000 + seed, {"preset": "clean", "foreign_share": 1.0,
+                                                "distractors": {"duplicate_payment_refunds": 2}})
+            pays = {p["payment_id"]: p for p in ep.tables["payments"]}
+            bal = {}
+            for r in ep.tables["ledger"]:
+                if r["account"] == "2300":
+                    bal[r["entity_id"]] = bal.get(r["entity_id"], 0) + r["credit_minor"] - r["debit_minor"]
+            refunds = [p for p in pays.values() if p["amount_minor"] < 0]
+            found += len(refunds)
+            adv_custs_with_refund = set()
+            for r in ep.tables["ledger"]:
+                if r["payment_id"] in {p["payment_id"] for p in refunds} and r["account"] == "2300":
+                    adv_custs_with_refund.add(r["entity_id"])
+            for c in adv_custs_with_refund:
+                adv_only = sum(1 for r in ep.tables["ledger"] if r["account"] == "2300" and r["entity_id"] == c
+                               and r["credit_minor"] > 0 and pays[r["payment_id"]]["amount_minor"] > 0)
+                if adv_only == 1:                       # only the refunded duplicate sat in 2300
+                    self.assertEqual(bal[c], 0)
+        self.assertGreater(found, 0)

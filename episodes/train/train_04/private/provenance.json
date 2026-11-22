@@ -59,7 +59,7 @@
       ]
     },
     "foreign_share": 0.35,
-    "id_seed": null,
+    "id_seed": 71,
     "interactions": {
       "cutoff_fx_boundary": [
         0,
@@ -82,7 +82,7 @@
       25,
       70
     ],
-    "order_seed": null,
+    "order_seed": 858,
     "preset": "single",
     "subsequent_days": 5
   },
@@ -100,79 +100,79 @@
     "payment:unidentified": 1
   },
   "document_tags": {
-    "INV-067958": [
-      "boundary_payment"
-    ],
-    "INV-273227": [
+    "INV-096081": [
       "recurring",
       "repeated_amount"
     ],
-    "INV-308287": [
+    "INV-192866": [
       "boundary"
     ],
-    "INV-343131": [
-      "boundary"
-    ],
-    "INV-508172": [
-      "boundary"
-    ],
-    "INV-634600": [
-      "boundary_payment"
-    ],
-    "INV-731110": [
-      "boundary_payment"
-    ],
-    "INV-769463": [
+    "INV-259488": [
       "recurring"
     ],
-    "INV-864803": [
-      "recurring"
-    ],
-    "PAY-019964": [
-      "split"
-    ],
-    "PAY-024686": [
+    "INV-319224": [
       "boundary_payment"
     ],
-    "PAY-036008": [
+    "INV-439159": [
+      "recurring"
+    ],
+    "INV-662319": [
+      "boundary"
+    ],
+    "INV-788040": [
+      "boundary_payment"
+    ],
+    "INV-830996": [
+      "boundary"
+    ],
+    "INV-937241": [
+      "boundary_payment"
+    ],
+    "PAY-128191": [
+      "multi"
+    ],
+    "PAY-284312": [
       "split"
     ],
-    "PAY-111238": [
-      "advance"
+    "PAY-332822": [
+      "split"
     ],
-    "PAY-172151": [
+    "PAY-399483": [
+      "boundary_payment"
+    ],
+    "PAY-497578": [
+      "partial_open"
+    ],
+    "PAY-504547": [
+      "split"
+    ],
+    "PAY-572425": [
       "unidentified"
     ],
-    "PAY-185132": [
+    "PAY-609569": [
       "partial_open"
     ],
-    "PAY-254539": [
-      "split"
-    ],
-    "PAY-400495": [
+    "PAY-612148": [
       "multi"
     ],
-    "PAY-405163": [
-      "split"
-    ],
-    "PAY-615904": [
+    "PAY-643361": [
       "partial_open"
     ],
-    "PAY-690316": [
+    "PAY-791607": [
+      "partial_open"
+    ],
+    "PAY-807716": [
+      "advance"
+    ],
+    "PAY-809345": [
+      "multi"
+    ],
+    "PAY-863102": [
+      "split"
+    ],
+    "PAY-931075": [
       "boundary_payment",
       "multi"
-    ],
-    "PAY-824350": [
-      "multi"
-    ],
-    "PAY-865728": [
-      "partial_open"
-    ],
-    "PAY-915574": [
-      "multi"
-    ],
-    "PAY-958433": [
-      "partial_open"
     ]
   },
   "env_version": "1.0.0",
@@ -192,7 +192,7 @@
         "debit_minor": 0,
         "timestamp": "2026-04-21T20:50:52-05:00"
       },
-      "row_id": "ROW-ad2a85e0"
+      "row_id": "ROW-20e81c7b"
     },
     {
       "clean": {
@@ -208,7 +208,7 @@
         "debit_minor": 239340,
         "timestamp": "2026-04-19T21:26:52-05:00"
       },
-      "row_id": "ROW-49b93ce6"
+      "row_id": "ROW-2e707604"
     },
     {
       "clean": {
@@ -224,7 +224,7 @@
         "debit_minor": 0,
         "timestamp": "2026-04-21T20:50:52-05:00"
       },
-      "row_id": "ROW-d53caa0f"
+      "row_id": "ROW-6189b879"
     },
     {
       "clean": {
@@ -240,7 +240,7 @@
         "debit_minor": 0,
         "timestamp": "2026-04-19T21:26:52-05:00"
       },
-      "row_id": "ROW-c5c9a227"
+      "row_id": "ROW-d961d933"
     },
     {
       "clean": {
@@ -256,15 +256,15 @@
         "debit_minor": 0,
         "timestamp": "2026-04-19T21:26:52-05:00"
       },
-      "row_id": "ROW-d4ff374a"
+      "row_id": "ROW-2c329e57"
     }
   ],
   "mutations": [
     {
       "correct_rate_date": "2026-04-17",
       "document": "invoice",
-      "invoice": "INV-538700",
-      "issue_id": "ep-b69dbd9e9b51-I01",
+      "invoice": "INV-163702",
+      "issue_id": "ep-5cdf8aa51885-I01",
       "mutation": "wrong_rate_date",
       "used_rate_date": "2026-05-03",
       "wrong_date_rule": "due_date"

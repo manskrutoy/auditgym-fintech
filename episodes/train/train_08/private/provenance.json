@@ -59,7 +59,7 @@
       ]
     },
     "foreign_share": 0.35,
-    "id_seed": null,
+    "id_seed": 35,
     "interactions": {
       "cutoff_fx_boundary": [
         1,
@@ -82,7 +82,7 @@
       25,
       70
     ],
-    "order_seed": null,
+    "order_seed": 630,
     "preset": "interacting",
     "subsequent_days": 5
   },
@@ -100,81 +100,81 @@
     "payment:unidentified": 2
   },
   "document_tags": {
-    "INV-119969": [
+    "INV-050243": [
       "recurring"
     ],
-    "INV-150923": [
-      "boundary"
-    ],
-    "INV-239139": [
-      "recurring"
-    ],
-    "INV-273072": [
+    "INV-102888": [
       "recurring",
       "repeated_amount"
     ],
-    "INV-420320": [
-      "recurring"
-    ],
-    "INV-488505": [
-      "boundary_payment"
-    ],
-    "INV-734477": [
+    "INV-213972": [
       "boundary"
     ],
-    "INV-863521": [
+    "INV-319726": [
       "recurring"
     ],
-    "PAY-118757": [
-      "unidentified"
-    ],
-    "PAY-152255": [
-      "multi"
-    ],
-    "PAY-155036": [
-      "advance"
-    ],
-    "PAY-177476": [
-      "split"
-    ],
-    "PAY-205441": [
-      "split"
-    ],
-    "PAY-226506": [
-      "unidentified"
-    ],
-    "PAY-298720": [
-      "split"
-    ],
-    "PAY-417379": [
+    "INV-551988": [
       "boundary_payment"
     ],
-    "PAY-484092": [
-      "multi"
+    "INV-660534": [
+      "recurring"
     ],
-    "PAY-488790": [
+    "INV-770882": [
+      "boundary"
+    ],
+    "INV-977430": [
+      "recurring"
+    ],
+    "PAY-137351": [
       "split"
     ],
-    "PAY-570939": [
+    "PAY-143698": [
+      "unidentified"
+    ],
+    "PAY-308499": [
+      "split"
+    ],
+    "PAY-340849": [
+      "split"
+    ],
+    "PAY-360059": [
+      "split"
+    ],
+    "PAY-363780": [
       "advance"
     ],
-    "PAY-581154": [
+    "PAY-434610": [
       "partial_open"
     ],
-    "PAY-647201": [
+    "PAY-494243": [
       "split"
     ],
-    "PAY-649180": [
-      "split"
+    "PAY-521455": [
+      "boundary_payment"
     ],
-    "PAY-786639": [
+    "PAY-684652": [
+      "multi"
+    ],
+    "PAY-740122": [
+      "multi"
+    ],
+    "PAY-746324": [
+      "multi"
+    ],
+    "PAY-785523": [
       "partial_open"
     ],
-    "PAY-831352": [
+    "PAY-828790": [
       "multi"
     ],
-    "PAY-970829": [
-      "multi"
+    "PAY-897023": [
+      "advance"
+    ],
+    "PAY-902638": [
+      "unidentified"
+    ],
+    "PAY-905471": [
+      "split"
     ]
   },
   "env_version": "1.0.0",
@@ -205,7 +205,7 @@
         "debit_minor": 134829,
         "timestamp": "2026-08-31T18:32:09+09:00"
       },
-      "row_id": "ROW-a1643882"
+      "row_id": "ROW-c2034b25"
     },
     {
       "clean": {
@@ -221,7 +221,7 @@
         "debit_minor": 313358,
         "timestamp": "2026-08-31T13:49:48+09:00"
       },
-      "row_id": "ROW-c86b23d6"
+      "row_id": "ROW-315c213f"
     },
     {
       "clean": {
@@ -237,7 +237,7 @@
         "debit_minor": 1010,
         "timestamp": "2026-08-31T13:49:48+09:00"
       },
-      "row_id": "ROW-484bf3ed"
+      "row_id": "ROW-4083afeb"
     },
     {
       "clean": {
@@ -253,7 +253,7 @@
         "debit_minor": 0,
         "timestamp": "2026-08-31T18:32:09+09:00"
       },
-      "row_id": "ROW-f826f949"
+      "row_id": "ROW-b5d7ef9b"
     },
     {
       "clean": null,
@@ -264,15 +264,15 @@
         "debit_minor": 0,
         "timestamp": "2026-08-31T13:49:48+09:00"
       },
-      "row_id": "ROW-a8aa6f17"
+      "row_id": "ROW-56ca8eda"
     }
   ],
   "mutations": [
     {
       "correct_rate_date": "2026-09-01",
       "document": "invoice",
-      "invoice": "INV-847234",
-      "issue_id": "ep-a6cb35e2db92-I01",
+      "invoice": "INV-884789",
+      "issue_id": "ep-b31b90e0fbf4-I01",
       "mutation": "wrong_rate_date",
       "used_rate_date": "2026-08-31",
       "wrong_date_rule": "posting_date"
@@ -280,25 +280,25 @@
     {
       "correct_rate_date": "2026-08-31",
       "document": "payment",
-      "issue_id": "ep-a6cb35e2db92-I02",
+      "issue_id": "ep-b31b90e0fbf4-I02",
       "mutation": "wrong_rate_date",
-      "payment": "PAY-970829",
+      "payment": "PAY-746324",
       "used_rate_date": "2026-09-01",
       "wrong_date_rule": "next_day_value_date"
     },
     {
       "document_local_date": "2026-09-01",
-      "invoice": "INV-847234",
-      "issue_id": "ep-a6cb35e2db92-I03",
+      "invoice": "INV-884789",
+      "issue_id": "ep-b31b90e0fbf4-I03",
       "mutation": "wrong_posting_period",
       "posted_at": "2026-08-31T18:32:09+09:00",
       "variant": "early"
     },
     {
-      "invoice": "INV-340222",
-      "issue_id": "ep-a6cb35e2db92-I04",
+      "invoice": "INV-541386",
+      "issue_id": "ep-b31b90e0fbf4-I04",
       "mutation": "allocation_not_applied",
-      "payment": "PAY-970829",
+      "payment": "PAY-746324",
       "ref_index": 0,
       "variant": "partial"
     }

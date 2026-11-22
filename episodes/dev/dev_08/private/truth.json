@@ -12,6 +12,11 @@
           "DOC-fd97306c",
           "FX-2025-04-01-CHF-KZT",
           "ROW-b3b937d0"
+        ],
+        [
+          "FX-2025-04-01-CHF-KZT",
+          "INV-585124",
+          "ROW-b3b937d0"
         ]
       ],
       "expected_amount_minor": 1024650,
@@ -30,6 +35,11 @@
           "DOC-dcaf967c",
           "FX-2025-03-28-USD-KZT",
           "ROW-435e127d"
+        ],
+        [
+          "FX-2025-03-28-USD-KZT",
+          "PAY-973550",
+          "ROW-435e127d"
         ]
       ],
       "expected_amount_minor": 2713654,
@@ -46,6 +56,10 @@
       "evidence_sets": [
         [
           "DOC-fd97306c",
+          "ROW-b3b937d0"
+        ],
+        [
+          "INV-585124",
           "ROW-b3b937d0"
         ]
       ],
@@ -64,7 +78,13 @@
       "evidence_sets": [
         [
           "DOC-dcaf967c",
-          "ROW-ac488c88"
+          "ROW-ac488c88",
+          "ROW-c07e84a7"
+        ],
+        [
+          "PAY-973550",
+          "ROW-ac488c88",
+          "ROW-c07e84a7"
         ]
       ],
       "expected_amount_minor": 1185699,

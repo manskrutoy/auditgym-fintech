@@ -1,8 +1,8 @@
 {
-  "clean_ledger_lines": 424,
+  "clean_ledger_lines": 425,
   "clean_trial_balance": {
-    "credit_minor": 51588676730,
-    "debit_minor": 51588676730
+    "credit_minor": 51589973905,
+    "debit_minor": 51589973905
   },
   "config": {
     "base_currency": null,
@@ -86,7 +86,7 @@
     "preset": "interacting",
     "subsequent_days": 5
   },
-  "dirty_ledger_lines": 428,
+  "dirty_ledger_lines": 429,
   "distractor_tags": {
     "invoice:boundary": 2,
     "invoice:boundary_payment": 3,
@@ -254,7 +254,7 @@
         "debit_minor": 900369489,
         "timestamp": "2025-09-30T18:39:31+09:00"
       },
-      "row_id": "ROW-3b252983"
+      "row_id": "ROW-e9480506"
     },
     {
       "clean": null,
@@ -265,7 +265,7 @@
         "debit_minor": 750600050,
         "timestamp": "2025-09-24T21:46:00+09:00"
       },
-      "row_id": "ROW-bff3abce"
+      "row_id": "ROW-09c21d2e"
     },
     {
       "clean": {
@@ -281,7 +281,7 @@
         "debit_minor": 165045778,
         "timestamp": "2025-09-10T17:18:22+09:00"
       },
-      "row_id": "ROW-9d6fce97"
+      "row_id": "ROW-a11ea0a2"
     },
     {
       "clean": {
@@ -297,7 +297,7 @@
         "debit_minor": 1685602810,
         "timestamp": "2025-09-29T21:53:06+09:00"
       },
-      "row_id": "ROW-75d3ca2e"
+      "row_id": "ROW-acc8de27"
     },
     {
       "clean": {
@@ -313,7 +313,7 @@
         "debit_minor": 0,
         "timestamp": "2025-09-10T17:18:22+09:00"
       },
-      "row_id": "ROW-4adda55d"
+      "row_id": "ROW-b2a36769"
     },
     {
       "clean": {
@@ -329,7 +329,7 @@
         "debit_minor": 0,
         "timestamp": "2025-09-30T21:16:13+09:00"
       },
-      "row_id": "ROW-771ac406"
+      "row_id": "ROW-c0e59d3f"
     },
     {
       "clean": {
@@ -345,7 +345,7 @@
         "debit_minor": 0,
         "timestamp": "2025-09-29T21:53:06+09:00"
       },
-      "row_id": "ROW-c685d5d4"
+      "row_id": "ROW-a9398075"
     },
     {
       "clean": {
@@ -361,7 +361,7 @@
         "debit_minor": 0,
         "timestamp": "2025-09-30T18:39:31+09:00"
       },
-      "row_id": "ROW-e9480506"
+      "row_id": "ROW-eb64427f"
     },
     {
       "clean": {
@@ -377,7 +377,7 @@
         "debit_minor": 0,
         "timestamp": "2025-09-30T18:39:31+09:00"
       },
-      "row_id": "ROW-eb64427f"
+      "row_id": "ROW-6b2c57f9"
     },
     {
       "clean": {
@@ -393,7 +393,7 @@
         "debit_minor": 0,
         "timestamp": "2025-09-30T18:39:31+09:00"
       },
-      "row_id": "ROW-6b2c57f9"
+      "row_id": "ROW-043cd0bb"
     },
     {
       "clean": {
@@ -409,7 +409,7 @@
         "debit_minor": 0,
         "timestamp": "2025-09-30T18:39:31+09:00"
       },
-      "row_id": "ROW-043cd0bb"
+      "row_id": "ROW-a532cd76"
     },
     {
       "clean": null,
@@ -420,7 +420,7 @@
         "debit_minor": 0,
         "timestamp": "2025-09-24T21:46:00+09:00"
       },
-      "row_id": "ROW-09c21d2e"
+      "row_id": "ROW-978fa4eb"
     },
     {
       "clean": null,
@@ -431,7 +431,7 @@
         "debit_minor": 0,
         "timestamp": "2025-09-24T21:46:00+09:00"
       },
-      "row_id": "ROW-978fa4eb"
+      "row_id": "ROW-697106d5"
     },
     {
       "clean": null,
@@ -442,7 +442,7 @@
         "debit_minor": 0,
         "timestamp": "2025-09-24T21:46:00+09:00"
       },
-      "row_id": "ROW-697106d5"
+      "row_id": "ROW-5c558418"
     },
     {
       "clean": null,
@@ -453,7 +453,7 @@
         "debit_minor": 0,
         "timestamp": "2025-09-30T21:16:13+09:00"
       },
-      "row_id": "ROW-bafa22b4"
+      "row_id": "ROW-b16fd531"
     },
     {
       "clean": null,
@@ -464,7 +464,7 @@
         "debit_minor": 0,
         "timestamp": "2025-09-29T21:53:06+09:00"
       },
-      "row_id": "ROW-acc8de27"
+      "row_id": "ROW-aeeeebfe"
     }
   ],
   "mutations": [

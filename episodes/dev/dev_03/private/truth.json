@@ -1,42 +1,52 @@
 {
-  "episode_id": "ep-387cc5ee9038",
+  "episode_id": "ep-0294ffe18ab4",
   "issues": [
     {
       "affected_ids": [
-        "INV-222379",
-        "INV-466940"
+        "INV-425772",
+        "INV-517741"
       ],
       "amount_tolerance_minor": 0,
       "currency": "KZT",
       "evidence_sets": [
         [
-          "DOC-34d2e1a7",
-          "DOC-be2b421c",
-          "ROW-2ae4e4c9",
-          "ROW-b60546dd"
+          "DOC-866dc9a3",
+          "DOC-e0f84ee0",
+          "ROW-07d78731",
+          "ROW-2eec3def"
+        ],
+        [
+          "INV-425772",
+          "INV-517741",
+          "ROW-07d78731",
+          "ROW-2eec3def"
         ]
       ],
       "expected_amount_minor": 139600099,
       "interaction_group": null,
-      "issue_id": "ep-387cc5ee9038-I01",
+      "issue_id": "ep-0294ffe18ab4-I01",
       "type": "duplicate_invoice"
     },
     {
       "affected_ids": [
-        "INV-745960",
-        "PAY-364907"
+        "INV-277741",
+        "PAY-460918"
       ],
       "amount_tolerance_minor": 0,
       "currency": "KZT",
       "evidence_sets": [
         [
-          "DOC-6f05b43e",
-          "ROW-64c612be"
+          "DOC-1022954d",
+          "ROW-209249fd"
+        ],
+        [
+          "PAY-460918",
+          "ROW-209249fd"
         ]
       ],
       "expected_amount_minor": 460100396,
       "interaction_group": null,
-      "issue_id": "ep-387cc5ee9038-I02",
+      "issue_id": "ep-0294ffe18ab4-I02",
       "type": "unallocated_payment"
     }
   ],

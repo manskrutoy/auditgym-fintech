@@ -1,28 +1,28 @@
 {
-  "base_currency": "EUR",
-  "company_name": "Willow Studios Ltd",
+  "base_currency": "GBP",
+  "company_name": "Falcon Mining SA",
   "counts": {
-    "documents": 175,
-    "fx_rates": 124,
-    "invoices": 116,
-    "ledger_rows": 1541,
-    "payments": 59
+    "documents": 119,
+    "fx_rates": 186,
+    "invoices": 83,
+    "ledger_rows": 1308,
+    "payments": 36
   },
   "currency_exponents": {
-    "EUR": 2,
-    "JPY": 0,
+    "CNY": 2,
+    "GBP": 2,
     "KWD": 3
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-9128e2997d92",
-  "ledger_window_end": "2025-11-05",
-  "period_end": "2025-10-31",
-  "period_start": "2025-10-01",
+  "episode_id": "ep-64bbe1bcc542",
+  "ledger_window_end": "2025-09-05",
+  "period_end": "2025-08-31",
+  "period_start": "2025-08-01",
   "rounding": {
-    "fx_conversion": "half_even",
+    "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "-05:00"
+  "timezone": "+05:30"
 }

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "auditgym/fx_row.schema.json",
+  "title": "fx_row",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "date",
+    "source_currency",
+    "target_currency",
+    "rate",
+    "fx_id"
+  ],
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "source_currency": {
+      "type": "string"
+    },
+    "target_currency": {
+      "type": "string"
+    },
+    "rate": {
+      "type": "string",
+      "pattern": "^[0-9]+(\\.[0-9]+)?$"
+    },
+    "fx_id": {
+      "type": "string",
+      "description": "derived key FX-{date}-{source}-{target}"
+    }
+  }
+}

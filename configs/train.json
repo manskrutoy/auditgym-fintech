@@ -28,7 +28,9 @@
       "name": "train_04",
       "seed": 33758,
       "config": {
-        "preset": "single"
+        "preset": "single",
+        "order_seed": 858,
+        "id_seed": 71
       }
     },
     {
@@ -66,7 +68,9 @@
       "name": "train_08",
       "seed": 65434,
       "config": {
-        "preset": "interacting"
+        "preset": "interacting",
+        "order_seed": 630,
+        "id_seed": 35
       }
     },
     {

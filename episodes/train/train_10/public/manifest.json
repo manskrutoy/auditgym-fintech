@@ -1,29 +1,29 @@
 {
-  "base_currency": "JPY",
-  "company_name": "Willow Textiles GmbH",
+  "base_currency": "EUR",
+  "company_name": "Orbit Software SA",
   "counts": {
-    "documents": 200,
-    "fx_rates": 186,
-    "invoices": 133,
-    "ledger_rows": 1383,
-    "payments": 67
+    "documents": 117,
+    "fx_rates": 180,
+    "invoices": 80,
+    "ledger_rows": 1310,
+    "payments": 37
   },
   "currency_exponents": {
-    "GBP": 2,
+    "EUR": 2,
     "JPY": 0,
     "KWD": 3,
     "USD": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-632f16592f64",
-  "ledger_window_end": "2025-09-05",
-  "period_end": "2025-08-31",
-  "period_start": "2025-08-01",
+  "episode_id": "ep-93b9f1d5133d",
+  "ledger_window_end": "2026-10-05",
+  "period_end": "2026-09-30",
+  "period_start": "2026-09-01",
   "rounding": {
     "fx_conversion": "half_even",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+00:00"
+  "timezone": "+09:00"
 }

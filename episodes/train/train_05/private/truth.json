@@ -14,6 +14,12 @@
           "DOC-e3734c64",
           "ROW-79093a6d",
           "ROW-f9a88ddb"
+        ],
+        [
+          "INV-271905",
+          "INV-814649",
+          "ROW-79093a6d",
+          "ROW-f9a88ddb"
         ]
       ],
       "expected_amount_minor": 1004388,
@@ -34,6 +40,12 @@
           "DOC-adbf4529",
           "ROW-26b9f6f2",
           "ROW-ccc80f03"
+        ],
+        [
+          "INV-633896",
+          "INV-787672",
+          "ROW-26b9f6f2",
+          "ROW-ccc80f03"
         ]
       ],
       "expected_amount_minor": 1347249,
@@ -51,6 +63,11 @@
         [
           "DOC-acf3b61f",
           "FX-2026-02-02-JPY-USD",
+          "ROW-66b37c45"
+        ],
+        [
+          "FX-2026-02-02-JPY-USD",
+          "PAY-863451",
           "ROW-66b37c45"
         ]
       ],

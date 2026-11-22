@@ -14,6 +14,12 @@
           "DOC-8a5f9fc4",
           "ROW-83d112ec",
           "ROW-c36eb441"
+        ],
+        [
+          "INV-344338",
+          "INV-865772",
+          "ROW-83d112ec",
+          "ROW-c36eb441"
         ]
       ],
       "expected_amount_minor": 308000,
@@ -32,6 +38,11 @@
           "DOC-3678e198",
           "FX-2025-05-09-USD-GBP",
           "ROW-7175bf48"
+        ],
+        [
+          "FX-2025-05-09-USD-GBP",
+          "INV-239335",
+          "ROW-7175bf48"
         ]
       ],
       "expected_amount_minor": 535,
@@ -48,6 +59,10 @@
       "evidence_sets": [
         [
           "DOC-1d284e07",
+          "ROW-9712f949"
+        ],
+        [
+          "INV-298203",
           "ROW-9712f949"
         ]
       ],
@@ -66,6 +81,12 @@
       "evidence_sets": [
         [
           "DOC-5ee99651",
+          "ROW-2bffd2cc",
+          "ROW-531a8285"
+        ],
+        [
+          "PAY-114917",
+          "ROW-2bffd2cc",
           "ROW-531a8285"
         ]
       ],

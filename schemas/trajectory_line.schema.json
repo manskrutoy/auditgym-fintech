@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "auditgym/trajectory_line.schema.json",
+  "title": "trajectory_line",
+  "type": "object",
+  "required": [
+    "episode_id",
+    "step",
+    "action",
+    "observation",
+    "reward",
+    "terminated",
+    "truncated"
+  ],
+  "properties": {
+    "episode_id": {
+      "type": "string"
+    },
+    "step": {
+      "type": "integer"
+    },
+    "action": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "observation": {
+      "type": "object"
+    },
+    "reward": {
+      "type": "number"
+    },
+    "terminated": {
+      "type": "boolean"
+    },
+    "truncated": {
+      "type": "boolean"
+    },
+    "policy": {
+      "type": "string"
+    }
+  }
+}

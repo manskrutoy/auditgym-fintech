@@ -1,77 +1,147 @@
 {
-  "episode_id": "ep-632f16592f64",
+  "episode_id": "ep-93b9f1d5133d",
   "issues": [
     {
       "affected_ids": [
-        "INV-390149",
-        "INV-469160"
-      ],
-      "amount_tolerance_minor": 0,
-      "currency": "KWD",
-      "evidence_sets": [
-        [
-          "DOC-55ecbbf1",
-          "DOC-61390c04",
-          "ROW-c2905fda",
-          "ROW-f7dc0690"
-        ]
-      ],
-      "expected_amount_minor": 411000,
-      "interaction_group": null,
-      "issue_id": "ep-632f16592f64-I01",
-      "type": "duplicate_invoice"
-    },
-    {
-      "affected_ids": [
-        "PAY-186557"
-      ],
-      "amount_tolerance_minor": 1,
-      "currency": "JPY",
-      "evidence_sets": [
-        [
-          "DOC-5a5a5f29",
-          "FX-2025-08-29-USD-JPY",
-          "ROW-64294530"
-        ]
-      ],
-      "expected_amount_minor": 2215,
-      "interaction_group": null,
-      "issue_id": "ep-632f16592f64-I02",
-      "type": "fx_misconversion"
-    },
-    {
-      "affected_ids": [
-        "INV-874801"
-      ],
-      "amount_tolerance_minor": 0,
-      "currency": "JPY",
-      "evidence_sets": [
-        [
-          "DOC-99c36b2a",
-          "ROW-482cae7b"
-        ]
-      ],
-      "expected_amount_minor": 3101395,
-      "interaction_group": null,
-      "issue_id": "ep-632f16592f64-I03",
-      "type": "period_cutoff"
-    },
-    {
-      "affected_ids": [
-        "INV-274825",
-        "PAY-327188"
+        "INV-454670",
+        "INV-636976"
       ],
       "amount_tolerance_minor": 0,
       "currency": "USD",
       "evidence_sets": [
         [
-          "DOC-1a0b8d12",
-          "ROW-e4198efb"
+          "DOC-810a3c02",
+          "DOC-e5db14d1",
+          "ROW-2862ff0e",
+          "ROW-6e5ed02a"
+        ],
+        [
+          "INV-454670",
+          "INV-636976",
+          "ROW-2862ff0e",
+          "ROW-6e5ed02a"
         ]
       ],
-      "expected_amount_minor": 453699,
+      "expected_amount_minor": 784400,
       "interaction_group": null,
-      "issue_id": "ep-632f16592f64-I04",
+      "issue_id": "ep-93b9f1d5133d-I01",
+      "type": "duplicate_invoice"
+    },
+    {
+      "affected_ids": [
+        "INV-915064"
+      ],
+      "amount_tolerance_minor": 1,
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "DOC-a99c36b2",
+          "FX-2026-09-18-USD-EUR",
+          "ROW-9def8509"
+        ],
+        [
+          "FX-2026-09-18-USD-EUR",
+          "INV-915064",
+          "ROW-9def8509"
+        ]
+      ],
+      "expected_amount_minor": 1534,
+      "interaction_group": null,
+      "issue_id": "ep-93b9f1d5133d-I02",
+      "type": "fx_misconversion"
+    },
+    {
+      "affected_ids": [
+        "PAY-839509"
+      ],
+      "amount_tolerance_minor": 1,
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "DOC-845ea0bc",
+          "FX-2026-09-04-JPY-EUR",
+          "ROW-8d7aca89"
+        ],
+        [
+          "FX-2026-09-04-JPY-EUR",
+          "PAY-839509",
+          "ROW-8d7aca89"
+        ]
+      ],
+      "expected_amount_minor": 2086,
+      "interaction_group": null,
+      "issue_id": "ep-93b9f1d5133d-I03",
+      "type": "fx_misconversion"
+    },
+    {
+      "affected_ids": [
+        "INV-906104"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "DOC-fe9a95b5",
+          "ROW-7321e53d"
+        ],
+        [
+          "INV-906104",
+          "ROW-7321e53d"
+        ]
+      ],
+      "expected_amount_minor": 1307050,
+      "interaction_group": null,
+      "issue_id": "ep-93b9f1d5133d-I04",
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "INV-808846",
+        "PAY-068480"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "DOC-46563872",
+          "ROW-5a57a0de",
+          "ROW-8cbddb5e"
+        ],
+        [
+          "PAY-068480",
+          "ROW-5a57a0de",
+          "ROW-8cbddb5e"
+        ]
+      ],
+      "expected_amount_minor": 88900,
+      "interaction_group": null,
+      "issue_id": "ep-93b9f1d5133d-I05",
+      "type": "unallocated_payment"
+    },
+    {
+      "affected_ids": [
+        "INV-951009",
+        "PAY-592086"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "DOC-3c5174d5",
+          "ROW-21e81863",
+          "ROW-69168472",
+          "ROW-ca038e89"
+        ],
+        [
+          "PAY-592086",
+          "ROW-21e81863",
+          "ROW-69168472",
+          "ROW-ca038e89"
+        ]
+      ],
+      "expected_amount_minor": 1008400,
+      "interaction_group": null,
+      "issue_id": "ep-93b9f1d5133d-I06",
       "type": "unallocated_payment"
     }
   ],

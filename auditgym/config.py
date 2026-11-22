@@ -52,8 +52,8 @@ PRESETS = {
         "interactions": {k: 1 for k in INTERACTIONS},
     },
     "hard": {
-        "n_invoices": [55, 95],
-        "ledger_rows": [900, 2000],
+        "n_invoices": [50, 85],
+        "ledger_rows": [800, 1850],
         "n_customers": [12, 24],
         "foreign_share": 0.5,
         "errors": {t: [1, 2] for t in ISSUE_TYPES},
@@ -139,6 +139,21 @@ def canonical_json(obj) -> str:
 
 def config_hash(cfg) -> str:
     return hashlib.sha256(canonical_json(cfg).encode()).hexdigest()[:16]
+
+
+import contextlib
+
+
+@contextlib.contextmanager
+def open_generation():
+    """Generate OPEN (published) episodes: the evaluator secret is ignored so that train/dev
+    stay reproducible for everyone even when AUDITGYM_SECRET is set for closed evaluation."""
+    old = os.environ.pop("AUDITGYM_SECRET", None)
+    try:
+        yield
+    finally:
+        if old is not None:
+            os.environ["AUDITGYM_SECRET"] = old
 
 
 def evaluator_secret() -> str:

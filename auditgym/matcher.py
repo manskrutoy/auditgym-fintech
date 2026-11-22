@@ -59,6 +59,12 @@ def _id_list(v, name, max_len, allow_empty):
 
 def validate_submission(sub, episode_id):
     """Return the normalised findings list or raise SchemaError."""
+    if isinstance(sub, str):                     # accept findings.json passed as a JSON string
+        try:
+            import json
+            sub = json.loads(sub)
+        except ValueError:
+            raise SchemaError("submission string is not valid JSON")
     if not isinstance(sub, dict):
         raise SchemaError("submission must be an object")
     if set(sub) != SUBMISSION_KEYS:
@@ -74,6 +80,8 @@ def validate_submission(sub, episode_id):
     for i, f in enumerate(fs):
         if not isinstance(f, dict):
             raise SchemaError("finding %d must be an object" % i)
+        if "explanation" not in f and set(f) == FINDING_KEYS - {"explanation"}:
+            f = dict(f, explanation="")          # explanation is optional (never scored)
         if set(f) != FINDING_KEYS:
             raise SchemaError("finding %d keys must be exactly %s" % (i, sorted(FINDING_KEYS)))
         if f["type"] not in ISSUE_TYPES:

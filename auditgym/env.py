@@ -260,7 +260,8 @@ class AuditEnv:
         missing = req - set(args)
         extra = set(args) - req - opt
         if missing or extra:
-            raise ToolError("invalid_arguments", "missing %s / unexpected %d argument(s)" % (sorted(missing), len(extra)))
+            names = ", ".join(_short(str(x))[:24] for x in sorted(map(str, extra))[:5])
+            raise ToolError("invalid_arguments", "missing %s / unexpected: %s" % (sorted(missing), names or "none"))
         try:
             return getattr(self, "_t_" + name)(**args)
         except ToolError:

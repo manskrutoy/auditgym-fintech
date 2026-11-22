@@ -104,7 +104,7 @@ class Injector:
         correct_pub = w.published(cur, correct_date)
         correct_val = w.to_base(amount, cur, correct_date)
         exp = CURRENCY_EXPONENTS[w.base]
-        min_diff = 2 if exp == 0 else 2
+        min_diff = 5                      # >> the 1-unit rounding tolerance
         for label, d in candidates:
             try:
                 pub = w.published(cur, d)
@@ -210,9 +210,12 @@ class Injector:
 
     def _alloc_issue(self, p, j, variant, group=None):
         inv_key, amt = p.refs[j]
+        ev = [("doc_pay", p.key), ("line", ("suspense", p.key, inv_key))]
+        # partial: the AR credits of the refs that WERE applied show which ref was not
+        ev += [("line", ("ar_credit", p.key, r[0])) for k, r in enumerate(p.refs) if k != j]
         return PlannedIssue(
             "unallocated_payment", [("pay", p.key), ("inv", inv_key)], p.currency, ("fixed", amt),
-            [[("doc_pay", p.key), ("line", ("suspense", p.key, inv_key))]],
+            [ev],
             {"mutation": "allocation_not_applied", "variant": variant, "payment": p.key,
              "invoice": inv_key, "ref_index": j},
             group=group,
@@ -305,7 +308,19 @@ class Injector:
             if not cands or rng.random() < 0.5:
                 cands = [self._boundary_invoice(self.pick_customer(), w.period_end + timedelta(days=rng.choice([1, 1, 2])),
                                                 None, None, rng.random() < 0.5)]
-            inv = rng.choice(cands)
+            # the bookkeeper posts on period_end; keep the story possible: the rate in force on
+            # period_end must equal the document-date rate (base currency, or same publication)
+            ok = [i for i in cands if i.currency == w.base or
+                  w.published(i.currency, w.period_end) == w.published(i.currency, w.ldate(i.issued_at))]
+            if not ok:
+                base_custs = [c for c in w.customers.values() if c.currency == w.base]
+                c = rng.choice(sorted(base_custs, key=lambda c: c.key)) if base_custs else self.pick_customer()
+                ok = [self._boundary_invoice(c, w.period_end + timedelta(days=rng.choice([1, 1, 2])),
+                                             None, None, rng.random() < 0.5)]
+                if ok[0].currency != w.base and w.published(ok[0].currency, w.period_end) != \
+                        w.published(ok[0].currency, w.ldate(ok[0].issued_at)):
+                    raise InjectionError("no consistent early cut-off target")
+            inv = rng.choice(ok)
             post = w.local_dt(w.period_end, rng.randint(17, 23), rng.randint(0, 58), rng.randint(0, 59))
         else:
             cands = [i for i in self.free_period_invoices(unpaid=True)

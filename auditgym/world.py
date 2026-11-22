@@ -59,6 +59,7 @@ class Payment:
     refs: Optional[List[list]]     # [[invoice_key, amount_minor], ...] or None
     kind: str                      # settlement | advance | unidentified | duplicate | refund
     tags: List[str] = field(default_factory=list)
+    refund_of: Optional[int] = None
 
 
 @dataclass
@@ -321,13 +322,13 @@ class Builder:
         return inv
 
     def _dedupe_lines(self, inv: Invoice):
-        """No two genuine invoices of a customer may look like duplicates (same lines within 3 days)."""
+        """No two genuine invoices of a customer may have identical line items."""
         sig = lambda i: (i.cust, i.currency, tuple((l["description"], l["quantity"], l["unit_price_minor"]) for l in i.lines))
-        for other in self.w.invoices.values():
-            if other.dup_of is None and sig(other) == sig(inv) and abs((other.issued_at - inv.issued_at).total_seconds()) < 5 * 86400:
-                inv.lines[0]["quantity"] += 1
-                inv.lines[0]["amount_minor"] = inv.lines[0]["quantity"] * inv.lines[0]["unit_price_minor"]
-                inv.total = sum(l["amount_minor"] for l in inv.lines)
+        taken = {sig(o) for o in self.w.invoices.values() if o.dup_of is None}
+        while sig(inv) in taken:                                  # never identical, at any distance
+            inv.lines[0]["quantity"] += 1
+            inv.lines[0]["amount_minor"] = inv.lines[0]["quantity"] * inv.lines[0]["unit_price_minor"]
+            inv.total = sum(l["amount_minor"] for l in inv.lines)
 
     def kind_of(self, issued: datetime) -> str:
         d = self.w.ldate(issued)
@@ -490,7 +491,8 @@ class Builder:
                 continue
             cust = w.customers[p.cust]
             dup = self.add_payment(cust, _random_local_time(rng, w, d2, 7, 20), p.currency, p.amount, None, "duplicate", ["dup_payment"])
-            self.add_payment(cust, _random_local_time(rng, w, d3, 7, 20), p.currency, -p.amount, None, "refund", ["refund"])
+            ref = self.add_payment(cust, _random_local_time(rng, w, d3, 7, 20), p.currency, -p.amount, None, "refund", ["refund"])
+            ref.refund_of = dup.key
             p.tags.append("was_duplicated")
             dup.tags.append("refunded")
         # payments received on the last days of the period (several invoices, foreign when

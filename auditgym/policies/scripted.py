@@ -105,6 +105,8 @@ class SimpleReconciler(_ReadingPolicy):
             for ref in p["invoice_refs"] or []:
                 if (p["payment_id"], ref["invoice_id"]) not in b.ar_credit:
                     ev = [p["doc_id"]] + [r["row_id"] for r in b.suspense.get(p["payment_id"], [])]
+                    for other in p["invoice_refs"]:
+                        ev += [r["row_id"] for r in b.ar_credit.get((p["payment_id"], other["invoice_id"]), [])]
                     out.append(finding("unallocated_payment", [p["payment_id"], ref["invoice_id"]],
                                        ref["amount_minor"], p["currency"], ev, "ref not applied in ledger"))
         for inv in b.invoices:
@@ -150,7 +152,7 @@ class FlagAll(_ReadingPolicy):
                 p = pay[i % len(pay)]
                 refs = p["invoice_refs"] or [{"invoice_id": inv["invoice_id"], "amount_minor": p["amount_minor"]}]
                 out.append(finding("unallocated_payment", [p["payment_id"], refs[0]["invoice_id"]],
-                                   refs[0]["amount_minor"], p["currency"], [p["doc_id"], inv["doc_id"]], "flag"))
+                                   abs(refs[0]["amount_minor"]), p["currency"], [p["doc_id"], inv["doc_id"]], "flag"))
             i += 1
             if len(out) >= 30:
                 break
@@ -207,6 +209,8 @@ class ExpertAuditor(_ReadingPolicy):
             for ref in p["invoice_refs"] or []:
                 if (p["payment_id"], ref["invoice_id"]) not in b.ar_credit and b.suspense.get(p["payment_id"]):
                     ev = [p["doc_id"]] + [r["row_id"] for r in b.suspense[p["payment_id"]]]
+                    for other in p["invoice_refs"]:          # show which refs were applied
+                        ev += [r["row_id"] for r in b.ar_credit.get((p["payment_id"], other["invoice_id"]), [])]
                     out.append(finding("unallocated_payment", [p["payment_id"], ref["invoice_id"]],
                                        ref["amount_minor"], p["currency"], ev,
                                        "remittance allocates to invoice; ledger parked it in 1190"))

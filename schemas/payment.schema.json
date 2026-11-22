@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "auditgym/payment.schema.json",
+  "title": "payment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "doc_id",
+    "payment_id",
+    "timestamp",
+    "currency",
+    "amount_minor",
+    "invoice_refs"
+  ],
+  "properties": {
+    "doc_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "payment_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "ISO-8601 with UTC offset"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "amount_minor": {
+      "type": "integer",
+      "description": "negative for refunds"
+    },
+    "invoice_refs": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "invoice_id",
+              "amount_minor"
+            ],
+            "properties": {
+              "invoice_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64
+              },
+              "amount_minor": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

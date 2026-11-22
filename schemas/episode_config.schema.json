@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "auditgym/episode_config.schema.json",
+  "title": "episode_config",
+  "type": "object",
+  "description": "see auditgym/config.py DEFAULTS/PRESETS",
+  "properties": {
+    "preset": {
+      "enum": [
+        "clean",
+        "single",
+        "mixed",
+        "all_types",
+        "interacting",
+        "hard"
+      ]
+    },
+    "base_currency": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "errors": {
+      "type": "object"
+    },
+    "interactions": {
+      "type": "object"
+    },
+    "distractors": {
+      "type": "object"
+    },
+    "id_seed": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "order_seed": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    }
+  }
+}

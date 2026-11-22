@@ -12,8 +12,14 @@
         [
           "DOC-1e9ace69",
           "DOC-f7e4160e",
-          "ROW-7a496e32",
-          "ROW-bff3abce"
+          "ROW-09c21d2e",
+          "ROW-dd561404"
+        ],
+        [
+          "INV-008352",
+          "INV-832248",
+          "ROW-09c21d2e",
+          "ROW-dd561404"
         ]
       ],
       "expected_amount_minor": 750600050,
@@ -31,7 +37,12 @@
         [
           "DOC-d77695c7",
           "FX-2025-10-01-CHF-KZT",
-          "ROW-3b252983"
+          "ROW-e9480506"
+        ],
+        [
+          "FX-2025-10-01-CHF-KZT",
+          "INV-108909",
+          "ROW-e9480506"
         ]
       ],
       "expected_amount_minor": 4111694,
@@ -49,7 +60,12 @@
         [
           "DOC-e6eead22",
           "FX-2025-09-10-CHF-KZT",
-          "ROW-9d6fce97"
+          "ROW-a11ea0a2"
+        ],
+        [
+          "FX-2025-09-10-CHF-KZT",
+          "PAY-128792",
+          "ROW-a11ea0a2"
         ]
       ],
       "expected_amount_minor": 1055,
@@ -67,7 +83,12 @@
         [
           "DOC-4ced223e",
           "FX-2025-09-29-CHF-KZT",
-          "ROW-75d3ca2e"
+          "ROW-acc8de27"
+        ],
+        [
+          "FX-2025-09-29-CHF-KZT",
+          "PAY-480998",
+          "ROW-acc8de27"
         ]
       ],
       "expected_amount_minor": 1900864,
@@ -84,7 +105,11 @@
       "evidence_sets": [
         [
           "DOC-d77695c7",
-          "ROW-3b252983"
+          "ROW-e9480506"
+        ],
+        [
+          "INV-108909",
+          "ROW-e9480506"
         ]
       ],
       "expected_amount_minor": 900369489,
@@ -102,7 +127,13 @@
       "evidence_sets": [
         [
           "DOC-4ced223e",
-          "ROW-acc8de27"
+          "ROW-aeeeebfe",
+          "ROW-c685d5d4"
+        ],
+        [
+          "PAY-480998",
+          "ROW-aeeeebfe",
+          "ROW-c685d5d4"
         ]
       ],
       "expected_amount_minor": 2199588,
@@ -120,7 +151,13 @@
       "evidence_sets": [
         [
           "DOC-6dd9c7c1",
-          "ROW-bafa22b4"
+          "ROW-771ac406",
+          "ROW-b16fd531"
+        ],
+        [
+          "PAY-294374",
+          "ROW-771ac406",
+          "ROW-b16fd531"
         ]
       ],
       "expected_amount_minor": 1177200,

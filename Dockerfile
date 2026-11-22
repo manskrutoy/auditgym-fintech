@@ -1,5 +1,5 @@
 # AuditGym official check container: offline, CPU only, standard library only.
-FROM python:3.11-slim
+FROM python:3.11.10-slim-bookworm
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \

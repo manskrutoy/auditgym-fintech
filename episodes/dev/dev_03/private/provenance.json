@@ -59,7 +59,7 @@
       ]
     },
     "foreign_share": 0.35,
-    "id_seed": null,
+    "id_seed": 180,
     "interactions": {
       "cutoff_fx_boundary": [
         0,
@@ -82,7 +82,7 @@
       25,
       70
     ],
-    "order_seed": null,
+    "order_seed": 955,
     "preset": "single",
     "subsequent_days": 5
   },
@@ -100,93 +100,93 @@
     "payment:split": 2
   },
   "document_tags": {
-    "INV-257588": [
-      "recurring"
-    ],
-    "INV-298994": [
+    "INV-024634": [
       "boundary_payment"
     ],
-    "INV-308942": [
-      "recurring"
-    ],
-    "INV-321204": [
+    "INV-036298": [
       "boundary_payment"
     ],
-    "INV-417649": [
-      "recurring"
-    ],
-    "INV-427765": [
+    "INV-045931": [
       "boundary_payment"
     ],
-    "INV-466940": [
-      "duplicate"
-    ],
-    "INV-484361": [
-      "recurring"
-    ],
-    "INV-591723": [
+    "INV-054287": [
       "boundary_payment"
     ],
-    "INV-673826": [
+    "INV-152322": [
+      "boundary_payment"
+    ],
+    "INV-154194": [
       "recurring",
       "repeated_amount"
     ],
-    "INV-769499": [
+    "INV-263423": [
+      "recurring"
+    ],
+    "INV-450527": [
+      "recurring"
+    ],
+    "INV-517741": [
+      "duplicate"
+    ],
+    "INV-574979": [
+      "boundary_payment"
+    ],
+    "INV-596102": [
+      "recurring"
+    ],
+    "INV-650973": [
+      "boundary_payment"
+    ],
+    "INV-852764": [
       "boundary"
     ],
-    "INV-857661": [
-      "boundary_payment"
+    "INV-877620": [
+      "recurring"
     ],
-    "INV-902917": [
-      "boundary_payment"
-    ],
-    "INV-979774": [
-      "boundary_payment"
-    ],
-    "PAY-057618": [
-      "boundary_payment",
+    "PAY-072573": [
       "multi"
     ],
-    "PAY-200349": [
-      "boundary_payment",
-      "multi"
-    ],
-    "PAY-201849": [
-      "partial_open"
-    ],
-    "PAY-334531": [
-      "multi"
-    ],
-    "PAY-341148": [
+    "PAY-271328": [
       "split"
     ],
-    "PAY-350658": [
-      "multi"
-    ],
-    "PAY-386457": [
-      "multi"
-    ],
-    "PAY-432797": [
-      "split"
-    ],
-    "PAY-531416": [
-      "multi"
-    ],
-    "PAY-630882": [
+    "PAY-380061": [
       "boundary_payment",
       "multi"
     ],
-    "PAY-723042": [
+    "PAY-498732": [
       "multi"
     ],
-    "PAY-739819": [
+    "PAY-575101": [
       "multi"
     ],
-    "PAY-790837": [
+    "PAY-662936": [
       "partial_open"
     ],
-    "PAY-977517": [
+    "PAY-665483": [
+      "split"
+    ],
+    "PAY-694931": [
+      "partial_open"
+    ],
+    "PAY-797678": [
+      "boundary_payment",
+      "multi"
+    ],
+    "PAY-818538": [
+      "multi"
+    ],
+    "PAY-855888": [
       "advance"
+    ],
+    "PAY-915632": [
+      "boundary_payment",
+      "multi"
+    ],
+    "PAY-981417": [
+      "multi"
+    ],
+    "PAY-994365": [
+      "multi"
     ]
   },
   "env_version": "1.0.0",
@@ -212,7 +212,7 @@
         "debit_minor": 139600099,
         "timestamp": "2025-09-29T13:31:12-05:00"
       },
-      "row_id": "ROW-b60546dd"
+      "row_id": "ROW-2eec3def"
     },
     {
       "clean": null,
@@ -223,7 +223,7 @@
         "debit_minor": 0,
         "timestamp": "2025-09-29T13:31:12-05:00"
       },
-      "row_id": "ROW-b5e2eb61"
+      "row_id": "ROW-8dea6e21"
     },
     {
       "clean": null,
@@ -234,7 +234,7 @@
         "debit_minor": 0,
         "timestamp": "2025-09-29T13:31:12-05:00"
       },
-      "row_id": "ROW-4c0f6759"
+      "row_id": "ROW-e94cf6f3"
     },
     {
       "clean": null,
@@ -245,22 +245,22 @@
         "debit_minor": 0,
         "timestamp": "2025-09-29T14:55:34-05:00"
       },
-      "row_id": "ROW-64c612be"
+      "row_id": "ROW-209249fd"
     }
   ],
   "mutations": [
     {
-      "duplicate": "INV-466940",
-      "issue_id": "ep-387cc5ee9038-I01",
+      "duplicate": "INV-517741",
+      "issue_id": "ep-0294ffe18ab4-I01",
       "issued_delta_minutes": 1322,
       "mutation": "duplicate_document_posted",
-      "original": "INV-222379"
+      "original": "INV-425772"
     },
     {
-      "invoice": "INV-745960",
-      "issue_id": "ep-387cc5ee9038-I02",
+      "invoice": "INV-277741",
+      "issue_id": "ep-0294ffe18ab4-I02",
       "mutation": "allocation_not_applied",
-      "payment": "PAY-364907",
+      "payment": "PAY-460918",
       "ref_index": 0,
       "variant": "missing"
     }

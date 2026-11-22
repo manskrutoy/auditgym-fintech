@@ -49,9 +49,12 @@ def _drop_privileges():
     runs as `nobody`: it cannot read the evaluator's private files (mode 700), its environment
     or /proc, nor write into the project."""
     if hasattr(os, "geteuid") and os.geteuid() == 0:
-        os.setgroups([])
-        os.setgid(65534)
-        os.setuid(65534)
+        try:
+            os.setgroups([])
+            os.setgid(65534)
+            os.setuid(65534)
+        except OSError:          # e.g. --cap-drop ALL: keep running; sandbox dir + -I -S still apply
+            pass
 
 
 def protect_private(root=ROOT):

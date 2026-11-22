@@ -1,0 +1,145 @@
+{
+  "description": "Example closed-evaluation file for `python -m auditgym jury`. Replace seeds with random 64-bit integers and set AUDITGYM_SECRET.",
+  "episodes": [
+    {
+      "name": "closed_01",
+      "seed": 1000020,
+      "config": {
+        "preset": "clean"
+      }
+    },
+    {
+      "name": "closed_02",
+      "seed": 2000023,
+      "config": {
+        "preset": "clean"
+      }
+    },
+    {
+      "name": "closed_03",
+      "seed": 3000026,
+      "config": {
+        "preset": "clean"
+      }
+    },
+    {
+      "name": "closed_04",
+      "seed": 4000029,
+      "config": {
+        "preset": "clean"
+      }
+    },
+    {
+      "name": "closed_05",
+      "seed": 5000032,
+      "config": {
+        "preset": "clean"
+      }
+    },
+    {
+      "name": "closed_06",
+      "seed": 6000035,
+      "config": {
+        "preset": "interacting"
+      }
+    },
+    {
+      "name": "closed_07",
+      "seed": 7000038,
+      "config": {
+        "preset": "interacting"
+      }
+    },
+    {
+      "name": "closed_08",
+      "seed": 8000041,
+      "config": {
+        "preset": "interacting"
+      }
+    },
+    {
+      "name": "closed_09",
+      "seed": 9000044,
+      "config": {
+        "preset": "interacting"
+      }
+    },
+    {
+      "name": "closed_10",
+      "seed": 10000047,
+      "config": {
+        "preset": "interacting"
+      }
+    },
+    {
+      "name": "closed_11",
+      "seed": 11000050,
+      "config": {
+        "preset": "mixed"
+      }
+    },
+    {
+      "name": "closed_12",
+      "seed": 12000053,
+      "config": {
+        "preset": "mixed"
+      }
+    },
+    {
+      "name": "closed_13",
+      "seed": 13000056,
+      "config": {
+        "preset": "mixed"
+      }
+    },
+    {
+      "name": "closed_14",
+      "seed": 14000059,
+      "config": {
+        "preset": "mixed"
+      }
+    },
+    {
+      "name": "closed_15",
+      "seed": 15000062,
+      "config": {
+        "preset": "mixed"
+      }
+    },
+    {
+      "name": "closed_16",
+      "seed": 16000065,
+      "config": {
+        "preset": "all_types"
+      }
+    },
+    {
+      "name": "closed_17",
+      "seed": 17000068,
+      "config": {
+        "preset": "hard"
+      }
+    },
+    {
+      "name": "closed_18",
+      "seed": 18000071,
+      "config": {
+        "preset": "single"
+      }
+    },
+    {
+      "name": "closed_19",
+      "seed": 19000074,
+      "config": {
+        "preset": "mixed"
+      }
+    },
+    {
+      "name": "closed_20",
+      "seed": 20000077,
+      "config": {
+        "preset": "interacting"
+      }
+    }
+  ]
+}

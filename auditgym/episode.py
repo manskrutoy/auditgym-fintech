@@ -11,7 +11,7 @@ from .config import canonical_json
 
 LEDGER_COLS = ["row_id", "timestamp", "account", "debit_minor", "credit_minor", "currency",
                "entity_id", "invoice_id", "payment_id"]
-FX_COLS = ["fx_id", "date", "source_currency", "target_currency", "rate"]
+FX_COLS = ["date", "source_currency", "target_currency", "rate", "fx_id"]   # fx_id derived: FX-{date}-{src}-{dst}
 INT_COLS = {"debit_minor", "credit_minor"}
 
 

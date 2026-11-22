@@ -14,6 +14,12 @@
           "DOC-e8a34232",
           "ROW-36bc4371",
           "ROW-3841d74f"
+        ],
+        [
+          "INV-329697",
+          "INV-943462",
+          "ROW-36bc4371",
+          "ROW-3841d74f"
         ]
       ],
       "expected_amount_minor": 242000,
@@ -31,6 +37,11 @@
         [
           "DOC-3e932c36",
           "FX-2025-07-01-GBP-JPY",
+          "ROW-95a5a046"
+        ],
+        [
+          "FX-2025-07-01-GBP-JPY",
+          "INV-431798",
           "ROW-95a5a046"
         ]
       ],
@@ -50,6 +61,11 @@
           "DOC-4d76701b",
           "FX-2025-06-27-GBP-JPY",
           "ROW-8466d11c"
+        ],
+        [
+          "FX-2025-06-27-GBP-JPY",
+          "PAY-206542",
+          "ROW-8466d11c"
         ]
       ],
       "expected_amount_minor": 600,
@@ -66,6 +82,10 @@
       "evidence_sets": [
         [
           "DOC-3e932c36",
+          "ROW-95a5a046"
+        ],
+        [
+          "INV-431798",
           "ROW-95a5a046"
         ]
       ],
@@ -84,6 +104,10 @@
         [
           "DOC-ff9db80a",
           "ROW-c3604b69"
+        ],
+        [
+          "INV-899412",
+          "ROW-c3604b69"
         ]
       ],
       "expected_amount_minor": 497200,
@@ -101,6 +125,12 @@
       "evidence_sets": [
         [
           "DOC-4d76701b",
+          "ROW-21a9aa42",
+          "ROW-c8434afa"
+        ],
+        [
+          "PAY-206542",
+          "ROW-21a9aa42",
           "ROW-c8434afa"
         ]
       ],
@@ -119,6 +149,12 @@
       "evidence_sets": [
         [
           "DOC-8c82bd6e",
+          "ROW-5b2230a7",
+          "ROW-c9a2ee7f"
+        ],
+        [
+          "PAY-103505",
+          "ROW-5b2230a7",
           "ROW-c9a2ee7f"
         ]
       ],

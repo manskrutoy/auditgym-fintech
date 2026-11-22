@@ -1,22 +1,27 @@
 {
-  "episode_id": "ep-b69dbd9e9b51",
+  "episode_id": "ep-5cdf8aa51885",
   "issues": [
     {
       "affected_ids": [
-        "INV-538700"
+        "INV-163702"
       ],
       "amount_tolerance_minor": 1,
       "currency": "JPY",
       "evidence_sets": [
         [
-          "DOC-e4aa14ca",
+          "DOC-46e49a26",
           "FX-2026-04-17-GBP-JPY",
-          "ROW-49b93ce6"
+          "ROW-2e707604"
+        ],
+        [
+          "FX-2026-04-17-GBP-JPY",
+          "INV-163702",
+          "ROW-2e707604"
         ]
       ],
       "expected_amount_minor": 391,
       "interaction_group": null,
-      "issue_id": "ep-b69dbd9e9b51-I01",
+      "issue_id": "ep-5cdf8aa51885-I01",
       "type": "fx_misconversion"
     }
   ],

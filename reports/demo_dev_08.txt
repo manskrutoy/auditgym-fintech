@@ -17,7 +17,7 @@ step  15 list_records ledger   cursor=c1:ledger:350  -> 50 records
 step  16 list_records ledger   cursor=c1:ledger:400  -> 50 records
 step  17 list_records ledger   cursor=c1:ledger:450  -> 4 records
 step  18 submit: 4 findings
-   - unallocated_payment  INV-139006,PAY-973550               1185699 USD  evidence=DOC-dcaf967c,ROW-ac488c88
+   - unallocated_payment  INV-139006,PAY-973550               1185699 USD  evidence=DOC-dcaf967c,ROW-ac488c88,ROW-c07e84a7
    - fx_misconversion     INV-585124                          1024650 KZT  evidence=DOC-fd97306c,ROW-b3b937d0,FX-2025-04-01-CHF-KZT
    - fx_misconversion     PAY-973550                          2713654 KZT  evidence=DOC-dcaf967c,ROW-435e127d,FX-2025-03-28-USD-KZT
    - period_cutoff        INV-585124                        184136139 KZT  evidence=DOC-fd97306c,ROW-b3b937d0

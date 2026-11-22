@@ -12,6 +12,11 @@
           "DOC-203ade12",
           "FX-2026-01-30-CNY-USD",
           "ROW-513f83d1"
+        ],
+        [
+          "FX-2026-01-30-CNY-USD",
+          "PAY-476034",
+          "ROW-513f83d1"
         ]
       ],
       "expected_amount_minor": 1417,
@@ -28,6 +33,10 @@
       "evidence_sets": [
         [
           "DOC-bf402422",
+          "ROW-df1ef78a"
+        ],
+        [
+          "INV-286700",
           "ROW-df1ef78a"
         ]
       ],

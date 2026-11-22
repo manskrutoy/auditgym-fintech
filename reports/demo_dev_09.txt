@@ -13,8 +13,8 @@ step  11 list_records ledger   cursor=c1:ledger:200  -> 50 records
 step  12 list_records ledger   cursor=c1:ledger:250  -> 32 records
 step  13 submit: 7 findings
    - duplicate_invoice    INV-329697,INV-943462                242000 JPY  evidence=DOC-e8a34232,DOC-70017600,ROW-36bc4371,ROW-3841d74f
-   - unallocated_payment  INV-892387,PAY-103505                678000 JPY  evidence=DOC-8c82bd6e,ROW-c9a2ee7f
-   - unallocated_payment  INV-304813,PAY-206542                107350 GBP  evidence=DOC-4d76701b,ROW-c8434afa
+   - unallocated_payment  INV-892387,PAY-103505                678000 JPY  evidence=DOC-8c82bd6e,ROW-c9a2ee7f,ROW-5b2230a7
+   - unallocated_payment  INV-304813,PAY-206542                107350 GBP  evidence=DOC-4d76701b,ROW-c8434afa,ROW-21a9aa42
    - fx_misconversion     INV-431798                              561 JPY  evidence=DOC-3e932c36,ROW-95a5a046,FX-2025-07-01-GBP-JPY
    - fx_misconversion     PAY-206542                              600 JPY  evidence=DOC-4d76701b,ROW-8466d11c,FX-2025-06-27-GBP-JPY
    - period_cutoff        INV-899412                           497200 JPY  evidence=DOC-ff9db80a,ROW-c3604b69

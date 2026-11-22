@@ -221,3 +221,25 @@ class TestMatching(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestRedTeamFollowUps(unittest.TestCase):
+    def setUp(self):
+        self.ep = episode(seed=35, preset="interacting")
+
+    def test_business_id_evidence_alias_and_lenient_submission(self):
+        import json
+        issues = self.ep.truth["issues"]
+        fs = [finding_from_issue(i, evidence_ids=i["evidence_sets"][-1]) for i in issues]
+        self.assertEqual(R(self.ep, fs)["tp"], len(issues))
+        for f in fs:
+            f.pop("explanation")
+        self.assertEqual(grade(json.dumps(sub(self.ep, fs)), self.ep.truth, 0)["tp"], len(issues))
+
+    def test_partial_allocation_needs_applied_ar_credits(self):
+        for iss in self.ep.truth["issues"]:
+            if iss["type"] == "unallocated_payment" and len(iss["evidence_sets"][0]) > 2:
+                minimal = [e for e in iss["evidence_sets"][0]][:2]
+                self.assertEqual(R(self.ep, [finding_from_issue(iss, evidence_ids=minimal)])["tp"], 0)
+                return
+        self.skipTest("no partial allocation in this episode")

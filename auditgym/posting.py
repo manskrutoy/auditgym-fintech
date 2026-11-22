@@ -41,6 +41,7 @@ def post_ledger(w) -> List[Line]:
 
     lines: List[Line] = []
     ar = {}
+    advance_book = {}          # payment key -> base amount carried in 2300
     journal = 0
     ctz = tz(w.offset)
 
@@ -75,13 +76,19 @@ def post_ledger(w) -> List[Line]:
             ent = ("C", p.cust) if p.cust is not None else None
             cash = w.to_base(abs(p.amount), p.currency, pp.rate_date)
             if p.kind == "refund":
-                add(ts, ACC_ADVANCES, cash, 0, ent, None, key, ("refund_advance", key))
+                carried = advance_book.pop(p.refund_of, cash) if p.refund_of is not None else cash
+                add(ts, ACC_ADVANCES, carried, 0, ent, None, key, ("refund_advance", key))
                 add(ts, ACC_CASH, 0, cash, ent, None, key, ("cash", key))
+                if cash > carried:
+                    add(ts, ACC_FX, cash - carried, 0, None, None, key, ("fx_gl", key))
+                elif carried > cash:
+                    add(ts, ACC_FX, 0, carried - cash, None, None, key, ("fx_gl", key))
                 continue
             add(ts, ACC_CASH, cash, 0, ent, None, key, ("cash", key))
             if p.refs is None:
                 if p.kind in ("advance", "duplicate"):
                     add(ts, ACC_ADVANCES, 0, cash, ent, None, key, ("advance", key))
+                    advance_book[key] = cash
                 else:
                     add(ts, ACC_SUSPENSE, 0, cash, None, None, key, ("suspense", key, None))
                 continue

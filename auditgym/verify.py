@@ -123,6 +123,8 @@ def check_balances(ep, rep):
 def _idx(ep):
     docs = {d["doc_id"]: ("invoice", d) for d in ep.tables["invoices"]}
     docs.update({d["doc_id"]: ("payment", d) for d in ep.tables["payments"]})
+    docs.update({d["invoice_id"]: ("invoice", d) for d in ep.tables["invoices"]})   # business-id citations
+    docs.update({d["payment_id"]: ("payment", d) for d in ep.tables["payments"]})
     rows = {r["row_id"]: r for r in ep.tables["ledger"]}
     fx = {r["fx_id"]: r for r in ep.tables["fx"]}
     return docs, rows, fx
@@ -185,6 +187,12 @@ def verify_issue(ep, issue, evidence, idx=None):
             return False, "amount/currency mismatch"
         if not any(r["account"] == ACC_SUSPENSE and r["payment_id"] == p["payment_id"] and r["credit_minor"] > 0 for r in E_rows):
             return False, "no suspense row for the payment"
+        # every OTHER ref must be shown applied by an AR credit row inside the evidence
+        applied = {r["invoice_id"] for r in E_rows if r["account"] == ACC_AR and r["credit_minor"] > 0
+                   and r["payment_id"] == p["payment_id"]}
+        others_refs = [r["invoice_id"] for r in (p["invoice_refs"] or []) if r["invoice_id"] != inv]
+        if set(others_refs) - applied or inv in applied:
+            return False, "evidence does not show which refs were applied"
         for r in ep.tables["ledger"]:
             if r["account"] == ACC_AR and r["payment_id"] == p["payment_id"] and r["invoice_id"] == inv:
                 return False, "allocation IS applied in the ledger"

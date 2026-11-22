@@ -321,8 +321,8 @@ def _render(seed, cfg, attempt, w, lines, planned, clean_lines):
     for cur in sorted(w.rates):
         for d in sorted(w.rates[cur]):
             if lo <= d <= w.window_end:
-                fx.append({"fx_id": _fx_id(d, cur, w.base), "date": d.isoformat(),
-                           "source_currency": cur, "target_currency": w.base, "rate": w.rates[cur][d]})
+                fx.append({"date": d.isoformat(), "source_currency": cur, "target_currency": w.base,
+                           "rate": w.rates[cur][d], "fx_id": _fx_id(d, cur, w.base)})
     fx.sort(key=lambda r: (r["date"], r["source_currency"]))
     fx_ids = {r["fx_id"] for r in fx}
 
@@ -359,7 +359,7 @@ def _render(seed, cfg, attempt, w, lines, planned, clean_lines):
             "expected_amount_minor": amount,
             "currency": iss.currency,
             "amount_tolerance_minor": iss.tolerance,
-            "evidence_sets": [sorted(ev(r) for r in s) for s in iss.evidence],
+            "evidence_sets": _evidence_variants(iss.evidence, ev, inv_doc, inv_id, pay_doc, pay_id),
             "interaction_group": iss.group,
             "_story": iss.story,
         })
@@ -454,6 +454,19 @@ def _render(seed, cfg, attempt, w, lines, planned, clean_lines):
     return ep
 
 
+def _evidence_variants(sets, ev, inv_doc, inv_id, pay_doc, pay_id):
+    """Each admissible set, plus the same set with documents cited by their business id
+    (invoice_id / payment_id) instead of doc_id -- both identify the same public record."""
+    out = []
+    for s in sets:
+        a = sorted(ev(r) for r in s)
+        b = sorted(inv_id[r[1]] if r[0] == "doc_inv" else pay_id[r[1]] if r[0] == "doc_pay" else ev(r) for r in s)
+        for v in (a, b):
+            if v not in out:
+                out.append(v)
+    return out
+
+
 def _amount(w, lines, rule):
     kind, k = rule
     if kind == "fixed":
@@ -499,10 +512,15 @@ def make_policy(w):
         },
         "fx": {
             "quote": "rate = units of target_currency for 1 major unit of source_currency",
-            "rate_date": "calendar date of the document timestamp in manifest.timezone; if no rate is "
-                         "published for that date, use the latest earlier published date",
+            "rate_date": "calendar date of the document timestamp (invoice: issued_at, payment: timestamp) in "
+                         "manifest.timezone; if no rate is published for that date, use the latest earlier "
+                         "published date. A payment's 1190 and cash rows use the same rate.",
             "conversion": "base_minor = round(amount_minor / 10^exp(source) * rate * 10^exp(base))",
             "rounding": w.rounding,
+            "allocation_rounding": "revenue split per line item and pro-rata AR relief use the same rounding "
+                                   "mode; the last line / the completing allocation takes the remainder",
+            "refund_of_advance": "a refund relieves 2300 at the advance's carrying amount; the difference "
+                                 "to the cash line goes to 7900",
             "ar_relief": "AR is relieved at the invoice's recorded base amount (pro rata for partial "
                          "allocations, remaining balance on the allocation that completes the invoice); "
                          "the difference to the cash line goes to 7900",
@@ -511,7 +529,8 @@ def make_policy(w):
             "invoice": "Dr 1100 AR (base amount at invoice rate) / Cr 4000 revenue per line item",
             "payment_with_refs": "Dr 1000 cash at payment rate / Cr 1100 for each applied invoice_ref; "
                                  "a ref that is not applied sits in 1190; difference to 7900",
-            "payment_without_refs_known_customer": "Dr 1000 / Cr 2300 customer advance",
+            "payment_without_refs_known_customer": "Dr 1000 / Cr 2300 customer advance (payer = entity_id "
+                                                   "of the payment's cash row in the ledger)",
             "payment_without_refs_unknown_payer": "Dr 1000 / Cr 1190 unapplied receipt",
             "refund": "negative amount_minor; Dr 2300 / Cr 1000",
             "expense": "Dr 6xxx / Cr 1000, no documents in this extract",
@@ -519,6 +538,14 @@ def make_policy(w):
         "accounts": CHART_OF_ACCOUNTS,
         "findings": {
             "types": list(ISSUE_TYPES),
+            "definitions": {
+                "duplicate_invoice": "two invoices of the same customer and currency with identical line items "
+                                     "(description, quantity, unit price) issued within 3 days, both posted to AR",
+                "unallocated_payment": "an invoice_ref of a payment is not applied in the ledger (no 1100 credit "
+                                       "for that payment and invoice); the amount sits in 1190",
+                "fx_misconversion": "a converted base amount differs from the conversion at the policy rate",
+                "period_cutoff": "the AR posting is in a different reporting period than the invoice date",
+            },
             "affected_ids": {
                 "duplicate_invoice": "invoice_id of the original AND of the duplicate (order irrelevant)",
                 "unallocated_payment": "payment_id and the invoice_id whose allocation was not applied",
@@ -534,7 +561,8 @@ def make_policy(w):
             },
             "evidence": {
                 "duplicate_invoice": "doc_id of both invoices + row_id of both AR (1100) debit rows",
-                "unallocated_payment": "doc_id of the payment + row_id of its 1190 suspense row",
+                "unallocated_payment": "doc_id of the payment + row_id of its 1190 suspense row + row_ids of the "
+                                       "1100 credit rows of the refs that WERE applied (none if it has one ref)",
                 "fx_misconversion": "doc_id + row_id of the converted row (AR debit or cash) + fx_id of the "
                                     "rate the policy requires",
                 "period_cutoff": "doc_id of the invoice + row_id of its AR (1100) debit row",
