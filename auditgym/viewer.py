@@ -3,9 +3,10 @@
 
     python -m auditgym viewer --episode dev/dev_09 --out reports/demo_dev_09.html
 
-Design: an auditor's columnar workpaper — pad-green ruled paper, graphite ink, green tick
-marks for agreed findings, red pencil for false accusations, blue reviewer pencil for misses.
-The 100-cell step budget is the one bold element.
+Design: a cool slate review console (navy ink, one ultramarine accent for selection), the reward as one
+huge number with its formula spelled out, a 100-tick budget strip, an action tape beside the
+environment's answer, and findings marked with rubber stamps (ВЕРНО / ЛОЖНО / ПРОПУСК) — the one
+bold element, taken from audit practice. Fonts (Inter, Geist Mono; OFL) are embedded.
 """
 
 import html
@@ -37,138 +38,139 @@ TYPE_RU = {
 }
 
 CSS = r"""
+@font-face{font-family:'UI';src:url(data:font/ttf;base64,__INTER__) format('truetype');font-weight:100 900}
+@font-face{font-family:'Mono';src:url(data:font/ttf;base64,__MONO__) format('truetype');font-weight:100 900}
 :root{
-  --paper:#F3F7F1; --rule:#D3E3CF; --rule-strong:#A9C7A3; --ink:#23302A; --mute:#5E6F66;
-  --tick:#1E7B4F; --red:#B3261E; --blue:#2856A6; --card:#FBFDFA;
-  --serif:"Iowan Old Style","Charter","Palatino Linotype","Book Antiqua",Georgia,serif;
-  --sans:"Avenir Next","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --ground:#E9EDF3; --card:#FFFFFF; --ink:#0F1B2D; --mute:#5B6678; --line:#D5DCE6; --soft:#F4F6FA;
+  --accent:#2F45D8; --ok:#12804F; --bad:#C4291C; --miss:#A86A12;
+  --ui:'UI',"Segoe UI",system-ui,sans-serif; --mono:'Mono',ui-monospace,Menlo,Consolas,monospace;
 }
 *{box-sizing:border-box}
-html{background:var(--paper)}
-body{margin:0;color:var(--ink);font:15px/1.55 var(--sans);
-  background-image:repeating-linear-gradient(to bottom,transparent 0 27px,var(--rule) 27px 28px);
-  background-attachment:local}
-main{max-width:1120px;margin:0 auto;padding:40px 28px 80px;border-left:2px solid #E7B9B4;
-  background:linear-gradient(to right,transparent 0,transparent 100%)}
-a{color:var(--blue)}
-h1{font:600 34px/1.15 var(--serif);margin:0;letter-spacing:-.01em}
-h2{font:600 21px/1.3 var(--serif);margin:44px 0 6px}
-p.lead{margin:6px 0 0;color:var(--mute);max-width:72ch}
-.hint{color:var(--mute);font-size:13px;margin:0 0 14px;max-width:72ch}
-.head{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;flex-wrap:wrap}
-.sign{font-size:13px;color:var(--mute);text-align:right;line-height:1.7}
-.sign b{color:var(--ink);font-weight:600}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;margin-top:22px;
-  border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
-.fact{padding:10px 14px 12px;border-right:1px solid var(--rule-strong)}
-.fact:last-child{border-right:none}
-.fact span{display:block;font-size:12.5px;color:var(--mute)}
-.fact strong{font:600 19px/1.3 var(--serif);font-variant-numeric:tabular-nums lining-nums}
-.tabs{display:flex;gap:8px;margin:28px 0 0;flex-wrap:wrap}
-.tabs button{font:600 14px var(--sans);padding:8px 14px;border-radius:6px;border:1.5px solid var(--ink);
-  background:transparent;color:var(--ink);cursor:pointer}
-.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-.tabs button:focus-visible,.cell:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-.score{margin-top:18px;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px}
-.reward{font:600 54px/1 var(--serif);font-variant-numeric:tabular-nums lining-nums}
-.formula{font-size:15px;color:var(--mute);font-variant-numeric:tabular-nums}
-.formula b{color:var(--ink)}
-.budget{display:grid;grid-template-columns:repeat(20,1fr);gap:4px;margin-top:6px;max-width:640px}
-.cell{aspect-ratio:1;border-radius:3px;border:1px solid var(--rule-strong);background:transparent;
-  font:600 11px var(--sans);color:var(--ink);display:grid;place-items:center;padding:0;cursor:default}
-.cell.used{cursor:pointer;background:#E3EEE0;border-color:#8DB287}
-.cell.err{background:#F6DEDB;border-color:var(--red);color:var(--red)}
-.cell.sub{background:var(--tick);border-color:var(--tick);color:#fff}
-.cell.sel{box-shadow:0 0 0 2px var(--ink)}
-.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--mute);margin-top:10px}
-.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px;border:1px solid var(--rule-strong)}
-.detail{margin-top:16px;background:var(--card);border:1px solid var(--rule-strong);border-radius:4px;padding:14px 16px}
-.detail h3{font:600 16px var(--serif);margin:0 0 8px}
-.detail .act{font-variant-numeric:tabular-nums;color:var(--mute);font-size:13.5px;word-break:break-all}
-.scroll{max-height:340px;overflow:auto;margin-top:10px;border-top:1px solid var(--rule-strong)}
-table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
-th{font-weight:600;text-align:left;color:var(--mute);padding:7px 10px;border-bottom:1.5px solid var(--ink);background:var(--card);position:sticky;top:0}
-td{padding:6px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
-td.n{text-align:right;white-space:nowrap}
-.ws{border-top:1.5px solid var(--ink);margin-top:6px}
-.mark{font:700 18px/1 var(--serif);width:34px;text-align:center}
-.m-ok{color:var(--tick)}.m-bad{color:var(--red)}.m-miss{color:var(--blue)}
-.why{color:var(--mute);font-size:13px}
-.ids span{white-space:nowrap}
-.err-msg{color:var(--red)}
-.foot{margin-top:48px;font-size:13px;color:var(--mute);max-width:72ch}
-@media (max-width:640px){.budget{grid-template-columns:repeat(10,1fr)}.reward{font-size:42px}main{padding:28px 16px 60px}}
-@media (prefers-reduced-motion:no-preference){.cell.used{transition:transform .12s}.cell.used:hover{transform:translateY(-1px)}}
+html{background:var(--ground)}
+body{margin:0;color:var(--ink);font:15px/1.5 var(--ui);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+header{position:sticky;top:0;z-index:5;background:rgba(233,237,243,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:14px 20px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+.brand{font:700 19px var(--ui);letter-spacing:-.02em}
+.brand i{font-style:normal;color:var(--accent)}
+.meta{order:3;flex-basis:100%;display:flex;gap:8px;flex-wrap:wrap;color:var(--mute);font-size:13px}
+.meta span{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:3px 9px;white-space:nowrap}
+.meta b{color:var(--ink);font-weight:600}
+.seg{margin-left:auto;display:flex;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:3px}
+.seg button{white-space:nowrap;font:600 14px var(--ui);border:0;background:transparent;color:var(--mute);padding:8px 14px;border-radius:7px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.seg button:focus-visible,.step:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;padding:44px 0 26px;align-items:end}
+.kicker{color:var(--mute);font-size:14px;margin-bottom:6px}
+.reward{font:600 132px/0.9 var(--ui);letter-spacing:-.055em;font-variant-numeric:tabular-nums}
+.reward.neg{color:var(--bad)}
+.eq{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;color:var(--mute);font-size:15px}
+.eq .t{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:5px 10px;color:var(--ink);font-variant-numeric:tabular-nums}
+.counts{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.counts div{padding:18px 18px 16px;border-right:1px solid var(--line)}
+.counts div:last-child{border-right:0}
+.counts span{display:block;color:var(--mute);font-size:13px}
+.counts strong{font:600 44px/1.1 var(--ui);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.c-ok strong{color:var(--ok)}.c-bad strong{color:var(--bad)}.c-miss strong{color:var(--miss)}
+.budget{margin:6px 0 34px}
+.budget .lab{display:flex;justify-content:space-between;color:var(--mute);font-size:13px;margin-bottom:8px}
+.ticks{display:grid;grid-template-columns:repeat(100,1fr);gap:2px;height:30px}
+.ticks i{border-radius:2px;background:#D9DFE8}
+.ticks i.u{background:var(--ink)}.ticks i.e{background:var(--bad)}.ticks i.s{background:var(--ok)}
+.ticks i.sel{outline:2px solid var(--accent);outline-offset:1px}
+h2{font:650 22px var(--ui);letter-spacing:-.02em;margin:0 0 4px}
+.sub{color:var(--mute);margin:0 0 16px;max-width:70ch}
+.console{display:grid;grid-template-columns:330px minmax(0,1fr);gap:20px;margin-bottom:46px}
+.tape{background:var(--card);border:1px solid var(--line);border-radius:16px;max-height:520px;overflow:auto;padding:6px}
+.step{display:grid;grid-template-columns:34px 26px 1fr;gap:8px;align-items:center;width:100%;border:0;background:transparent;text-align:left;
+  padding:9px 10px;border-radius:9px;cursor:pointer;font:14px var(--ui);color:var(--ink)}
+.step:hover{background:var(--soft)}
+.step[aria-selected="true"]{background:#E7EAFB;box-shadow:inset 3px 0 0 var(--accent)}
+.step .n{font:500 13px var(--mono);color:var(--mute);font-variant-numeric:tabular-nums}
+.step .k{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font:700 12px var(--mono);background:var(--soft);color:var(--ink)}
+.step.err .k{background:#F8E1DE;color:var(--bad)}.step.sub .k{background:var(--ok);color:#fff}
+.step .d{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.panel{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;min-height:300px}
+.panel h3{font:650 17px var(--ui);margin:0 0 4px}
+.req{font:13px/1.5 var(--mono);color:var(--mute);background:var(--soft);border-radius:8px;padding:8px 10px;word-break:break-all;margin:8px 0 12px}
+.scroll{max-height:390px;overflow:auto;border:1px solid var(--line);border-radius:10px}
+table{width:100%;border-collapse:collapse;font:13px var(--mono);font-variant-numeric:tabular-nums}
+th{position:sticky;top:0;background:var(--soft);text-align:left;color:var(--mute);font:600 12px var(--ui);padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td.n{text-align:right}
+tr:last-child td{border-bottom:0}
+.err-msg{color:var(--bad);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px;margin-bottom:56px}
+.fc{position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px 16px;overflow:hidden}
+.fc .ty{font:650 17px var(--ui);letter-spacing:-.01em}
+.fc .ids{font:13px var(--mono);color:var(--mute);margin:4px 0 10px;overflow-wrap:anywhere;padding-right:96px}
+.fc .amt{font:600 26px var(--ui);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.fc .why{color:var(--mute);font-size:14px;margin-top:8px}
+.stamp{position:absolute;right:22px;top:20px;transform:rotate(-9deg);border:3px solid currentColor;border-radius:8px;padding:3px 10px 2px;
+  font:800 17px var(--ui);letter-spacing:.06em;opacity:.9}
+.stamp.ok{color:var(--ok)}.stamp.bad{color:var(--bad)}.stamp.miss{color:var(--miss);border-style:dashed}
+.fc.bad{background:linear-gradient(#fff,#fff) padding-box}
+footer{color:var(--mute);font-size:13px;padding:0 0 40px}
+@media (prefers-reduced-motion:no-preference){
+  .stamp{animation:press .32s cubic-bezier(.2,1.4,.4,1) both}
+  @keyframes press{from{transform:rotate(-9deg) scale(1.8);opacity:0}to{transform:rotate(-9deg) scale(1);opacity:.9}}
+}
+@media (max-width:900px){.hero{grid-template-columns:1fr}.console{grid-template-columns:1fr}.reward{font-size:96px}.counts strong{font-size:34px}}
 """
 
 JS = r"""
 const D = JSON.parse(document.getElementById('data').textContent);
 const T = {duplicate_invoice:'Дубль счёта',unallocated_payment:'Нераспределённый платёж',fx_misconversion:'Неверный курс',period_cutoff:'Не тот период'};
-const el = (t,a={},...c)=>{const e=document.createElement(t);for(const[k,v]of Object.entries(a)){if(k==='class')e.className=v;else if(k==='text')e.textContent=v;else e.setAttribute(k,v)}for(const x of c)e.append(x);return e};
-const fmt = n => typeof n==='number' ? n.toLocaleString('ru-RU') : (n===null?'—':String(n));
-let run = Object.keys(D.runs)[0], sel = null;
-const H = new URLSearchParams(location.hash.slice(1));
-if (H.get('run') in D.runs) run = H.get('run');
-if (+H.get('step') > 0 && +H.get('step') <= D.runs[run].steps.length) sel = +H.get('step');
-
-function renderTabs(){
-  const box=document.getElementById('tabs');box.innerHTML='';
-  for(const k of Object.keys(D.runs)){
-    const b=el('button',{type:'button','aria-pressed':String(k===run),text:D.runs[k].label});
-    b.onclick=()=>{run=k;sel=null;render()};box.append(b);
-  }
-}
-function renderScore(){
-  const g=D.runs[run].grade;
-  const ru=(x,d)=>x.toFixed(d).replace('.',',');
-  document.getElementById('reward').textContent=(g.reward>=0?'+':'−')+ru(Math.abs(g.reward),3);
-  document.getElementById('formula').innerHTML=
-    `= 2 × F1 <b>${ru(g.f1,2)}</b> − 1 − 0,002 × <b>${g.inspection_steps}</b> шагов. Верно ${g.tp}, ложно ${g.fp}, пропущено ${g.fn}.`;
-}
-function renderBudget(){
-  const box=document.getElementById('budget');box.innerHTML='';
-  const steps=D.runs[run].steps;
-  for(let i=1;i<=100;i++){
-    const s=steps[i-1];
-    const c=el('button',{type:'button',class:'cell'+(s?(' used'+(s.cls?' '+s.cls:'')):''),'aria-label':s?`Шаг ${i}: ${s.label}`:`Шаг ${i} не использован`});
-    if(s){c.textContent=s.short;c.onclick=()=>{sel=i;renderBudget();renderDetail()};if(sel===i)c.classList.add('sel')}
-    else c.disabled=true;
-    box.append(c);
-  }
-}
-function table(rows){
-  if(!rows.length)return el('p',{class:'hint',text:'Пустая страница.'});
-  const cols=Object.keys(rows[0]).filter(k=>k!=='line_items');
-  const t=el('table'),h=el('tr');cols.forEach(c=>h.append(el('th',{text:c})));t.append(el('thead',{},h));
-  const b=el('tbody');
-  rows.forEach(r=>{const tr=el('tr');cols.forEach(c=>{const v=r[c];const td=el('td',{class:typeof v==='number'?'n':'',text:Array.isArray(v)?v.map(x=>x.invoice_id+': '+fmt(x.amount_minor)).join(', '):fmt(v)});tr.append(td)});b.append(tr)});
-  t.append(b);return el('div',{class:'scroll'},t);
-}
-function renderDetail(){
-  const box=document.getElementById('detail');box.innerHTML='';
-  if(!sel){box.append(el('p',{class:'hint',text:'Нажмите на любой использованный шаг, чтобы увидеть, что агент запросил и что ему вернула среда.'}));return}
-  const s=D.runs[run].steps[sel-1],o=s.obs;
-  box.append(el('h3',{text:`Шаг ${sel} из 100 — ${s.label}`}));
-  box.append(el('div',{class:'act',text:JSON.stringify(s.action).slice(0,600)}));
-  if(o.error){box.append(el('p',{class:'err-msg',text:`Ошибка ${o.error.code}: ${o.error.message}`}));return}
+const el=(t,a={},...c)=>{const e=document.createElement(t);for(const[k,v]of Object.entries(a)){if(k==='class')e.className=v;else if(k==='text')e.textContent=v;else e.setAttribute(k,v)}for(const x of c)e.append(x);return e};
+const fmt=n=>typeof n==='number'?n.toLocaleString('ru-RU'):(n===null?'—':String(n));
+const ru=(x,d)=>x.toFixed(d).replace('.',',');
+const H=new URLSearchParams(location.hash.slice(1));
+let run=Object.keys(D.runs)[0]; if(H.get('run') in D.runs) run=H.get('run');
+let sel=+H.get('step')||1;
+function renderSeg(){const b=document.getElementById('seg');b.innerHTML='';
+  for(const k of Object.keys(D.runs)){const x=el('button',{type:'button','aria-pressed':String(k===run),text:D.runs[k].label});
+    x.onclick=()=>{run=k;sel=1;render()};b.append(x);}}
+function renderHero(){const g=D.runs[run].grade;const r=document.getElementById('reward');
+  r.textContent=(g.reward>=0?'+':'−')+ru(Math.abs(g.reward),3); r.classList.toggle('neg',g.reward<0);
+  document.getElementById('eq').innerHTML=`<span class="t">2 × F1 ${ru(g.f1,2)}</span> − <span class="t">1</span> − <span class="t">0,002 × ${g.inspection_steps} шагов</span>`;
+  const set=(id,v)=>document.querySelector(id+' strong').textContent=v;
+  set('.c-ok',g.tp);set('.c-bad',g.fp);set('.c-miss',g.fn);set('.c-f1',ru(g.f1,2));}
+function renderBudget(){const s=D.runs[run].steps;const box=document.getElementById('ticks');box.innerHTML='';
+  for(let i=1;i<=100;i++){const st=s[i-1];box.append(el('i',{class:(st?'u'+(st.cls==='err'?' e':st.cls==='sub'?' s':''):'')+(i===sel?' sel':''),title:st?`Шаг ${i}: ${st.label}`:''}));}
+  document.getElementById('bud').textContent=`использовано ${s.length} из 100`;}
+function renderTape(){const s=D.runs[run].steps;const box=document.getElementById('tape');box.innerHTML='';
+  s.forEach((st,i)=>{const b=el('button',{type:'button',class:'step'+(st.cls?' '+st.cls:''),'aria-selected':String(i+1===sel)},
+      el('span',{class:'n',text:String(i+1).padStart(2,'0')}),el('span',{class:'k',text:st.short}),el('span',{class:'d',text:st.label}));
+    b.onclick=()=>{sel=i+1;renderTape();renderBudget();renderPanel()};box.append(b);});}
+function table(rows){if(!rows.length)return el('p',{class:'sub',text:'Пустая страница.'});
+  const cols=Object.keys(rows[0]).filter(k=>k!=='line_items');const t=el('table'),h=el('tr');cols.forEach(c=>h.append(el('th',{text:c})));t.append(el('thead',{},h));
+  const b=el('tbody');rows.forEach(r=>{const tr=el('tr');cols.forEach(c=>{const v=r[c];tr.append(el('td',{class:typeof v==='number'?'n':'',text:Array.isArray(v)?v.map(x=>x.invoice_id+': '+fmt(x.amount_minor)).join(', '):fmt(v)}))});b.append(tr)});
+  t.append(b);return el('div',{class:'scroll'},t);}
+function renderPanel(){const box=document.getElementById('panel');box.innerHTML='';const s=D.runs[run].steps[sel-1];
+  if(!s){box.append(el('p',{class:'sub',text:'Выберите шаг слева.'}));return}
+  const o=s.obs;box.append(el('h3',{text:`Шаг ${sel}: ${s.label}`}),el('div',{class:'req',text:JSON.stringify(s.action).slice(0,500)}));
+  if(o.error){box.append(el('p',{class:'err-msg',text:`${o.error.code}: ${o.error.message}`}));return}
   const r=o.result||{};
-  if(r.records){box.append(el('p',{class:'hint',text:`Таблица ${r.table}: получено ${r.records.length} из ${r.total_records}. Следующий курсор: ${r.next_cursor||'конец таблицы'}.`}));box.append(table(r.records))}
-  else if(r.record){box.append(table([r.record]))}
-  else if(r.document){box.append(table([r.document]))}
-  else box.append(el('p',{class:'hint',text:JSON.stringify(r)}));
-}
-function renderFindings(){
-  const tb=document.getElementById('findings');tb.innerHTML='';
-  const R=D.runs[run];
-  const rows=[];
-  R.findings.forEach(f=>rows.push({m:f.tp?'✓':'✗',cls:f.tp?'m-ok':'m-bad',t:f.type,ids:f.affected_ids.join(', '),amt:fmt(f.claimed_amount_minor)+' '+f.currency,why:f.tp?'Совпало с эталоном: тип, ID, сумма, валюта и доказательства.':(f.why||'Ложное обвинение: в эталоне такой ошибки нет.')}));
-  D.truth.forEach(t=>{if(!R.found.includes(t.issue_id))rows.push({m:'○',cls:'m-miss',t:t.type,ids:t.affected_ids.join(', '),amt:fmt(t.expected_amount_minor)+' '+t.currency,why:'Пропущено: ошибка есть, агент её не заявил. '+(t.cause||'')})});
-  if(!rows.length){tb.append(el('tr',{},el('td',{colspan:'5',class:'why',text:'Книги чистые, и агент правильно ничего не заявил.'})));return}
-  rows.forEach(r=>{const tr=el('tr');tr.append(el('td',{class:'mark '+r.cls,text:r.m}),el('td',{text:T[r.t]||r.t}),(()=>{const td=el('td',{class:'ids'});r.ids.split(', ').forEach((x,i)=>{if(i)td.append(', ');td.append(el('span',{text:x}))});return td})(),el('td',{class:'n',text:r.amt}),el('td',{class:'why',text:r.why}));tb.append(tr)});
-}
-function render(){renderTabs();renderScore();renderBudget();renderDetail();renderFindings()}
+  if(r.records){box.append(el('p',{class:'sub',text:`Таблица ${r.table}: ${r.records.length} из ${r.total_records} записей · следующий курсор: ${r.next_cursor||'конец таблицы'}`}),table(r.records))}
+  else if(r.record)box.append(table([r.record]));else if(r.document)box.append(table([r.document]));
+  else box.append(el('p',{class:'sub',text:JSON.stringify(r)}));}
+function renderCards(){const box=document.getElementById('cards');box.innerHTML='';const R=D.runs[run];const items=[];
+  R.findings.forEach(f=>items.push({st:f.tp?'ok':'bad',lab:f.tp?'ВЕРНО':'ЛОЖНО',t:f.type,ids:f.affected_ids.join(', '),amt:fmt(f.claimed_amount_minor)+' '+f.currency,
+    why:f.tp?'Совпало с эталоном: тип, ID, сумма, валюта и доказательства.':(f.why||'В эталоне такой ошибки нет.')}));
+  D.truth.forEach(t=>{if(!R.found.includes(t.issue_id))items.push({st:'miss',lab:'ПРОПУСК',t:t.type,ids:t.affected_ids.join(', '),amt:fmt(t.expected_amount_minor)+' '+t.currency,why:'Ошибка есть, агент её не заявил. '+(t.cause||'')})});
+  const ord={ok:0,bad:1,miss:2}; items.sort((a,b)=>ord[a.st]-ord[b.st]);
+  if(!items.length){box.append(el('p',{class:'sub',text:'Книги чистые, и агент правильно ничего не заявил.'}));return}
+  items.forEach((x,i)=>{const c=el('div',{class:'fc '+x.st},el('div',{class:'stamp '+x.st,text:x.lab}),el('div',{class:'ty',text:T[x.t]||x.t}),el('div',{class:'ids',text:x.ids}),
+    el('div',{class:'amt',text:x.amt}),el('div',{class:'why',text:x.why}));c.querySelector('.stamp').style.animationDelay=Math.min(i*40,320)+'ms';box.append(c)});}
+function render(){renderSeg();renderHero();renderBudget();renderTape();renderPanel();renderCards()}
 render();
 """
+
+
+def _font(name):
+    import base64, os
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", name), "rb") as f:
+        return base64.b64encode(f.read()).decode()
 
 
 def _e(x):
@@ -241,40 +243,32 @@ def build(ep, policies=("expert", "reconciler")):
     data = {"runs": {p: _run(ep, p) for p in policies}, "truth": truth}
     blob = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
     c = m["counts"]
-    facts = [("Компания", m["company_name"]), ("Период", "%s — %s" % (m["period_start"], m["period_end"])),
-             ("Пояс компании", "UTC" + m["timezone"]), ("Базовая валюта", m["base_currency"]),
-             ("Проводки", "%d" % c["ledger_rows"]), ("Документы", "%d" % c["documents"]),
-             ("Ошибок в эталоне", "%d" % len(ep.truth["issues"]))]
-    facts_html = "".join('<div class="fact"><span>%s</span><strong>%s</strong></div>' % (_e(k), _e(v)) for k, v in facts)
+    meta = [("Компания", m["company_name"]), ("Период", "%s — %s" % (m["period_start"], m["period_end"])),
+            ("Пояс", "UTC" + m["timezone"]), ("Валюта", m["base_currency"]),
+            ("Проводки", "%d" % c["ledger_rows"]), ("Документы", "%d" % c["documents"]),
+            ("Ошибок в эталоне", "%d" % len(ep.truth["issues"]))]
+    meta_html = "".join("<span>%s <b>%s</b></span>" % (_e(k), _e(v)) for k, v in meta)
+    css = CSS.replace("__INTER__", _font("Inter-sub.ttf")).replace("__MONO__", _font("GeistMono-sub.ttf"))
     return """<!DOCTYPE html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AuditGym — рабочий документ %(eid)s</title><style>%(css)s</style></head>
-<body><main>
-<div class="head">
-  <div><h1>Рабочий документ аудита</h1>
-  <p class="lead">Эпизод AuditGym: вымышленная компания за один отчётный период. Агент расследует книги через инструменты среды,
-  отправляет выводы с доказательствами, а закрытый оценщик сверяет их с эталоном.</p></div>
-  <div class="sign">Эпизод <b>%(eid)s</b><br>Подготовил: агент<br>Проверил: закрытый оценщик</div>
-</div>
-<div class="facts">%(facts)s</div>
-
-<h2>Итог проверки</h2>
-<div class="tabs" id="tabs" role="group" aria-label="Политика"></div>
-<div class="score"><div class="reward" id="reward"></div><div class="formula" id="formula"></div></div>
-
-<h2>Бюджет шагов</h2>
-<p class="hint">Сто клеток — это весь бюджет эпизода. Каждый вызов инструмента, включая ошибочный, тратит одну клетку; отправка выводов — последняя.</p>
-<div class="budget" id="budget"></div>
-<div class="legend"><span><i style="background:#E3EEE0;border-color:#8DB287"></i>чтение (L — таблица, R — запись, D — документ)</span>
-<span><i style="background:#F6DEDB;border-color:#B3261E"></i>ошибка вызова</span><span><i style="background:#1E7B4F;border-color:#1E7B4F"></i>отправка</span></div>
-<div class="detail" id="detail" aria-live="polite"></div>
-
-<h2>Сверка выводов с эталоном</h2>
-<p class="hint">✓ — вывод совпал с эталоном, ✗ — ложное обвинение, ○ — пропущенная ошибка. Эталон закрыт от агента и показан здесь только для демонстрации.</p>
-<table class="ws"><thead><tr><th></th><th>Тип</th><th>Затронутые ID</th><th>Сумма</th><th>Пояснение</th></tr></thead><tbody id="findings"></tbody></table>
-
-<p class="foot">Все компании, документы и суммы вымышлены. Файл создан командой <code>python -m auditgym viewer</code> и открывается без интернета.</p>
+<title>AuditGym — разбор эпизода %(eid)s</title><style>%(css)s</style></head>
+<body>
+<header><div class="wrap"><div class="brand">Audit<i>Gym</i></div><div class="meta">%(meta)s</div>
+<div class="seg" id="seg" role="group" aria-label="Агент"></div></div></header>
+<main class="wrap">
+<section class="hero">
+  <div><div class="kicker">Награда агента за эпизод <span style="font-family:var(--mono)">%(eid)s</span></div>
+  <div class="reward" id="reward"></div><div class="eq" id="eq"></div></div>
+  <div class="counts"><div class="c-ok"><span>Верно</span><strong></strong></div><div class="c-bad"><span>Ложно</span><strong></strong></div>
+  <div class="c-miss"><span>Пропущено</span><strong></strong></div><div class="c-f1"><span>F1</span><strong></strong></div></div>
+</section>
+<section class="budget"><div class="lab"><span>Бюджет: 100 действий, каждое — даже ошибочное — тратит одно</span><span id="bud"></span></div><div class="ticks" id="ticks"></div></section>
+<h2>Что делал агент</h2><p class="sub">Слева — каждое действие по порядку, справа — что агент запросил и что ему вернула среда.</p>
+<section class="console"><div class="tape" id="tape" role="listbox" aria-label="Действия агента"></div><div class="panel" id="panel" aria-live="polite"></div></section>
+<h2>Сверка выводов с эталоном</h2><p class="sub">Эталон закрыт от агента и показан только в этом разборе. У каждого ложного вывода указана ловушка, на которую попался агент.</p>
+<section class="cards" id="cards"></section>
+<footer>Все компании, документы и суммы вымышлены. Файл создан командой <span style="font-family:var(--mono)">python -m auditgym viewer</span> и работает без интернета.</footer>
 </main>
 <script type="application/json" id="data">%(blob)s</script>
 <script>%(js)s</script>
-</body></html>""" % {"eid": _e(m["episode_id"]), "css": CSS, "facts": facts_html, "blob": blob, "js": JS}
+</body></html>""" % {"eid": _e(m["episode_id"]), "css": css, "meta": meta_html, "blob": blob, "js": JS}

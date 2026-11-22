@@ -2,7 +2,7 @@
   "env_version": "1.0.0",
   "python": "3.13.18",
   "platform": "Linux-6.18.44-fc-v726-x86_64-with-glibc2.39",
-  "started": "2026-11-22T14:55:58Z",
+  "started": "2026-11-22T16:11:01Z",
   "unit_tests": {
     "ran": 78,
     "failures": 0,
@@ -435,7 +435,7 @@
           36
         ],
         "mean_steps": 19.8,
-        "mean_wall_time_s": 0.0091,
+        "mean_wall_time_s": 0.0085,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -0.026,
@@ -466,7 +466,7 @@
           10
         ],
         "mean_steps": 18.4,
-        "mean_wall_time_s": 0.0096,
+        "mean_wall_time_s": 0.0094,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -494,7 +494,7 @@
           36
         ],
         "mean_steps": 4.3,
-        "mean_wall_time_s": 0.0065,
+        "mean_wall_time_s": 0.006,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -525,7 +525,7 @@
           0
         ],
         "mean_steps": 1.0,
-        "mean_wall_time_s": 0.0006,
+        "mean_wall_time_s": 0.0004,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 1.0,
@@ -546,7 +546,7 @@
           0
         ],
         "mean_steps": 18.4,
-        "mean_wall_time_s": 0.0118,
+        "mean_wall_time_s": 0.0107,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 0.969,
@@ -569,7 +569,7 @@
           73
         ],
         "mean_steps": 16.45,
-        "mean_wall_time_s": 0.0051,
+        "mean_wall_time_s": 0.0053,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -0.2184,
@@ -600,7 +600,7 @@
           9
         ],
         "mean_steps": 16.7,
-        "mean_wall_time_s": 0.0088,
+        "mean_wall_time_s": 0.0063,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -628,7 +628,7 @@
           73
         ],
         "mean_steps": 3.95,
-        "mean_wall_time_s": 0.0045,
+        "mean_wall_time_s": 0.0044,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -659,7 +659,7 @@
           0
         ],
         "mean_steps": 1.0,
-        "mean_wall_time_s": 0.0006,
+        "mean_wall_time_s": 0.0004,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 1.0,
@@ -680,7 +680,7 @@
           0
         ],
         "mean_steps": 16.7,
-        "mean_wall_time_s": 0.0101,
+        "mean_wall_time_s": 0.0098,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 0.9728,
@@ -1088,5 +1088,5 @@
     "hits": []
   },
   "ok": true,
-  "duration_s": 10.6
+  "duration_s": 11.6
 }
