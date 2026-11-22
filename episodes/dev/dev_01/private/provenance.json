@@ -1,8 +1,8 @@
 {
-  "clean_ledger_lines": 264,
+  "clean_ledger_lines": 363,
   "clean_trial_balance": {
-    "credit_minor": 58241318,
-    "debit_minor": 58241318
+    "credit_minor": 123663187,
+    "debit_minor": 123663187
   },
   "config": {
     "base_currency": null,
@@ -20,8 +20,8 @@
         1
       ],
       "multi_invoice_payments": [
-        1,
-        2
+        3,
+        6
       ],
       "recurring_customers": [
         1,
@@ -82,18 +82,15 @@
     "preset": "clean",
     "subsequent_days": 5
   },
-  "dirty_ledger_lines": 264,
+  "dirty_ledger_lines": 363,
   "distractor_tags": {
-    "invoice:boundary": 2,
-    "invoice:recurring": 4,
-    "payment:advance": 1,
-    "payment:dup_payment": 1,
-    "payment:multi": 1,
-    "payment:refund": 1,
-    "payment:refunded": 1,
-    "payment:split": 2,
-    "payment:unidentified": 1,
-    "payment:was_duplicated": 1
+    "invoice:boundary": 1,
+    "invoice:recurring": 8,
+    "invoice:repeated_amount": 2,
+    "payment:advance": 2,
+    "payment:multi": 4,
+    "payment:split": 4,
+    "payment:unidentified": 1
   },
   "env_version": "1.0.0",
   "generation_attempt": 0,
@@ -101,17 +98,17 @@
   "mutations": [],
   "seed": 20011,
   "world": {
-    "base": "GBP",
-    "customers": 6,
+    "base": "JPY",
+    "customers": 10,
     "foreign_currencies": [
-      "CHF",
       "CNY",
+      "GBP",
       "KWD"
     ],
-    "offset": "+00:00",
+    "offset": "-05:00",
     "period": [
-      "2026-08-01",
-      "2026-08-31"
+      "2025-11-01",
+      "2025-11-30"
     ],
     "rounding": "half_up"
   }

@@ -1,27 +1,29 @@
 {
-  "base_currency": "USD",
-  "company_name": "Orbit Foods Ltd",
+  "base_currency": "GBP",
+  "company_name": "Willow Optics Co",
   "counts": {
-    "documents": 126,
-    "fx_rates": 59,
-    "invoices": 77,
-    "ledger_rows": 353,
-    "payments": 49
+    "documents": 115,
+    "fx_rates": 183,
+    "invoices": 71,
+    "ledger_rows": 316,
+    "payments": 44
   },
   "currency_exponents": {
-    "KZT": 2,
-    "USD": 2
+    "CHF": 2,
+    "GBP": 2,
+    "JPY": 0,
+    "KZT": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-cdabfd030f2a",
-  "ledger_window_end": "2025-03-05",
-  "period_end": "2025-02-28",
-  "period_start": "2025-02-01",
+  "episode_id": "ep-0846366670a6",
+  "ledger_window_end": "2026-11-05",
+  "period_end": "2026-10-31",
+  "period_start": "2026-10-01",
   "rounding": {
     "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+09:00"
+  "timezone": "-05:00"
 }

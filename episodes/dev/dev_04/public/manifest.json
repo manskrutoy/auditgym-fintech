@@ -1,19 +1,21 @@
 {
-  "base_currency": "USD",
-  "company_name": "Orbit Textiles GmbH",
+  "base_currency": "JPY",
+  "company_name": "Quartz Textiles GmbH",
   "counts": {
-    "documents": 135,
-    "fx_rates": 61,
-    "invoices": 92,
-    "ledger_rows": 374,
-    "payments": 43
+    "documents": 68,
+    "fx_rates": 183,
+    "invoices": 42,
+    "ledger_rows": 426,
+    "payments": 26
   },
   "currency_exponents": {
-    "CHF": 2,
+    "CNY": 2,
+    "EUR": 2,
+    "JPY": 0,
     "USD": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-9536227aa6a1",
+  "episode_id": "ep-507493f6683c",
   "ledger_window_end": "2025-12-05",
   "period_end": "2025-11-30",
   "period_start": "2025-11-01",
@@ -23,5 +25,5 @@
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+03:00"
+  "timezone": "+06:00"
 }

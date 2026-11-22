@@ -1,75 +1,40 @@
 {
-  "episode_id": "ep-9536227aa6a1",
+  "episode_id": "ep-507493f6683c",
   "issues": [
     {
       "affected_ids": [
-        "INV-970213"
-      ],
-      "amount_tolerance_minor": 1,
-      "currency": "USD",
-      "evidence_sets": [
-        [
-          "DOC-82d4e1ec",
-          "FX-2025-11-12-CHF-USD",
-          "ROW-76556732"
-        ]
-      ],
-      "expected_amount_minor": 234,
-      "interaction_group": null,
-      "issue_id": "ep-9536227aa6a1-I01",
-      "type": "fx_misconversion"
-    },
-    {
-      "affected_ids": [
-        "PAY-466966"
-      ],
-      "amount_tolerance_minor": 1,
-      "currency": "USD",
-      "evidence_sets": [
-        [
-          "DOC-816fd09b",
-          "FX-2025-11-05-CHF-USD",
-          "ROW-6be98a40"
-        ]
-      ],
-      "expected_amount_minor": 542,
-      "interaction_group": null,
-      "issue_id": "ep-9536227aa6a1-I02",
-      "type": "fx_misconversion"
-    },
-    {
-      "affected_ids": [
-        "INV-268593"
+        "INV-404485"
       ],
       "amount_tolerance_minor": 0,
-      "currency": "USD",
+      "currency": "JPY",
       "evidence_sets": [
         [
-          "DOC-256a4519",
-          "ROW-edb81bd8"
+          "DOC-b66e488f",
+          "ROW-08af6a4a"
         ]
       ],
-      "expected_amount_minor": 181083,
+      "expected_amount_minor": 709000,
       "interaction_group": null,
-      "issue_id": "ep-9536227aa6a1-I03",
+      "issue_id": "ep-507493f6683c-I01",
       "type": "period_cutoff"
     },
     {
       "affected_ids": [
-        "INV-667042"
+        "INV-527536",
+        "PAY-720178"
       ],
       "amount_tolerance_minor": 0,
-      "currency": "USD",
+      "currency": "EUR",
       "evidence_sets": [
         [
-          "DOC-736cfc58",
-          "ROW-7fb4b5da"
+          "DOC-8c1f174f",
+          "ROW-7e757910"
         ]
       ],
-      "expected_amount_minor": 1006697,
+      "expected_amount_minor": 2103049,
       "interaction_group": null,
-      "issue_id": "ep-9536227aa6a1-I04",
-      "type": "period_cutoff"
+      "issue_id": "ep-507493f6683c-I02",
+      "type": "unallocated_payment"
     }
   ],
   "schema_version": "1.0"

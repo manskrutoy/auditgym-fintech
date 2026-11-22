@@ -1,23 +1,23 @@
 {
-  "base_currency": "USD",
-  "company_name": "Lumen Optics GmbH",
+  "base_currency": "JPY",
+  "company_name": "Borealis Logistics LLP",
   "counts": {
-    "documents": 75,
-    "fx_rates": 124,
-    "invoices": 42,
-    "ledger_rows": 545,
-    "payments": 33
+    "documents": 56,
+    "fx_rates": 183,
+    "invoices": 38,
+    "ledger_rows": 282,
+    "payments": 18
   },
   "currency_exponents": {
-    "GBP": 2,
-    "KWD": 3,
-    "USD": 2
+    "CHF": 2,
+    "CNY": 2,
+    "JPY": 0
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-c887063070b4",
-  "ledger_window_end": "2026-06-05",
-  "period_end": "2026-05-31",
-  "period_start": "2026-05-01",
+  "episode_id": "ep-dfb300d1a4dd",
+  "ledger_window_end": "2025-08-05",
+  "period_end": "2025-07-31",
+  "period_start": "2025-07-01",
   "rounding": {
     "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",

@@ -1,43 +1,60 @@
 {
-  "episode_id": "ep-0214f8047c58",
+  "episode_id": "ep-bf2c4e86a19c",
   "issues": [
     {
       "affected_ids": [
-        "INV-196346",
-        "INV-646041"
+        "INV-691262",
+        "INV-713216"
       ],
       "amount_tolerance_minor": 0,
       "currency": "GBP",
       "evidence_sets": [
         [
-          "DOC-204285d7",
-          "DOC-88d01e2b",
-          "ROW-af540ffd",
-          "ROW-b444dbea"
+          "DOC-149e4aa1",
+          "DOC-ec6f188d",
+          "ROW-67698ad8",
+          "ROW-c1ed1904"
         ]
       ],
-      "expected_amount_minor": 34200,
+      "expected_amount_minor": 452000,
       "interaction_group": null,
-      "issue_id": "ep-0214f8047c58-I01",
+      "issue_id": "ep-bf2c4e86a19c-I01",
       "type": "duplicate_invoice"
     },
     {
       "affected_ids": [
-        "INV-502243",
-        "PAY-946102"
+        "PAY-858995"
+      ],
+      "amount_tolerance_minor": 1,
+      "currency": "GBP",
+      "evidence_sets": [
+        [
+          "DOC-e41d2a19",
+          "FX-2026-04-10-CHF-GBP",
+          "ROW-85a5239b"
+        ]
+      ],
+      "expected_amount_minor": 1242,
+      "interaction_group": null,
+      "issue_id": "ep-bf2c4e86a19c-I02",
+      "type": "fx_misconversion"
+    },
+    {
+      "affected_ids": [
+        "INV-454816"
       ],
       "amount_tolerance_minor": 0,
       "currency": "GBP",
       "evidence_sets": [
         [
-          "DOC-0c026d9a",
-          "ROW-eee92749"
+          "DOC-5ac62bb1",
+          "ROW-95b8111c"
         ]
       ],
-      "expected_amount_minor": 1427689,
+      "expected_amount_minor": 544099,
       "interaction_group": null,
-      "issue_id": "ep-0214f8047c58-I02",
-      "type": "unallocated_payment"
+      "issue_id": "ep-bf2c4e86a19c-I03",
+      "type": "period_cutoff"
     }
   ],
   "schema_version": "1.0"

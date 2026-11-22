@@ -145,9 +145,9 @@ class World:
         """instant + random delay that never crosses local midnight."""
         loc = instant.astimezone(tz(self.offset))
         midnight = datetime(loc.year, loc.month, loc.day, tzinfo=loc.tzinfo) + timedelta(days=1)
-        room = int((midnight - loc).total_seconds() // 60) - 2
-        delay = rng.randint(0, max(0, min(max_minutes, room)))
-        return (loc + timedelta(minutes=delay)).replace(microsecond=0)
+        room = int((midnight - loc).total_seconds()) - 120
+        delay = rng.randint(0, max(0, min(max_minutes * 60, room)))      # seconds: no timestamp tells
+        return (loc + timedelta(seconds=delay)).replace(microsecond=0)
 
 
 # --------------------------------------------------------------------------- vocab (fictional)
@@ -439,14 +439,16 @@ class Builder:
         groups = [g for g in by_cust.values() if len(g) >= 2]
         rng.shuffle(groups)
         for g in groups[:multi_n]:
-            a, b = rng.sample(g, 2)
-            later = max(a.issued_at, b.issued_at)
+            k = 3 if len(g) >= 3 and rng.random() < 0.3 else 2
+            chosen = rng.sample(g, k)
+            later = max(i.issued_at for i in chosen)
             t = self._pay_time(later, 1, 12)
             if t is None:
                 continue
-            refs = sorted([[a.key, a.total], [b.key, b.total]], key=lambda r: w.invoices[r[0]].issued_at)
-            self.add_payment(w.customers[a.cust], t, a.currency, a.total + b.total, refs, "settlement", ["multi"])
-            busy.update([a.key, b.key])
+            refs = sorted([[i.key, i.total] for i in chosen], key=lambda r: (w.invoices[r[0]].issued_at, r[0]))
+            self.add_payment(w.customers[chosen[0].cust], t, chosen[0].currency, sum(r[1] for r in refs),
+                             refs, "settlement", ["multi"])
+            busy.update(i.key for i in chosen)
         # ordinary payments
         for inv in invs:
             if inv.key in busy:

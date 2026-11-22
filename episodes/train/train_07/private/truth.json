@@ -1,77 +1,77 @@
 {
-  "episode_id": "ep-728cff6a62f2",
+  "episode_id": "ep-e9a1ed6eb228",
   "issues": [
     {
       "affected_ids": [
-        "INV-405764",
-        "INV-908558"
+        "INV-727835",
+        "INV-907788"
       ],
       "amount_tolerance_minor": 0,
-      "currency": "USD",
+      "currency": "KZT",
       "evidence_sets": [
         [
-          "DOC-17bec80f",
-          "DOC-256328fe",
-          "ROW-2957ac29",
-          "ROW-5321865a"
+          "DOC-513fb3e7",
+          "DOC-c7fa363a",
+          "ROW-1aee4fbb",
+          "ROW-c2a71373"
         ]
       ],
-      "expected_amount_minor": 97300,
+      "expected_amount_minor": 867410150,
       "interaction_group": null,
-      "issue_id": "ep-728cff6a62f2-I01",
+      "issue_id": "ep-e9a1ed6eb228-I01",
       "type": "duplicate_invoice"
     },
     {
       "affected_ids": [
-        "INV-143370"
+        "INV-583295"
       ],
       "amount_tolerance_minor": 1,
-      "currency": "KZT",
+      "currency": "EUR",
       "evidence_sets": [
         [
-          "DOC-447acec5",
-          "FX-2025-10-28-USD-KZT",
-          "ROW-cd136206"
+          "DOC-013da58b",
+          "FX-2026-04-21-KZT-EUR",
+          "ROW-e123a587"
         ]
       ],
-      "expected_amount_minor": 856979,
+      "expected_amount_minor": 93,
       "interaction_group": null,
-      "issue_id": "ep-728cff6a62f2-I02",
+      "issue_id": "ep-e9a1ed6eb228-I02",
       "type": "fx_misconversion"
     },
     {
       "affected_ids": [
-        "INV-766691"
+        "INV-078177"
       ],
       "amount_tolerance_minor": 0,
-      "currency": "KZT",
+      "currency": "EUR",
       "evidence_sets": [
         [
-          "DOC-363aec3e",
-          "ROW-0b66539c"
+          "DOC-bc95269e",
+          "ROW-e8bb8f0f"
         ]
       ],
-      "expected_amount_minor": 303561502,
+      "expected_amount_minor": 127800,
       "interaction_group": null,
-      "issue_id": "ep-728cff6a62f2-I03",
+      "issue_id": "ep-e9a1ed6eb228-I03",
       "type": "period_cutoff"
     },
     {
       "affected_ids": [
-        "INV-319769",
-        "PAY-979087"
+        "INV-014437",
+        "PAY-237050"
       ],
       "amount_tolerance_minor": 0,
-      "currency": "USD",
+      "currency": "EUR",
       "evidence_sets": [
         [
-          "DOC-534d858b",
-          "ROW-a828596d"
+          "DOC-a45dfd43",
+          "ROW-836c9061"
         ]
       ],
-      "expected_amount_minor": 540495,
+      "expected_amount_minor": 1317445,
       "interaction_group": null,
-      "issue_id": "ep-728cff6a62f2-I04",
+      "issue_id": "ep-e9a1ed6eb228-I04",
       "type": "unallocated_payment"
     }
   ],

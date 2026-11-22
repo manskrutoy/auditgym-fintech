@@ -1,28 +1,27 @@
 {
-  "base_currency": "EUR",
-  "company_name": "Willow Logistics Co",
+  "base_currency": "JPY",
+  "company_name": "Esil Optics Co",
   "counts": {
-    "documents": 76,
-    "fx_rates": 118,
-    "invoices": 49,
-    "ledger_rows": 574,
+    "documents": 74,
+    "fx_rates": 60,
+    "invoices": 47,
+    "ledger_rows": 277,
     "payments": 27
   },
   "currency_exponents": {
-    "CNY": 2,
-    "EUR": 2,
-    "KZT": 2
+    "JPY": 0,
+    "KWD": 3
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-525a2b46e2eb",
-  "ledger_window_end": "2026-03-05",
-  "period_end": "2026-02-28",
-  "period_start": "2026-02-01",
+  "episode_id": "ep-626042f6471a",
+  "ledger_window_end": "2025-10-05",
+  "period_end": "2025-09-30",
+  "period_start": "2025-09-01",
   "rounding": {
-    "fx_conversion": "half_up",
+    "fx_conversion": "half_even",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+05:00"
+  "timezone": "+03:00"
 }

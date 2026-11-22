@@ -1,95 +1,130 @@
 {
-  "episode_id": "ep-dd48559b2442",
+  "episode_id": "ep-5659b7868e54",
   "issues": [
     {
       "affected_ids": [
-        "INV-482556",
-        "INV-705054"
+        "INV-254920",
+        "INV-868052"
       ],
       "amount_tolerance_minor": 0,
-      "currency": "GBP",
+      "currency": "EUR",
       "evidence_sets": [
         [
-          "DOC-92a28f7e",
-          "DOC-dcf0c73b",
-          "ROW-1c73267f",
-          "ROW-4c1e8732"
+          "DOC-496d7e52",
+          "DOC-aa29db46",
+          "ROW-69600801",
+          "ROW-ec0eed51"
         ]
       ],
-      "expected_amount_minor": 184099,
+      "expected_amount_minor": 1379297,
       "interaction_group": null,
-      "issue_id": "ep-dd48559b2442-I01",
+      "issue_id": "ep-5659b7868e54-I01",
       "type": "duplicate_invoice"
     },
     {
       "affected_ids": [
-        "INV-690249"
+        "INV-316470"
       ],
       "amount_tolerance_minor": 1,
-      "currency": "JPY",
+      "currency": "EUR",
       "evidence_sets": [
         [
-          "DOC-70e87f4e",
-          "FX-2025-01-31-GBP-JPY",
-          "ROW-ff04a1e4"
+          "DOC-5903258a",
+          "FX-2026-06-01-JPY-EUR",
+          "ROW-ae43ab59"
         ]
       ],
-      "expected_amount_minor": 2312,
+      "expected_amount_minor": 8530,
       "interaction_group": "cutoff_fx_boundary",
-      "issue_id": "ep-dd48559b2442-I02",
+      "issue_id": "ep-5659b7868e54-I02",
       "type": "fx_misconversion"
     },
     {
       "affected_ids": [
-        "PAY-838611"
+        "PAY-494700"
       ],
       "amount_tolerance_minor": 1,
-      "currency": "JPY",
+      "currency": "EUR",
       "evidence_sets": [
         [
-          "DOC-555970bd",
-          "FX-2025-01-31-GBP-JPY",
-          "ROW-05bf52d4"
+          "DOC-c02c883d",
+          "FX-2026-05-29-JPY-EUR",
+          "ROW-71d5e772"
         ]
       ],
-      "expected_amount_minor": 3630,
+      "expected_amount_minor": 3362,
       "interaction_group": "fx_partial_payment",
-      "issue_id": "ep-dd48559b2442-I03",
+      "issue_id": "ep-5659b7868e54-I03",
       "type": "fx_misconversion"
     },
     {
       "affected_ids": [
-        "INV-690249"
+        "PAY-650012"
+      ],
+      "amount_tolerance_minor": 1,
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "DOC-8559b415",
+          "FX-2026-05-06-JPY-EUR",
+          "ROW-e51dfee7"
+        ]
+      ],
+      "expected_amount_minor": 685,
+      "interaction_group": null,
+      "issue_id": "ep-5659b7868e54-I04",
+      "type": "fx_misconversion"
+    },
+    {
+      "affected_ids": [
+        "INV-316470"
       ],
       "amount_tolerance_minor": 0,
-      "currency": "JPY",
+      "currency": "EUR",
       "evidence_sets": [
         [
-          "DOC-70e87f4e",
-          "ROW-ff04a1e4"
+          "DOC-5903258a",
+          "ROW-ae43ab59"
         ]
       ],
-      "expected_amount_minor": 739539,
+      "expected_amount_minor": 1561568,
       "interaction_group": "cutoff_fx_boundary",
-      "issue_id": "ep-dd48559b2442-I04",
+      "issue_id": "ep-5659b7868e54-I05",
       "type": "period_cutoff"
     },
     {
       "affected_ids": [
-        "INV-442936",
-        "PAY-838611"
+        "INV-836585"
       ],
       "amount_tolerance_minor": 0,
-      "currency": "GBP",
+      "currency": "EUR",
       "evidence_sets": [
         [
-          "DOC-555970bd",
-          "ROW-81025e76"
+          "DOC-8e984eea",
+          "ROW-9209eaea"
         ]
       ],
-      "expected_amount_minor": 194398,
+      "expected_amount_minor": 1010800,
+      "interaction_group": null,
+      "issue_id": "ep-5659b7868e54-I06",
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "INV-554953",
+        "PAY-494700"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "JPY",
+      "evidence_sets": [
+        [
+          "DOC-c02c883d",
+          "ROW-335bf514"
+        ]
+      ],
+      "expected_amount_minor": 252000,
       "interaction_group": "fx_partial_payment",
-      "issue_id": "ep-dd48559b2442-I05",
+      "issue_id": "ep-5659b7868e54-I07",
       "type": "unallocated_payment"
     }
   ],

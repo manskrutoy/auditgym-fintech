@@ -1,27 +1,28 @@
 {
   "base_currency": "USD",
-  "company_name": "Koktem Media Ltd",
+  "company_name": "Riverbend Textiles JSC",
   "counts": {
-    "documents": 121,
-    "fx_rates": 124,
-    "invoices": 75,
-    "ledger_rows": 353,
-    "payments": 46
+    "documents": 86,
+    "fx_rates": 180,
+    "invoices": 60,
+    "ledger_rows": 517,
+    "payments": 26
   },
   "currency_exponents": {
-    "KWD": 3,
+    "CHF": 2,
+    "CNY": 2,
     "USD": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-f71fa94cf126",
-  "ledger_window_end": "2025-09-05",
-  "period_end": "2025-08-31",
-  "period_start": "2025-08-01",
+  "episode_id": "ep-a815b175712e",
+  "ledger_window_end": "2026-12-05",
+  "period_end": "2026-11-30",
+  "period_start": "2026-11-01",
   "rounding": {
-    "fx_conversion": "half_up",
+    "fx_conversion": "half_even",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+01:00"
+  "timezone": "+00:00"
 }

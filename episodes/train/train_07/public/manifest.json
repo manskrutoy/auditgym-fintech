@@ -1,27 +1,27 @@
 {
-  "base_currency": "KZT",
-  "company_name": "Meridian Optics Ltd",
+  "base_currency": "EUR",
+  "company_name": "Cobalt Freight SA",
   "counts": {
-    "documents": 127,
-    "fx_rates": 62,
-    "invoices": 83,
-    "ledger_rows": 458,
-    "payments": 44
+    "documents": 130,
+    "fx_rates": 122,
+    "invoices": 92,
+    "ledger_rows": 527,
+    "payments": 38
   },
   "currency_exponents": {
-    "KZT": 2,
-    "USD": 2
+    "EUR": 2,
+    "KZT": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-728cff6a62f2",
-  "ledger_window_end": "2025-11-05",
-  "period_end": "2025-10-31",
-  "period_start": "2025-10-01",
+  "episode_id": "ep-e9a1ed6eb228",
+  "ledger_window_end": "2026-05-05",
+  "period_end": "2026-04-30",
+  "period_start": "2026-04-01",
   "rounding": {
-    "fx_conversion": "half_up",
+    "fx_conversion": "half_even",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+05:30"
+  "timezone": "+06:00"
 }

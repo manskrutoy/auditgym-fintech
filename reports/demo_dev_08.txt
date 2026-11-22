@@ -1,25 +1,29 @@
-episode ep-dd48559b2442 | Esil Labs JSC | base JPY | period 2025-01-01..2025-01-31 (UTC+09:00) | rows=508 docs=114
+episode ep-5659b7868e54 | Caspian Systems BV | base EUR | period 2026-05-01..2026-05-31 (UTC+03:00) | rows=542 docs=106
 step   1 list_records invoices cursor=None           -> 50 records
-step   2 list_records invoices cursor=c1:invoices:50 -> 27 records
-step   3 list_records payments cursor=None           -> 37 records
+step   2 list_records invoices cursor=c1:invoices:50 -> 23 records
+step   3 list_records payments cursor=None           -> 33 records
 step   4 list_records fx       cursor=None           -> 50 records
-step   5 list_records fx       cursor=c1:fx:50       -> 11 records
-step   6 list_records ledger   cursor=None           -> 50 records
-step   7 list_records ledger   cursor=c1:ledger:50   -> 50 records
-step   8 list_records ledger   cursor=c1:ledger:100  -> 50 records
-step   9 list_records ledger   cursor=c1:ledger:150  -> 50 records
-step  10 list_records ledger   cursor=c1:ledger:200  -> 50 records
-step  11 list_records ledger   cursor=c1:ledger:250  -> 50 records
-step  12 list_records ledger   cursor=c1:ledger:300  -> 50 records
-step  13 list_records ledger   cursor=c1:ledger:350  -> 50 records
-step  14 list_records ledger   cursor=c1:ledger:400  -> 50 records
-step  15 list_records ledger   cursor=c1:ledger:450  -> 50 records
-step  16 list_records ledger   cursor=c1:ledger:500  -> 8 records
-step  17 submit: 5 findings
-   - duplicate_invoice    INV-482556,INV-705054                184099 GBP  evidence=DOC-92a28f7e,DOC-dcf0c73b,ROW-1c73267f,ROW-4c1e8732
-   - unallocated_payment  INV-442936,PAY-838611                194398 GBP  evidence=DOC-555970bd,ROW-81025e76
-   - fx_misconversion     INV-690249                             2312 JPY  evidence=DOC-70e87f4e,ROW-ff04a1e4,FX-2025-01-31-GBP-JPY
-   - fx_misconversion     PAY-838611                             3630 JPY  evidence=DOC-555970bd,ROW-05bf52d4,FX-2025-01-31-GBP-JPY
-   - period_cutoff        INV-690249                           739539 JPY  evidence=DOC-70e87f4e,ROW-ff04a1e4
-reward=0.968  P=1.00 R=1.00 F1=1.00  TP=5 FP=0 FN=0  inspection_steps=16
-truth (closed, shown for the demo only): [('duplicate_invoice', ['INV-482556', 'INV-705054']), ('fx_misconversion', ['INV-690249']), ('fx_misconversion', ['PAY-838611']), ('period_cutoff', ['INV-690249']), ('unallocated_payment', ['INV-442936', 'PAY-838611'])]
+step   5 list_records fx       cursor=c1:fx:50       -> 50 records
+step   6 list_records fx       cursor=c1:fx:100      -> 50 records
+step   7 list_records fx       cursor=c1:fx:150      -> 33 records
+step   8 list_records ledger   cursor=None           -> 50 records
+step   9 list_records ledger   cursor=c1:ledger:50   -> 50 records
+step  10 list_records ledger   cursor=c1:ledger:100  -> 50 records
+step  11 list_records ledger   cursor=c1:ledger:150  -> 50 records
+step  12 list_records ledger   cursor=c1:ledger:200  -> 50 records
+step  13 list_records ledger   cursor=c1:ledger:250  -> 50 records
+step  14 list_records ledger   cursor=c1:ledger:300  -> 50 records
+step  15 list_records ledger   cursor=c1:ledger:350  -> 50 records
+step  16 list_records ledger   cursor=c1:ledger:400  -> 50 records
+step  17 list_records ledger   cursor=c1:ledger:450  -> 50 records
+step  18 list_records ledger   cursor=c1:ledger:500  -> 42 records
+step  19 submit: 7 findings
+   - duplicate_invoice    INV-254920,INV-868052               1379297 EUR  evidence=DOC-496d7e52,DOC-aa29db46,ROW-ec0eed51,ROW-69600801
+   - unallocated_payment  INV-554953,PAY-494700                252000 JPY  evidence=DOC-c02c883d,ROW-335bf514
+   - fx_misconversion     INV-316470                             8530 EUR  evidence=DOC-5903258a,ROW-ae43ab59,FX-2026-06-01-JPY-EUR
+   - fx_misconversion     PAY-650012                              685 EUR  evidence=DOC-8559b415,ROW-e51dfee7,FX-2026-05-06-JPY-EUR
+   - fx_misconversion     PAY-494700                             3362 EUR  evidence=DOC-c02c883d,ROW-71d5e772,FX-2026-05-29-JPY-EUR
+   - period_cutoff        INV-836585                          1010800 EUR  evidence=DOC-8e984eea,ROW-9209eaea
+   - period_cutoff        INV-316470                          1561568 EUR  evidence=DOC-5903258a,ROW-ae43ab59
+reward=0.964  P=1.00 R=1.00 F1=1.00  TP=7 FP=0 FN=0  inspection_steps=18
+truth (closed, shown for the demo only): [('duplicate_invoice', ['INV-254920', 'INV-868052']), ('fx_misconversion', ['INV-316470']), ('fx_misconversion', ['PAY-494700']), ('fx_misconversion', ['PAY-650012']), ('period_cutoff', ['INV-316470']), ('period_cutoff', ['INV-836585']), ('unallocated_payment', ['INV-554953', 'PAY-494700'])]

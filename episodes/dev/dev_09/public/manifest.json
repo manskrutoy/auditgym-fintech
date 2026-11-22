@@ -1,27 +1,27 @@
 {
-  "base_currency": "KZT",
-  "company_name": "Nova Media SA",
+  "base_currency": "GBP",
+  "company_name": "Tengri Mining Co",
   "counts": {
-    "documents": 113,
-    "fx_rates": 183,
-    "invoices": 73,
-    "ledger_rows": 297,
-    "payments": 40
+    "documents": 123,
+    "fx_rates": 62,
+    "invoices": 81,
+    "ledger_rows": 532,
+    "payments": 42
   },
   "currency_exponents": {
-    "JPY": 0,
-    "KZT": 2
+    "GBP": 2,
+    "JPY": 0
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-38f4dda7645d",
-  "ledger_window_end": "2026-05-05",
-  "period_end": "2026-04-30",
-  "period_start": "2026-04-01",
+  "episode_id": "ep-34f7289f2618",
+  "ledger_window_end": "2026-11-05",
+  "period_end": "2026-10-31",
+  "period_start": "2026-10-01",
   "rounding": {
     "fx_conversion": "half_even",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+05:30"
+  "timezone": "+00:00"
 }

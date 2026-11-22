@@ -1,8 +1,8 @@
 {
-  "clean_ledger_lines": 390,
+  "clean_ledger_lines": 370,
   "clean_trial_balance": {
-    "credit_minor": 110347993,
-    "debit_minor": 110347993
+    "credit_minor": 67230192,
+    "debit_minor": 67230192
   },
   "config": {
     "base_currency": null,
@@ -20,8 +20,8 @@
         1
       ],
       "multi_invoice_payments": [
-        1,
-        2
+        3,
+        6
       ],
       "recurring_customers": [
         1,
@@ -82,15 +82,15 @@
     "preset": "interacting",
     "subsequent_days": 5
   },
-  "dirty_ledger_lines": 393,
+  "dirty_ledger_lines": 369,
   "distractor_tags": {
-    "invoice:boundary": 1,
-    "invoice:duplicate": 1,
-    "invoice:recurring": 3,
-    "invoice:repeated_amount": 1,
-    "payment:multi": 3,
+    "invoice:boundary": 2,
+    "invoice:recurring": 2,
+    "payment:advance": 1,
+    "payment:multi": 6,
     "payment:partial_open": 2,
-    "payment:split": 2
+    "payment:split": 2,
+    "payment:unidentified": 2
   },
   "env_version": "1.0.0",
   "generation_attempt": 0,
@@ -98,9 +98,20 @@
     {
       "clean": {
         "account": "1100",
-        "credit_minor": 136437,
+        "credit_minor": 60429,
         "debit_minor": 0,
-        "timestamp": "2026-01-31T16:10:00+03:00"
+        "timestamp": "2025-04-30T14:28:29+09:00"
+      },
+      "line_role": "ar_credit",
+      "recorded": null,
+      "row_id": null
+    },
+    {
+      "clean": {
+        "account": "1100",
+        "credit_minor": 356459,
+        "debit_minor": 0,
+        "timestamp": "2025-04-29T12:45:51+09:00"
       },
       "line_role": "ar_credit",
       "recorded": null,
@@ -110,214 +121,212 @@
       "clean": {
         "account": "1100",
         "credit_minor": 0,
-        "debit_minor": 2851518,
-        "timestamp": "2026-02-01T01:16:23+03:00"
+        "debit_minor": 247362,
+        "timestamp": "2025-05-01T03:05:09+09:00"
       },
       "line_role": "ar_debit",
       "recorded": {
         "account": "1100",
         "credit_minor": 0,
-        "debit_minor": 2855630,
-        "timestamp": "2026-01-31T20:07:19+03:00"
+        "debit_minor": 248892,
+        "timestamp": "2025-04-30T22:00:49+09:00"
       },
-      "row_id": "ROW-c6949e4a"
+      "row_id": "ROW-d138e19a"
     },
     {
-      "clean": null,
+      "clean": {
+        "account": "1100",
+        "credit_minor": 0,
+        "debit_minor": 266000,
+        "timestamp": "2025-05-01T06:13:55+09:00"
+      },
       "line_role": "ar_debit",
       "recorded": {
         "account": "1100",
         "credit_minor": 0,
-        "debit_minor": 726227,
-        "timestamp": "2026-01-03T23:39:12+03:00"
+        "debit_minor": 266000,
+        "timestamp": "2025-04-30T19:06:14+09:00"
       },
-      "row_id": "ROW-45a0f4d1"
+      "row_id": "ROW-0c217c40"
     },
     {
       "clean": {
         "account": "1000",
         "credit_minor": 0,
-        "debit_minor": 355015,
-        "timestamp": "2026-01-31T16:10:00+03:00"
+        "debit_minor": 192793,
+        "timestamp": "2025-04-30T14:28:29+09:00"
       },
       "line_role": "cash",
       "recorded": {
         "account": "1000",
         "credit_minor": 0,
-        "debit_minor": 352535,
-        "timestamp": "2026-01-31T16:10:00+03:00"
+        "debit_minor": 191608,
+        "timestamp": "2025-04-30T14:28:29+09:00"
       },
-      "row_id": "ROW-6058cb90"
+      "row_id": "ROW-59c1633a"
     },
     {
       "clean": {
         "account": "7900",
-        "credit_minor": 0,
-        "debit_minor": 22,
-        "timestamp": "2026-01-31T16:10:00+03:00"
+        "credit_minor": 1821,
+        "debit_minor": 0,
+        "timestamp": "2025-04-30T14:28:29+09:00"
       },
       "line_role": "fx_gl",
       "recorded": {
         "account": "7900",
-        "credit_minor": 0,
-        "debit_minor": 1540,
-        "timestamp": "2026-01-31T16:10:00+03:00"
+        "credit_minor": 1289,
+        "debit_minor": 0,
+        "timestamp": "2025-04-30T14:28:29+09:00"
       },
-      "row_id": "ROW-e36e1477"
+      "row_id": "ROW-82bb73f7"
+    },
+    {
+      "clean": {
+        "account": "7900",
+        "credit_minor": 6150,
+        "debit_minor": 0,
+        "timestamp": "2025-04-29T12:45:51+09:00"
+      },
+      "line_role": "fx_gl",
+      "recorded": null,
+      "row_id": null
     },
     {
       "clean": {
         "account": "4000",
-        "credit_minor": 157611,
+        "credit_minor": 111509,
         "debit_minor": 0,
-        "timestamp": "2026-02-01T01:16:23+03:00"
+        "timestamp": "2025-05-01T03:05:09+09:00"
       },
       "line_role": "revenue",
       "recorded": {
         "account": "4000",
-        "credit_minor": 157838,
+        "credit_minor": 112198,
         "debit_minor": 0,
-        "timestamp": "2026-01-31T20:07:19+03:00"
+        "timestamp": "2025-04-30T22:00:49+09:00"
       },
-      "row_id": "ROW-7b1900b6"
+      "row_id": "ROW-21033fdb"
     },
     {
       "clean": {
         "account": "4000",
-        "credit_minor": 557780,
+        "credit_minor": 135853,
         "debit_minor": 0,
-        "timestamp": "2026-02-01T01:16:23+03:00"
+        "timestamp": "2025-05-01T03:05:09+09:00"
       },
       "line_role": "revenue",
       "recorded": {
         "account": "4000",
-        "credit_minor": 558584,
+        "credit_minor": 136694,
         "debit_minor": 0,
-        "timestamp": "2026-01-31T20:07:19+03:00"
+        "timestamp": "2025-04-30T22:00:49+09:00"
       },
-      "row_id": "ROW-c6770eb6"
+      "row_id": "ROW-483fe805"
     },
     {
       "clean": {
         "account": "4000",
-        "credit_minor": 1851087,
+        "credit_minor": 266000,
         "debit_minor": 0,
-        "timestamp": "2026-02-01T01:16:23+03:00"
+        "timestamp": "2025-05-01T06:13:55+09:00"
       },
       "line_role": "revenue",
       "recorded": {
         "account": "4000",
-        "credit_minor": 1853756,
+        "credit_minor": 266000,
         "debit_minor": 0,
-        "timestamp": "2026-01-31T20:07:19+03:00"
+        "timestamp": "2025-04-30T19:06:14+09:00"
       },
-      "row_id": "ROW-320f542d"
-    },
-    {
-      "clean": {
-        "account": "4000",
-        "credit_minor": 285040,
-        "debit_minor": 0,
-        "timestamp": "2026-02-01T01:16:23+03:00"
-      },
-      "line_role": "revenue",
-      "recorded": {
-        "account": "4000",
-        "credit_minor": 285452,
-        "debit_minor": 0,
-        "timestamp": "2026-01-31T20:07:19+03:00"
-      },
-      "row_id": "ROW-fe4a00f2"
-    },
-    {
-      "clean": null,
-      "line_role": "revenue",
-      "recorded": {
-        "account": "4000",
-        "credit_minor": 598342,
-        "debit_minor": 0,
-        "timestamp": "2026-01-03T23:39:12+03:00"
-      },
-      "row_id": "ROW-45e72e58"
-    },
-    {
-      "clean": null,
-      "line_role": "revenue",
-      "recorded": {
-        "account": "4000",
-        "credit_minor": 127885,
-        "debit_minor": 0,
-        "timestamp": "2026-01-03T23:39:12+03:00"
-      },
-      "row_id": "ROW-3508e5f1"
+      "row_id": "ROW-34e7f4ac"
     },
     {
       "clean": null,
       "line_role": "suspense",
       "recorded": {
         "account": "1190",
-        "credit_minor": 135475,
+        "credit_minor": 59776,
         "debit_minor": 0,
-        "timestamp": "2026-01-31T16:10:00+03:00"
+        "timestamp": "2025-04-30T14:28:29+09:00"
       },
-      "row_id": "ROW-524f736b"
+      "row_id": "ROW-20cc0685"
+    },
+    {
+      "clean": null,
+      "line_role": "suspense",
+      "recorded": {
+        "account": "1190",
+        "credit_minor": 362609,
+        "debit_minor": 0,
+        "timestamp": "2025-04-29T12:45:51+09:00"
+      },
+      "row_id": "ROW-24bba964"
     }
   ],
   "mutations": [
     {
-      "duplicate": "INV-373483",
-      "issue_id": "ep-a99fdff75c0f-I01",
-      "issued_delta_minutes": 324,
-      "mutation": "duplicate_document_posted",
-      "original": "INV-820438"
-    },
-    {
-      "correct_rate_date": "2026-01-30",
+      "correct_rate_date": "2025-05-01",
       "document": "invoice",
-      "invoice": "INV-565841",
-      "issue_id": "ep-a99fdff75c0f-I02",
+      "invoice": "INV-932969",
+      "issue_id": "ep-c85ef99eb9ae-I01",
       "mutation": "wrong_rate_date",
-      "used_rate_date": "2026-01-29",
-      "wrong_date_rule": "posting_date_minus_2"
+      "used_rate_date": "2025-04-30",
+      "wrong_date_rule": "posting_date"
     },
     {
-      "correct_rate_date": "2026-01-30",
+      "correct_rate_date": "2025-04-30",
       "document": "payment",
-      "issue_id": "ep-a99fdff75c0f-I03",
+      "issue_id": "ep-c85ef99eb9ae-I02",
       "mutation": "wrong_rate_date",
-      "payment": "PAY-938968",
-      "used_rate_date": "2026-02-02",
-      "wrong_date_rule": "value_date_plus_2"
+      "payment": "PAY-068983",
+      "used_rate_date": "2025-05-01",
+      "wrong_date_rule": "next_day_value_date"
     },
     {
-      "document_local_date": "2026-02-01",
-      "invoice": "INV-565841",
-      "issue_id": "ep-a99fdff75c0f-I04",
+      "document_local_date": "2025-05-01",
+      "invoice": "INV-076637",
+      "issue_id": "ep-c85ef99eb9ae-I03",
       "mutation": "wrong_posting_period",
-      "posted_at": "2026-01-31T20:07:19+03:00",
+      "posted_at": "2025-04-30T19:06:14+09:00",
       "variant": "early"
     },
     {
-      "invoice": "INV-966108",
-      "issue_id": "ep-a99fdff75c0f-I05",
+      "document_local_date": "2025-05-01",
+      "invoice": "INV-932969",
+      "issue_id": "ep-c85ef99eb9ae-I04",
+      "mutation": "wrong_posting_period",
+      "posted_at": "2025-04-30T22:00:49+09:00",
+      "variant": "early"
+    },
+    {
+      "invoice": "INV-727855",
+      "issue_id": "ep-c85ef99eb9ae-I05",
       "mutation": "allocation_not_applied",
-      "payment": "PAY-938968",
+      "payment": "PAY-068983",
       "ref_index": 1,
       "variant": "partial"
+    },
+    {
+      "invoice": "INV-898837",
+      "issue_id": "ep-c85ef99eb9ae-I06",
+      "mutation": "allocation_not_applied",
+      "payment": "PAY-870150",
+      "ref_index": 0,
+      "variant": "missing"
     }
   ],
   "seed": 73353,
   "world": {
-    "base": "USD",
-    "customers": 13,
+    "base": "GBP",
+    "customers": 7,
     "foreign_currencies": [
-      "GBP"
+      "CNY"
     ],
-    "offset": "+03:00",
+    "offset": "+09:00",
     "period": [
-      "2026-01-01",
-      "2026-01-31"
+      "2025-04-01",
+      "2025-04-30"
     ],
-    "rounding": "half_even"
+    "rounding": "half_up"
   }
 }

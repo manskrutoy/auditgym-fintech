@@ -1,27 +1,27 @@
 {
-  "base_currency": "JPY",
-  "company_name": "Steppe Agro GmbH",
+  "base_currency": "USD",
+  "company_name": "Ural Pharma LLP",
   "counts": {
-    "documents": 131,
-    "fx_rates": 186,
-    "invoices": 80,
-    "ledger_rows": 367,
-    "payments": 51
+    "documents": 99,
+    "fx_rates": 122,
+    "invoices": 63,
+    "ledger_rows": 272,
+    "payments": 36
   },
   "currency_exponents": {
-    "GBP": 2,
-    "JPY": 0
+    "CNY": 2,
+    "USD": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-d10ed44bc050",
-  "ledger_window_end": "2026-02-05",
-  "period_end": "2026-01-31",
-  "period_start": "2026-01-01",
+  "episode_id": "ep-9cc88b4d6e7c",
+  "ledger_window_end": "2025-06-05",
+  "period_end": "2025-05-31",
+  "period_start": "2025-05-01",
   "rounding": {
-    "fx_conversion": "half_even",
+    "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+00:00"
+  "timezone": "+05:30"
 }

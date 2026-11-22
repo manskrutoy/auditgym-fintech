@@ -1,23 +1,23 @@
 {
   "base_currency": "JPY",
-  "company_name": "Vertex Logistics Co",
+  "company_name": "Steppe Robotics JSC",
   "counts": {
-    "documents": 71,
-    "fx_rates": 183,
-    "invoices": 46,
-    "ledger_rows": 457,
-    "payments": 25
+    "documents": 84,
+    "fx_rates": 180,
+    "invoices": 52,
+    "ledger_rows": 561,
+    "payments": 32
   },
   "currency_exponents": {
-    "CNY": 2,
+    "EUR": 2,
     "JPY": 0,
-    "USD": 2
+    "KZT": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-ab389406fb41",
-  "ledger_window_end": "2026-08-05",
-  "period_end": "2026-07-31",
-  "period_start": "2026-07-01",
+  "episode_id": "ep-8af178b033b6",
+  "ledger_window_end": "2026-07-05",
+  "period_end": "2026-06-30",
+  "period_start": "2026-06-01",
   "rounding": {
     "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",

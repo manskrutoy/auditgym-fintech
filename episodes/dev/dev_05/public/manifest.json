@@ -1,28 +1,28 @@
 {
   "base_currency": "KZT",
-  "company_name": "Nomad Agro BV",
+  "company_name": "Horizon Optics LLP",
   "counts": {
-    "documents": 62,
-    "fx_rates": 186,
-    "invoices": 38,
-    "ledger_rows": 258,
-    "payments": 24
+    "documents": 87,
+    "fx_rates": 180,
+    "invoices": 54,
+    "ledger_rows": 410,
+    "payments": 33
   },
   "currency_exponents": {
-    "EUR": 2,
-    "KZT": 2,
-    "USD": 2
+    "CNY": 2,
+    "GBP": 2,
+    "KZT": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-a19a723b2577",
-  "ledger_window_end": "2026-06-05",
-  "period_end": "2026-05-31",
-  "period_start": "2026-05-01",
+  "episode_id": "ep-dbb73328cb23",
+  "ledger_window_end": "2026-01-05",
+  "period_end": "2025-12-31",
+  "period_start": "2025-12-01",
   "rounding": {
-    "fx_conversion": "half_up",
+    "fx_conversion": "half_even",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+00:00"
+  "timezone": "+01:00"
 }

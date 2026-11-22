@@ -1,8 +1,8 @@
 {
-  "clean_ledger_lines": 336,
+  "clean_ledger_lines": 275,
   "clean_trial_balance": {
-    "credit_minor": 60221422,
-    "debit_minor": 60221422
+    "credit_minor": 64403151,
+    "debit_minor": 64403151
   },
   "config": {
     "base_currency": null,
@@ -20,8 +20,8 @@
         1
       ],
       "multi_invoice_payments": [
-        1,
-        2
+        3,
+        6
       ],
       "recurring_customers": [
         1,
@@ -82,13 +82,13 @@
     "preset": "clean",
     "subsequent_days": 5
   },
-  "dirty_ledger_lines": 336,
+  "dirty_ledger_lines": 275,
   "distractor_tags": {
-    "invoice:boundary": 3,
+    "invoice:boundary": 2,
     "invoice:recurring": 3,
     "invoice:repeated_amount": 1,
     "payment:advance": 2,
-    "payment:multi": 2,
+    "payment:multi": 3,
     "payment:split": 2,
     "payment:unidentified": 1
   },
@@ -98,17 +98,17 @@
   "mutations": [],
   "seed": 27930,
   "world": {
-    "base": "EUR",
-    "customers": 11,
+    "base": "GBP",
+    "customers": 14,
     "foreign_currencies": [
-      "GBP",
+      "CHF",
       "KZT"
     ],
-    "offset": "+00:00",
+    "offset": "+09:00",
     "period": [
-      "2025-11-01",
-      "2025-11-30"
+      "2025-08-01",
+      "2025-08-31"
     ],
-    "rounding": "half_up"
+    "rounding": "half_even"
   }
 }

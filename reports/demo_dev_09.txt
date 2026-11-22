@@ -1,24 +1,26 @@
-episode ep-38f4dda7645d | Nova Media SA | base KZT | period 2026-04-01..2026-04-30 (UTC+05:30) | rows=297 docs=113
+episode ep-34f7289f2618 | Tengri Mining Co | base GBP | period 2026-10-01..2026-10-31 (UTC+00:00) | rows=532 docs=123
 step   1 list_records invoices cursor=None           -> 50 records
-step   2 list_records invoices cursor=c1:invoices:50 -> 23 records
-step   3 list_records payments cursor=None           -> 40 records
+step   2 list_records invoices cursor=c1:invoices:50 -> 31 records
+step   3 list_records payments cursor=None           -> 42 records
 step   4 list_records fx       cursor=None           -> 50 records
-step   5 list_records fx       cursor=c1:fx:50       -> 50 records
-step   6 list_records fx       cursor=c1:fx:100      -> 50 records
-step   7 list_records fx       cursor=c1:fx:150      -> 33 records
-step   8 list_records ledger   cursor=None           -> 50 records
-step   9 list_records ledger   cursor=c1:ledger:50   -> 50 records
-step  10 list_records ledger   cursor=c1:ledger:100  -> 50 records
-step  11 list_records ledger   cursor=c1:ledger:150  -> 50 records
-step  12 list_records ledger   cursor=c1:ledger:200  -> 50 records
-step  13 list_records ledger   cursor=c1:ledger:250  -> 47 records
-step  14 submit: 7 findings
-   - duplicate_invoice    INV-479338,INV-574749             205800099 KZT  evidence=DOC-17b567a4,DOC-4403b19d,ROW-78cd0384,ROW-fc688ed9
-   - unallocated_payment  INV-708244,PAY-979211              72000000 KZT  evidence=DOC-1cb08757,ROW-b3600441
-   - unallocated_payment  INV-904946,PAY-186156               1171800 JPY  evidence=DOC-84473705,ROW-177dfc85
-   - fx_misconversion     INV-911682                             2872 KZT  evidence=DOC-70e01c86,ROW-bda930a4,FX-2026-05-01-JPY-KZT
-   - fx_misconversion     PAY-186156                           117609 KZT  evidence=DOC-84473705,ROW-d4e4a78a,FX-2026-04-30-JPY-KZT
-   - period_cutoff        INV-124919                         84400000 KZT  evidence=DOC-7f015cac,ROW-8c2d123d
-   - period_cutoff        INV-911682                         30920825 KZT  evidence=DOC-70e01c86,ROW-bda930a4
-reward=0.974  P=1.00 R=1.00 F1=1.00  TP=7 FP=0 FN=0  inspection_steps=13
-truth (closed, shown for the demo only): [('duplicate_invoice', ['INV-479338', 'INV-574749']), ('fx_misconversion', ['INV-911682']), ('fx_misconversion', ['PAY-186156']), ('period_cutoff', ['INV-124919']), ('period_cutoff', ['INV-911682']), ('unallocated_payment', ['INV-708244', 'PAY-979211']), ('unallocated_payment', ['INV-904946', 'PAY-186156'])]
+step   5 list_records fx       cursor=c1:fx:50       -> 12 records
+step   6 list_records ledger   cursor=None           -> 50 records
+step   7 list_records ledger   cursor=c1:ledger:50   -> 50 records
+step   8 list_records ledger   cursor=c1:ledger:100  -> 50 records
+step   9 list_records ledger   cursor=c1:ledger:150  -> 50 records
+step  10 list_records ledger   cursor=c1:ledger:200  -> 50 records
+step  11 list_records ledger   cursor=c1:ledger:250  -> 50 records
+step  12 list_records ledger   cursor=c1:ledger:300  -> 50 records
+step  13 list_records ledger   cursor=c1:ledger:350  -> 50 records
+step  14 list_records ledger   cursor=c1:ledger:400  -> 50 records
+step  15 list_records ledger   cursor=c1:ledger:450  -> 50 records
+step  16 list_records ledger   cursor=c1:ledger:500  -> 32 records
+step  17 submit: 6 findings
+   - unallocated_payment  INV-501327,PAY-944227               1004000 JPY  evidence=DOC-3f0ef10d,ROW-ba314211
+   - fx_misconversion     INV-574749                             4098 GBP  evidence=DOC-61c26357,ROW-719cf12a,FX-2026-10-30-JPY-GBP
+   - fx_misconversion     INV-809806                             8179 GBP  evidence=DOC-d4cfb7e0,ROW-7953b4c6,FX-2026-10-30-JPY-GBP
+   - fx_misconversion     PAY-944227                             1860 GBP  evidence=DOC-3f0ef10d,ROW-99cc3b94,FX-2026-10-30-JPY-GBP
+   - period_cutoff        INV-827457                           105600 GBP  evidence=DOC-04aef2f6,ROW-d0131db6
+   - period_cutoff        INV-809806                          1054522 GBP  evidence=DOC-d4cfb7e0,ROW-7953b4c6
+reward=0.968  P=1.00 R=1.00 F1=1.00  TP=6 FP=0 FN=0  inspection_steps=16
+truth (closed, shown for the demo only): [('fx_misconversion', ['INV-574749']), ('fx_misconversion', ['INV-809806']), ('fx_misconversion', ['PAY-944227']), ('period_cutoff', ['INV-809806']), ('period_cutoff', ['INV-827457']), ('unallocated_payment', ['INV-501327', 'PAY-944227'])]

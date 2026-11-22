@@ -1,27 +1,27 @@
 {
-  "base_currency": "USD",
-  "company_name": "Delta Textiles SA",
+  "base_currency": "GBP",
+  "company_name": "Baikonur Freight Ltd",
   "counts": {
-    "documents": 122,
-    "fx_rates": 62,
-    "invoices": 83,
-    "ledger_rows": 393,
-    "payments": 39
+    "documents": 70,
+    "fx_rates": 60,
+    "invoices": 48,
+    "ledger_rows": 369,
+    "payments": 22
   },
   "currency_exponents": {
-    "GBP": 2,
-    "USD": 2
+    "CNY": 2,
+    "GBP": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-a99fdff75c0f",
-  "ledger_window_end": "2026-02-05",
-  "period_end": "2026-01-31",
-  "period_start": "2026-01-01",
+  "episode_id": "ep-c85ef99eb9ae",
+  "ledger_window_end": "2025-05-05",
+  "period_end": "2025-04-30",
+  "period_start": "2025-04-01",
   "rounding": {
-    "fx_conversion": "half_even",
+    "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+03:00"
+  "timezone": "+09:00"
 }

@@ -20,7 +20,7 @@ DEFAULTS = {
     "distractors": {
         "recurring_customers": [1, 3],
         "split_payments": [1, 3],
-        "multi_invoice_payments": [1, 2],
+        "multi_invoice_payments": [3, 6],
         "duplicate_payment_refunds": [0, 1],
         "advances": [0, 2],
         "unidentified_receipts": [0, 2],

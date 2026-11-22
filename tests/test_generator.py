@@ -148,3 +148,28 @@ class TestDifficulty(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestNoShortcutTells(unittest.TestCase):
+    """Generation artefacts must not reveal injected errors (e.g. round seconds, ledger
+    timestamps copied from documents, id ranges)."""
+
+    def test_timestamp_and_id_artefacts(self):
+        from datetime import datetime
+        aff_sec0 = aff_n = oth_eq = oth_n = aff_low = 0
+        for seed in range(40):
+            ep = generate_episode(6000 + seed, {"preset": "interacting"})
+            aff = {x for i in ep.truth["issues"] for x in i["affected_ids"]}
+            ar = {r["invoice_id"]: r for r in ep.tables["ledger"] if r["account"] == "1100" and r["debit_minor"] > 0}
+            for d in ep.tables["invoices"]:
+                t = datetime.fromisoformat(d["issued_at"])
+                if d["invoice_id"] in aff:
+                    aff_n += 1
+                    aff_sec0 += t.second == 0
+                    aff_low += int(d["invoice_id"].split("-")[1]) < 500000
+                elif d["invoice_id"] in ar:
+                    oth_n += 1
+                    oth_eq += datetime.fromisoformat(ar[d["invoice_id"]]["timestamp"]).second == t.second
+        self.assertLess(aff_sec0 / aff_n, 0.08)
+        self.assertLess(oth_eq / oth_n, 0.08)
+        self.assertTrue(0.35 < aff_low / aff_n < 0.65)

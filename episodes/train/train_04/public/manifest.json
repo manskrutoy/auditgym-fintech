@@ -1,28 +1,28 @@
 {
-  "base_currency": "KZT",
-  "company_name": "Saryarka Freight BV",
+  "base_currency": "GBP",
+  "company_name": "Riverbend Software JSC",
   "counts": {
-    "documents": 121,
-    "fx_rates": 118,
-    "invoices": 74,
-    "ledger_rows": 491,
-    "payments": 47
+    "documents": 84,
+    "fx_rates": 122,
+    "invoices": 56,
+    "ledger_rows": 299,
+    "payments": 28
   },
   "currency_exponents": {
     "CHF": 2,
     "GBP": 2,
-    "KZT": 2
+    "JPY": 0
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-0214f8047c58",
-  "ledger_window_end": "2025-07-05",
-  "period_end": "2025-06-30",
-  "period_start": "2025-06-01",
+  "episode_id": "ep-bf2c4e86a19c",
+  "ledger_window_end": "2026-05-05",
+  "period_end": "2026-04-30",
+  "period_start": "2026-04-01",
   "rounding": {
     "fx_conversion": "half_even",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+06:00"
+  "timezone": "+00:00"
 }

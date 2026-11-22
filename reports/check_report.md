@@ -1,11 +1,11 @@
 # AuditGym check report
 
-- env_version: `1.0.0`, python 3.13.18, Linux-6.18.44-fc-v726-x86_64-with-glibc2.39
-- overall: **PASSED** (6.7s)
+- env_version: `1.0.0`, python 3.11.18, Linux-6.18.44-fc-v726-x86_64-with-glibc2.39
+- overall: **PASSED** (8.7s)
 
 | check | result |
 |---|---|
-| unit tests | 53 run, 0 failures, 0 errors |
+| unit tests | 54 run, 0 failures, 0 errors |
 | reproducibility (train+dev regenerate == committed) | True |
 | data verification (40 episodes) | 0 failures |
 | paired checks | 20/20 |
@@ -15,21 +15,21 @@
 
 | policy | P | R | F1 | return | clean return | erroneous return | steps | time s | FP by type | missed by type |
 |---|---|---|---|---|---|---|---|---|---|---|
-| random | 0.000 | 0.000 | 0.100 | -0.806 | -0.03 | -1.0 | 24.2 | 0.0090 | {'duplicate_invoice': 3, 'fx_misconversion': 4, 'period_cutoff': 3, 'unallocated_payment': 3} | {'duplicate_invoice': 7, 'fx_misconversion': 13, 'period_cutoff': 9, 'unallocated_payment': 9} |
-| reconciler | 0.372 | 0.571 | 0.446 | -0.130 | -1.0 | 0.0872 | 15.8 | 0.0097 | {'duplicate_invoice': 20, 'fx_misconversion': 9, 'period_cutoff': 11} | {'fx_misconversion': 5, 'period_cutoff': 3} |
-| flag_all | 0.000 | 0.000 | 0.000 | -1.000 | -1.0 | -1.0 | 3.9 | 0.0057 | {'duplicate_invoice': 80, 'fx_misconversion': 80, 'period_cutoff': 70, 'unallocated_payment': 70} | {'duplicate_invoice': 7, 'fx_misconversion': 13, 'period_cutoff': 9, 'unallocated_payment': 9} |
-| oracle | 0.800 | 0.800 | 1.000 | +1.000 | 1.0 | 1.0 | 1.0 | 0.0002 | - | - |
-| expert | 0.800 | 0.800 | 1.000 | +0.970 | 0.975 | 0.9692 | 15.8 | 0.0085 | - | - |
+| random | 0.000 | 0.000 | 0.000 | -1.000 | -1.0 | -1.0 | 17.2 | 0.0080 | {'duplicate_invoice': 8, 'fx_misconversion': 3, 'period_cutoff': 4, 'unallocated_payment': 3} | {'duplicate_invoice': 8, 'fx_misconversion': 13, 'period_cutoff': 10, 'unallocated_payment': 10} |
+| reconciler | 0.415 | 0.669 | 0.498 | -0.030 | -1.0 | 0.2128 | 17.0 | 0.0111 | {'duplicate_invoice': 18, 'fx_misconversion': 23, 'period_cutoff': 10} | {'fx_misconversion': 7} |
+| flag_all | 0.000 | 0.000 | 0.000 | -1.000 | -1.0 | -1.0 | 3.9 | 0.0075 | {'duplicate_invoice': 80, 'fx_misconversion': 80, 'period_cutoff': 70, 'unallocated_payment': 70} | {'duplicate_invoice': 8, 'fx_misconversion': 13, 'period_cutoff': 10, 'unallocated_payment': 10} |
+| oracle | 0.800 | 0.800 | 1.000 | +1.000 | 1.0 | 1.0 | 1.0 | 0.0003 | - | - |
+| expert | 0.800 | 0.800 | 1.000 | +0.968 | 0.973 | 0.9667 | 17.0 | 0.0129 | - | - |
 
 ## Baselines on local_holdout (eval mode, policies in separate processes)
 
 | policy | P | R | F1 | return | clean return | erroneous return | steps | time s | FP by type | missed by type |
 |---|---|---|---|---|---|---|---|---|---|---|
-| random | 0.000 | 0.000 | 0.050 | -0.901 | -0.6028 | -1.0 | 15.7 | 0.0046 | {'duplicate_invoice': 6, 'fx_misconversion': 8, 'period_cutoff': 14, 'unallocated_payment': 7} | {'duplicate_invoice': 14, 'fx_misconversion': 21, 'period_cutoff': 17, 'unallocated_payment': 18} |
-| reconciler | 0.342 | 0.637 | 0.418 | -0.189 | -1.0 | 0.0818 | 17.0 | 0.0075 | {'duplicate_invoice': 44, 'fx_misconversion': 32, 'period_cutoff': 16} | {'fx_misconversion': 10, 'period_cutoff': 4} |
-| flag_all | 0.000 | 0.000 | 0.000 | -1.000 | -1.0 | -1.0 | 4.1 | 0.0057 | {'duplicate_invoice': 160, 'fx_misconversion': 160, 'period_cutoff': 140, 'unallocated_payment': 140} | {'duplicate_invoice': 14, 'fx_misconversion': 21, 'period_cutoff': 17, 'unallocated_payment': 18} |
+| random | 0.000 | 0.000 | 0.050 | -0.900 | -0.602 | -1.0 | 18.1 | 0.0083 | {'duplicate_invoice': 9, 'fx_misconversion': 10, 'period_cutoff': 6, 'unallocated_payment': 2} | {'duplicate_invoice': 15, 'fx_misconversion': 24, 'period_cutoff': 16, 'unallocated_payment': 18} |
+| reconciler | 0.342 | 0.556 | 0.411 | -0.206 | -1.0 | 0.0589 | 18.8 | 0.0139 | {'duplicate_invoice': 41, 'fx_misconversion': 40, 'period_cutoff': 24} | {'fx_misconversion': 14, 'period_cutoff': 6} |
+| flag_all | 0.000 | 0.000 | 0.000 | -1.000 | -1.0 | -1.0 | 4.0 | 0.0050 | {'duplicate_invoice': 160, 'fx_misconversion': 160, 'period_cutoff': 140, 'unallocated_payment': 140} | {'duplicate_invoice': 15, 'fx_misconversion': 24, 'period_cutoff': 16, 'unallocated_payment': 18} |
 | oracle | 0.750 | 0.750 | 1.000 | +1.000 | 1.0 | 1.0 | 1.0 | 0.0003 | - | - |
-| expert | 0.750 | 0.750 | 1.000 | +0.968 | 0.9732 | 0.9663 | 17.0 | 0.0115 | - | - |
+| expert | 0.750 | 0.750 | 1.000 | +0.965 | 0.9684 | 0.9632 | 18.8 | 0.0096 | - | - |
 
 Precision/recall are 0 by definition when their denominator is 0 (e.g. clean books answered with no findings), so mean P/R are below 1 even for the oracle; F1 and return follow the spec (empty truth + empty answer => F1 = 1).
 

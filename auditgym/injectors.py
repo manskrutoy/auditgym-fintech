@@ -72,6 +72,11 @@ class Injector:
         out.sort(key=lambda i: i.key)
         return out
 
+    def when(self, d, lo=8, hi=18):
+        """Random local time on day d (random seconds, like every other document)."""
+        r = self.rng
+        return self.w.local_dt(d, r.randint(lo, hi), r.randint(0, 59), r.randint(0, 59))
+
     def new_invoice(self, cust, local_dt, kind, tags):
         inv = self.b.add_invoice(cust, local_dt, kind, tags=tags)
         self.w.inv_post[inv.key] = self.b.clean_invoice_decision(inv)
@@ -130,7 +135,7 @@ class Injector:
         if not cands or rng.random() < 0.15:
             c = self.pick_customer()
             d = w.period_start + timedelta(days=rng.randint(0, max(0, (w.period_end - w.period_start).days - 3)))
-            cands = [self.new_invoice(c, w.local_dt(d, rng.randint(8, 18), rng.randint(0, 59)), "period", [])]
+            cands = [self.new_invoice(c, self.when(d), "period", [])]
         orig = rng.choice(cands)
         delta = timedelta(minutes=rng.choice([0, rng.randint(1, 600), rng.randint(600, 2880)]))
         if not w.in_period(w.ldate(orig.issued_at + delta)):
@@ -174,11 +179,11 @@ class Injector:
         invs = []
         for _ in range(n_invoices):
             d = w.period_start + timedelta(days=rng.randint(0, early_days if early_days is not None else max(0, span - 8)))
-            invs.append(self.new_invoice(cust, w.local_dt(d, rng.randint(8, 18), rng.randint(0, 59)), "period", []))
+            invs.append(self.new_invoice(cust, self.when(d), "period", []))
         last = max(w.ldate(i.issued_at) for i in invs)
         if pay_day is None:
             pay_day = min(w.period_end, last + timedelta(days=rng.randint(1, 7)))
-        when = w.local_dt(pay_day, rng.randint(9, 19), rng.randint(0, 59))
+        when = self.when(pay_day, 9, 19)
         refs = sorted([[i.key, i.total] for i in invs], key=lambda r: (w.invoices[r[0]].issued_at, r[0]))
         p = self.new_payment(cust, when, sum(r[1] for r in refs), refs, ["multi"] if n_invoices > 1 else [])
         return p
@@ -218,7 +223,7 @@ class Injector:
                 if _attempt >= 3 or not cands:
                     c = self.pick_customer(foreign=True)
                     d = w.period_start + timedelta(days=rng.randint(0, (w.period_end - w.period_start).days - 1))
-                    cands = [self.new_invoice(c, w.local_dt(d, rng.randint(8, 18), rng.randint(0, 59)), "period", [])]
+                    cands = [self.new_invoice(c, self.when(d), "period", [])]
                 for inv in cands[:8]:
                     correct = w.ldate(inv.issued_at)
                     choice = self.wrong_rate_date(inv.currency, inv.total, correct,

@@ -1,8 +1,8 @@
 {
-  "clean_ledger_lines": 380,
+  "clean_ledger_lines": 271,
   "clean_trial_balance": {
-    "credit_minor": 97686954,
-    "debit_minor": 97686954
+    "credit_minor": 48769502,
+    "debit_minor": 48769502
   },
   "config": {
     "base_currency": null,
@@ -20,8 +20,8 @@
         1
       ],
       "multi_invoice_payments": [
-        1,
-        2
+        3,
+        6
       ],
       "recurring_customers": [
         1,
@@ -82,147 +82,118 @@
     "preset": "single",
     "subsequent_days": 5
   },
-  "dirty_ledger_lines": 381,
+  "dirty_ledger_lines": 274,
   "distractor_tags": {
     "invoice:boundary": 1,
     "invoice:duplicate": 1,
-    "invoice:recurring": 7,
+    "invoice:recurring": 3,
     "invoice:repeated_amount": 1,
-    "payment:multi": 1,
-    "payment:partial_open": 2,
-    "payment:split": 2,
+    "payment:advance": 1,
+    "payment:multi": 2,
+    "payment:partial_open": 1,
+    "payment:split": 6,
     "payment:unidentified": 1
   },
   "env_version": "1.0.0",
   "generation_attempt": 0,
   "ledger_diff_vs_clean": [
     {
-      "clean": {
-        "account": "1100",
-        "credit_minor": 75167,
-        "debit_minor": 0,
-        "timestamp": "2026-06-30T09:05:54+05:30"
-      },
-      "line_role": "ar_credit",
-      "recorded": null,
-      "row_id": null
-    },
-    {
       "clean": null,
       "line_role": "ar_debit",
       "recorded": {
         "account": "1100",
         "credit_minor": 0,
-        "debit_minor": 514788,
-        "timestamp": "2026-06-09T14:29:06+05:30"
+        "debit_minor": 654800,
+        "timestamp": "2026-06-28T23:50:27+09:00"
       },
-      "row_id": "ROW-392eccce"
+      "row_id": "ROW-c50f2f5c"
     },
     {
       "clean": {
         "account": "1100",
         "credit_minor": 0,
-        "debit_minor": 234100,
-        "timestamp": "2026-07-01T15:08:40+05:30"
+        "debit_minor": 98200,
+        "timestamp": "2026-07-01T12:15:07+09:00"
       },
       "line_role": "ar_debit",
       "recorded": {
         "account": "1100",
         "credit_minor": 0,
-        "debit_minor": 234100,
-        "timestamp": "2026-06-30T18:04:30+05:30"
+        "debit_minor": 98200,
+        "timestamp": "2026-06-30T22:53:42+09:00"
       },
-      "row_id": "ROW-443013d3"
-    },
-    {
-      "clean": {
-        "account": "7900",
-        "credit_minor": 0,
-        "debit_minor": 495,
-        "timestamp": "2026-06-30T09:05:54+05:30"
-      },
-      "line_role": "fx_gl",
-      "recorded": null,
-      "row_id": null
+      "row_id": "ROW-f2c75e84"
     },
     {
       "clean": null,
       "line_role": "revenue",
       "recorded": {
         "account": "4000",
-        "credit_minor": 514788,
+        "credit_minor": 118000,
         "debit_minor": 0,
-        "timestamp": "2026-06-09T14:29:06+05:30"
+        "timestamp": "2026-06-28T23:50:27+09:00"
       },
-      "row_id": "ROW-64b95f96"
+      "row_id": "ROW-0155a934"
+    },
+    {
+      "clean": null,
+      "line_role": "revenue",
+      "recorded": {
+        "account": "4000",
+        "credit_minor": 536800,
+        "debit_minor": 0,
+        "timestamp": "2026-06-28T23:50:27+09:00"
+      },
+      "row_id": "ROW-d7547f84"
     },
     {
       "clean": {
         "account": "4000",
-        "credit_minor": 234100,
+        "credit_minor": 98200,
         "debit_minor": 0,
-        "timestamp": "2026-07-01T15:08:40+05:30"
+        "timestamp": "2026-07-01T12:15:07+09:00"
       },
       "line_role": "revenue",
       "recorded": {
         "account": "4000",
-        "credit_minor": 234100,
+        "credit_minor": 98200,
         "debit_minor": 0,
-        "timestamp": "2026-06-30T18:04:30+05:30"
+        "timestamp": "2026-06-30T22:53:42+09:00"
       },
-      "row_id": "ROW-6ac263e8"
-    },
-    {
-      "clean": null,
-      "line_role": "suspense",
-      "recorded": {
-        "account": "1190",
-        "credit_minor": 74672,
-        "debit_minor": 0,
-        "timestamp": "2026-06-30T09:05:54+05:30"
-      },
-      "row_id": "ROW-cc09464b"
+      "row_id": "ROW-b601db76"
     }
   ],
   "mutations": [
     {
-      "duplicate": "INV-272256",
-      "issue_id": "ep-3c2533534bd8-I01",
-      "issued_delta_minutes": 1469,
+      "duplicate": "INV-831187",
+      "issue_id": "ep-4672a10626b5-I01",
+      "issued_delta_minutes": 2199,
       "mutation": "duplicate_document_posted",
-      "original": "INV-706526"
+      "original": "INV-556253"
     },
     {
       "document_local_date": "2026-07-01",
-      "invoice": "INV-859742",
-      "issue_id": "ep-3c2533534bd8-I02",
+      "invoice": "INV-119584",
+      "issue_id": "ep-4672a10626b5-I02",
       "mutation": "wrong_posting_period",
-      "posted_at": "2026-06-30T18:04:30+05:30",
+      "posted_at": "2026-06-30T22:53:42+09:00",
       "variant": "early"
-    },
-    {
-      "invoice": "INV-496778",
-      "issue_id": "ep-3c2533534bd8-I03",
-      "mutation": "allocation_not_applied",
-      "payment": "PAY-691985",
-      "ref_index": 0,
-      "variant": "missing"
     }
   ],
   "seed": 25839,
   "world": {
-    "base": "GBP",
-    "customers": 12,
+    "base": "EUR",
+    "customers": 11,
     "foreign_currencies": [
-      "EUR",
-      "KZT",
+      "CNY",
+      "KWD",
       "USD"
     ],
-    "offset": "+05:30",
+    "offset": "+09:00",
     "period": [
       "2026-06-01",
       "2026-06-30"
     ],
-    "rounding": "half_up"
+    "rounding": "half_even"
   }
 }

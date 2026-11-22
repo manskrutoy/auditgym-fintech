@@ -1,27 +1,28 @@
 {
-  "base_currency": "KZT",
-  "company_name": "Ural Agro SA",
+  "base_currency": "USD",
+  "company_name": "Ural Systems BV",
   "counts": {
-    "documents": 133,
-    "fx_rates": 59,
-    "invoices": 89,
-    "ledger_rows": 438,
-    "payments": 44
+    "documents": 72,
+    "fx_rates": 186,
+    "invoices": 47,
+    "ledger_rows": 464,
+    "payments": 25
   },
   "currency_exponents": {
-    "CNY": 2,
-    "KZT": 2
+    "KWD": 3,
+    "KZT": 2,
+    "USD": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-57b45ab4133d",
-  "ledger_window_end": "2025-10-05",
-  "period_end": "2025-09-30",
-  "period_start": "2025-09-01",
+  "episode_id": "ep-c7c259c497af",
+  "ledger_window_end": "2025-06-05",
+  "period_end": "2025-05-31",
+  "period_start": "2025-05-01",
   "rounding": {
     "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "-05:00"
+  "timezone": "+00:00"
 }
