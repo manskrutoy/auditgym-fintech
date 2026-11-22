@@ -2,9 +2,9 @@
   "env_version": "1.0.0",
   "python": "3.13.18",
   "platform": "Linux-6.18.44-fc-v726-x86_64-with-glibc2.39",
-  "started": "2026-11-22T12:35:38Z",
+  "started": "2026-11-22T12:47:44Z",
   "unit_tests": {
-    "ran": 58,
+    "ran": 62,
     "failures": 0,
     "errors": 0,
     "ok": true,
@@ -435,7 +435,7 @@
           41
         ],
         "mean_steps": 17.2,
-        "mean_wall_time_s": 0.007,
+        "mean_wall_time_s": 0.0069,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -466,7 +466,7 @@
           7
         ],
         "mean_steps": 17.0,
-        "mean_wall_time_s": 0.0103,
+        "mean_wall_time_s": 0.0095,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -493,7 +493,7 @@
           41
         ],
         "mean_steps": 3.9,
-        "mean_wall_time_s": 0.0057,
+        "mean_wall_time_s": 0.0052,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -524,7 +524,7 @@
           0
         ],
         "mean_steps": 1.0,
-        "mean_wall_time_s": 0.0002,
+        "mean_wall_time_s": 0.0004,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 1.0,
@@ -545,7 +545,7 @@
           0
         ],
         "mean_steps": 17.0,
-        "mean_wall_time_s": 0.0099,
+        "mean_wall_time_s": 0.0113,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 0.973,
@@ -568,7 +568,7 @@
           73
         ],
         "mean_steps": 18.1,
-        "mean_wall_time_s": 0.0063,
+        "mean_wall_time_s": 0.0054,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -0.602,
@@ -599,7 +599,7 @@
           20
         ],
         "mean_steps": 18.75,
-        "mean_wall_time_s": 0.0124,
+        "mean_wall_time_s": 0.0089,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -627,7 +627,7 @@
           73
         ],
         "mean_steps": 3.95,
-        "mean_wall_time_s": 0.005,
+        "mean_wall_time_s": 0.0039,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -658,7 +658,7 @@
           0
         ],
         "mean_steps": 1.0,
-        "mean_wall_time_s": 0.0004,
+        "mean_wall_time_s": 0.0002,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 1.0,
@@ -679,7 +679,7 @@
           0
         ],
         "mean_steps": 18.75,
-        "mean_wall_time_s": 0.0114,
+        "mean_wall_time_s": 0.0095,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 0.9684,
@@ -1100,5 +1100,5 @@
     "hits": []
   },
   "ok": true,
-  "duration_s": 8.6
+  "duration_s": 8.0
 }

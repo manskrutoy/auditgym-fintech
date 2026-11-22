@@ -238,3 +238,40 @@ class TestModesAndLeaks(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestRedTeamRegressions(unittest.TestCase):
+    """Inputs found by the adversarial review: none may crash step()."""
+
+    def setUp(self):
+        self.env = AuditEnv(record_trajectory=True)
+        self.env.reset(episode=episode(seed=909, preset="single"))
+
+    def test_malformed_cursors_are_errors(self):
+        for c in ["c1:ledger:²", "c1:ledger:" + "0" * 4400, "c1:ledger:١٢", "c1:ledger:-1", "c1:ledger:1.5"]:
+            o = self.env.step({"action": "list_records", "table": "ledger", "cursor": c})[0]
+            self.assertEqual(o["error"]["code"], "invalid_cursor", c)
+
+    def test_calculator_overflow_and_precision(self):
+        for e in ["1e999999*1e999999", "(1e999999)**64", "1e31", "10**31"]:
+            o = self.env.step({"action": "calculator", "expression": e})[0]
+            self.assertEqual(o["error"]["code"], "calc_error", e)
+        o = self.env.step({"action": "calculator", "expression": "1e29 % 7"})[0]
+        self.assertEqual(o["result"]["value"], str(10 ** 29 % 7))
+        o = self.env.step({"action": "calculator", "expression": "-7 % 3"})[0]
+        self.assertEqual(o["result"]["value"], "2")
+
+    def test_error_messages_bounded_and_odd_python_inputs(self):
+        o = self.env.step({"action": "get_document", "doc_id": "x", "k" * 100000: 1})[0]
+        self.assertLessEqual(len(o["error"]["message"]), 200)
+        o = self.env.step({"action": "list_records", "table": "ledger", "limit": {1, 2}})[0]
+        self.assertIsNotNone(o["error"])
+        o = self.env.step({"action": "get_record", "table": "ledger", "id": b"bytes"})[0]
+        self.assertIsNotNone(o["error"])
+
+    def test_non_ascii_currency_rejected(self):
+        from auditgym.reward import grade
+        ep = episode(seed=909, preset="single")
+        f = {"type": "period_cutoff", "affected_ids": ["X"], "claimed_amount_minor": 1, "currency": "UſD",
+             "evidence_ids": [], "explanation": ""}
+        self.assertFalse(grade({"episode_id": ep.episode_id, "findings": [f]}, ep.truth, 0)["valid"])

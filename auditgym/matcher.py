@@ -84,7 +84,7 @@ def validate_submission(sub, episode_id):
         if not _is_int(amt) or amt < 0 or amt > 10 ** 15:
             raise SchemaError("finding %d claimed_amount_minor must be a non-negative integer" % i)
         cur = f["currency"]
-        if not isinstance(cur, str) or len(cur.strip()) != 3 or not cur.strip().isalpha():
+        if not isinstance(cur, str) or len(cur.strip()) != 3 or not cur.strip().isalpha() or not cur.isascii():
             raise SchemaError("finding %d currency must be a 3-letter code" % i)
         exp = f["explanation"]
         if not isinstance(exp, str) or len(exp) > MAX_EXPLANATION:

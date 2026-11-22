@@ -77,6 +77,8 @@ def run_episode(ep, policy, worker=None, mode="eval", record=False, time_limit_s
                 break
     except (TimeoutError, RuntimeError):
         env.force_truncate("time_limit")
+    except Exception:                            # a broken policy never stops the evaluation run
+        env.force_truncate("policy_error")
     g = dict(env.last_grade)
     g["policy"] = policy
     g["wall_time_s"] = round(time.monotonic() - t0, 4)

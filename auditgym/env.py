@@ -19,6 +19,7 @@ Modes
 import copy
 import json
 import os
+import re
 import time
 
 from .calculator import CalcError, evaluate
@@ -61,9 +62,13 @@ _ARGS = {
 
 class ToolError(Exception):
     def __init__(self, code, message):
+        message = message if len(message) <= 200 else message[:197] + "..."     # bounded errors
         super().__init__(message)
         self.code = code
         self.message = message
+
+
+_CURSOR_RE = re.compile(r"c1:(ledger|invoices|payments|fx):([0-9]{1,9})")
 
 
 def _short(x):
@@ -237,7 +242,7 @@ class AuditEnv:
         if self.record_trajectory:
             self.trajectory.append({
                 "episode_id": self._ep.episode_id, "step": self.steps_used,
-                "action": _copy(action) if action is not None else None,
+                "action": _copy_safe(action) if action is not None else None,
                 "observation": _copy(obs), "reward": reward,
                 "terminated": terminated, "truncated": truncated,
             })
@@ -255,8 +260,13 @@ class AuditEnv:
         missing = req - set(args)
         extra = set(args) - req - opt
         if missing or extra:
-            raise ToolError("invalid_arguments", "missing %s / unexpected %s" % (sorted(missing), sorted(extra)))
-        return getattr(self, "_t_" + name)(**args)
+            raise ToolError("invalid_arguments", "missing %s / unexpected %d argument(s)" % (sorted(missing), len(extra)))
+        try:
+            return getattr(self, "_t_" + name)(**args)
+        except ToolError:
+            raise
+        except Exception:                      # never let a malformed action crash step()
+            raise ToolError("invalid_arguments", "could not process the arguments of %s" % name)
 
     def _table(self, table):
         if not isinstance(table, str) or table not in TABLES:
@@ -274,10 +284,10 @@ class AuditEnv:
         else:
             if not isinstance(cursor, str):
                 raise ToolError("invalid_cursor", "cursor must be a string or null")
-            parts = cursor.split(":")
-            if len(parts) != 3 or parts[0] != "c1" or parts[1] != table or not parts[2].isdigit():
+            mt = _CURSOR_RE.fullmatch(cursor) if len(cursor) <= 40 else None
+            if mt is None or mt.group(1) != table:
                 raise ToolError("invalid_cursor", "invalid cursor for table %s" % table)
-            offset = int(parts[2])
+            offset = int(mt.group(2))
             if offset > len(rows):
                 raise ToolError("invalid_cursor", "cursor out of range")
         page = rows[offset:offset + limit]

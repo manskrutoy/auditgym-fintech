@@ -1,7 +1,7 @@
 """Arithmetic-only calculator (no names, calls, attributes, code or files)."""
 
 import ast
-from decimal import ROUND_FLOOR, Decimal, DivisionByZero, InvalidOperation, localcontext
+from decimal import ROUND_FLOOR, Decimal, DecimalException, DivisionByZero, InvalidOperation, localcontext
 
 from .constants import MAX_CALC_LEN
 
@@ -34,8 +34,8 @@ def evaluate(expr: str) -> str:
             val = _eval(tree.body, expr)
         except (DivisionByZero, InvalidOperation, ZeroDivisionError):
             raise CalcError("invalid operation (e.g. division by zero)")
-        except OverflowError:
-            raise CalcError("result too large")
+        except (OverflowError, DecimalException, ArithmeticError, ValueError, RecursionError):
+            raise CalcError("result out of range")
         if not val.is_finite():
             raise CalcError("result not finite")
         if abs(val) > Decimal(10) ** 30:
@@ -44,7 +44,20 @@ def evaluate(expr: str) -> str:
         return out
 
 
+LIMIT = Decimal(10) ** 30
+
+
+def _bounded(v):
+    if not v.is_finite() or abs(v) > LIMIT:
+        raise CalcError("numbers must stay within ±1e30")
+    return v
+
+
 def _eval(node, src):
+    return _bounded(_eval_raw(node, src))
+
+
+def _eval_raw(node, src):
     if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)) and not isinstance(node.value, bool):
         seg = ast.get_source_segment(src, node)
         return Decimal(seg)
