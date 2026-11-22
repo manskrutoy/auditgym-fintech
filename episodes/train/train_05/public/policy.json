@@ -51,7 +51,7 @@
     "conversion": "base_minor = round(amount_minor / 10^exp(source) * rate * 10^exp(base))",
     "quote": "rate = units of target_currency for 1 major unit of source_currency",
     "rate_date": "calendar date of the document timestamp in manifest.timezone; if no rate is published for that date, use the latest earlier published date",
-    "rounding": "half_even"
+    "rounding": "half_up"
   },
   "period": {
     "ledger_window": "ledger.csv holds rows dated period_start..ledger_window_end; rows after period_end are subsequent-period postings shown for cut-off testing. Invoices issued before period_start appear as opening balances (account 3900) posted at period_start.",

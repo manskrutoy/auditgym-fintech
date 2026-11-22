@@ -1,11 +1,11 @@
-episode ep-5659b7868e54 | Caspian Systems BV | base EUR | period 2026-05-01..2026-05-31 (UTC+03:00) | rows=542 docs=106
+episode ep-15f05c8e2ad9 | Lumen Textiles GmbH | base KZT | period 2025-03-01..2025-03-31 (UTC+09:00) | rows=454 docs=149
 step   1 list_records invoices cursor=None           -> 50 records
-step   2 list_records invoices cursor=c1:invoices:50 -> 23 records
-step   3 list_records payments cursor=None           -> 33 records
-step   4 list_records fx       cursor=None           -> 50 records
-step   5 list_records fx       cursor=c1:fx:50       -> 50 records
-step   6 list_records fx       cursor=c1:fx:100      -> 50 records
-step   7 list_records fx       cursor=c1:fx:150      -> 33 records
+step   2 list_records invoices cursor=c1:invoices:50 -> 46 records
+step   3 list_records payments cursor=None           -> 50 records
+step   4 list_records payments cursor=c1:payments:50 -> 3 records
+step   5 list_records fx       cursor=None           -> 50 records
+step   6 list_records fx       cursor=c1:fx:50       -> 50 records
+step   7 list_records fx       cursor=c1:fx:100      -> 22 records
 step   8 list_records ledger   cursor=None           -> 50 records
 step   9 list_records ledger   cursor=c1:ledger:50   -> 50 records
 step  10 list_records ledger   cursor=c1:ledger:100  -> 50 records
@@ -15,15 +15,11 @@ step  13 list_records ledger   cursor=c1:ledger:250  -> 50 records
 step  14 list_records ledger   cursor=c1:ledger:300  -> 50 records
 step  15 list_records ledger   cursor=c1:ledger:350  -> 50 records
 step  16 list_records ledger   cursor=c1:ledger:400  -> 50 records
-step  17 list_records ledger   cursor=c1:ledger:450  -> 50 records
-step  18 list_records ledger   cursor=c1:ledger:500  -> 42 records
-step  19 submit: 7 findings
-   - duplicate_invoice    INV-254920,INV-868052               1379297 EUR  evidence=DOC-496d7e52,DOC-aa29db46,ROW-ec0eed51,ROW-69600801
-   - unallocated_payment  INV-554953,PAY-494700                252000 JPY  evidence=DOC-c02c883d,ROW-335bf514
-   - fx_misconversion     INV-316470                             8530 EUR  evidence=DOC-5903258a,ROW-ae43ab59,FX-2026-06-01-JPY-EUR
-   - fx_misconversion     PAY-650012                              685 EUR  evidence=DOC-8559b415,ROW-e51dfee7,FX-2026-05-06-JPY-EUR
-   - fx_misconversion     PAY-494700                             3362 EUR  evidence=DOC-c02c883d,ROW-71d5e772,FX-2026-05-29-JPY-EUR
-   - period_cutoff        INV-836585                          1010800 EUR  evidence=DOC-8e984eea,ROW-9209eaea
-   - period_cutoff        INV-316470                          1561568 EUR  evidence=DOC-5903258a,ROW-ae43ab59
-reward=0.964  P=1.00 R=1.00 F1=1.00  TP=7 FP=0 FN=0  inspection_steps=18
-truth (closed, shown for the demo only): [('duplicate_invoice', ['INV-254920', 'INV-868052']), ('fx_misconversion', ['INV-316470']), ('fx_misconversion', ['PAY-494700']), ('fx_misconversion', ['PAY-650012']), ('period_cutoff', ['INV-316470']), ('period_cutoff', ['INV-836585']), ('unallocated_payment', ['INV-554953', 'PAY-494700'])]
+step  17 list_records ledger   cursor=c1:ledger:450  -> 4 records
+step  18 submit: 4 findings
+   - unallocated_payment  INV-139006,PAY-973550               1185699 USD  evidence=DOC-dcaf967c,ROW-ac488c88
+   - fx_misconversion     INV-585124                          1024650 KZT  evidence=DOC-fd97306c,ROW-b3b937d0,FX-2025-04-01-CHF-KZT
+   - fx_misconversion     PAY-973550                          2713654 KZT  evidence=DOC-dcaf967c,ROW-435e127d,FX-2025-03-28-USD-KZT
+   - period_cutoff        INV-585124                        184136139 KZT  evidence=DOC-fd97306c,ROW-b3b937d0
+reward=0.966  P=1.00 R=1.00 F1=1.00  TP=4 FP=0 FN=0  inspection_steps=17
+truth (closed, shown for the demo only): [('fx_misconversion', ['INV-585124']), ('fx_misconversion', ['PAY-973550']), ('period_cutoff', ['INV-585124']), ('unallocated_payment', ['INV-139006', 'PAY-973550'])]

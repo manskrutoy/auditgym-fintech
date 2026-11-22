@@ -1,8 +1,8 @@
 {
-  "clean_ledger_lines": 363,
+  "clean_ledger_lines": 556,
   "clean_trial_balance": {
-    "credit_minor": 123663187,
-    "debit_minor": 123663187
+    "credit_minor": 98336039,
+    "debit_minor": 98336039
   },
   "config": {
     "base_currency": null,
@@ -12,6 +12,10 @@
         2
       ],
       "boundary_documents": [
+        1,
+        3
+      ],
+      "boundary_payments": [
         1,
         3
       ],
@@ -82,78 +86,87 @@
     "preset": "clean",
     "subsequent_days": 5
   },
-  "dirty_ledger_lines": 363,
+  "dirty_ledger_lines": 556,
   "distractor_tags": {
-    "invoice:boundary": 1,
-    "invoice:recurring": 8,
-    "invoice:repeated_amount": 2,
-    "payment:advance": 2,
-    "payment:multi": 4,
+    "invoice:boundary": 3,
+    "invoice:boundary_payment": 3,
+    "invoice:recurring": 2,
+    "payment:boundary_payment": 2,
+    "payment:dup_payment": 1,
+    "payment:multi": 6,
+    "payment:refund": 1,
+    "payment:refunded": 1,
     "payment:split": 4,
-    "payment:unidentified": 1
+    "payment:was_duplicated": 1
   },
   "document_tags": {
-    "INV-257308": [
+    "INV-072631": [
+      "boundary_payment"
+    ],
+    "INV-333207": [
       "recurring"
     ],
-    "INV-343303": [
+    "INV-432349": [
+      "recurring"
+    ],
+    "INV-497447": [
       "boundary"
     ],
-    "INV-457433": [
-      "recurring"
-    ],
     "INV-540854": [
-      "recurring"
+      "boundary"
     ],
-    "INV-588500": [
-      "recurring",
-      "repeated_amount"
+    "INV-557383": [
+      "boundary"
     ],
-    "INV-606287": [
-      "recurring"
+    "INV-597378": [
+      "boundary_payment"
     ],
-    "INV-726474": [
-      "recurring"
+    "INV-852601": [
+      "boundary_payment"
     ],
-    "INV-766625": [
-      "recurring"
-    ],
-    "INV-856452": [
-      "recurring",
-      "repeated_amount"
-    ],
-    "PAY-037622": [
-      "split"
-    ],
-    "PAY-061230": [
-      "advance"
-    ],
-    "PAY-103490": [
-      "unidentified"
-    ],
-    "PAY-145106": [
-      "advance"
-    ],
-    "PAY-264931": [
-      "split"
-    ],
-    "PAY-269421": [
-      "split"
-    ],
-    "PAY-438321": [
+    "PAY-015086": [
       "multi"
     ],
-    "PAY-475063": [
-      "multi"
-    ],
-    "PAY-623447": [
-      "multi"
-    ],
-    "PAY-806810": [
-      "multi"
-    ],
-    "PAY-971976": [
+    "PAY-068718": [
       "split"
+    ],
+    "PAY-156511": [
+      "was_duplicated"
+    ],
+    "PAY-175433": [
+      "boundary_payment",
+      "multi"
+    ],
+    "PAY-224797": [
+      "split"
+    ],
+    "PAY-459092": [
+      "multi"
+    ],
+    "PAY-504593": [
+      "multi"
+    ],
+    "PAY-543691": [
+      "split"
+    ],
+    "PAY-754076": [
+      "split"
+    ],
+    "PAY-778220": [
+      "dup_payment",
+      "refunded"
+    ],
+    "PAY-797539": [
+      "multi"
+    ],
+    "PAY-930693": [
+      "boundary_payment"
+    ],
+    "PAY-977377": [
+      "refund"
+    ],
+    "PAY-984226": [
+      "multi"
     ]
   },
   "env_version": "1.0.0",
@@ -162,18 +175,17 @@
   "mutations": [],
   "seed": 20011,
   "world": {
-    "base": "JPY",
-    "customers": 10,
+    "base": "EUR",
+    "customers": 6,
     "foreign_currencies": [
-      "CNY",
-      "GBP",
-      "KWD"
+      "KWD",
+      "KZT"
     ],
-    "offset": "-05:00",
+    "offset": "+06:00",
     "period": [
-      "2025-11-01",
-      "2025-11-30"
+      "2026-02-01",
+      "2026-02-28"
     ],
-    "rounding": "half_up"
+    "rounding": "half_even"
   }
 }

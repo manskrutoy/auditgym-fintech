@@ -1,29 +1,28 @@
 {
-  "base_currency": "GBP",
-  "company_name": "Willow Optics Co",
+  "base_currency": "KZT",
+  "company_name": "Nomad Optics Ltd",
   "counts": {
-    "documents": 115,
-    "fx_rates": 183,
-    "invoices": 71,
-    "ledger_rows": 316,
-    "payments": 44
+    "documents": 148,
+    "fx_rates": 186,
+    "invoices": 96,
+    "ledger_rows": 521,
+    "payments": 52
   },
   "currency_exponents": {
-    "CHF": 2,
-    "GBP": 2,
     "JPY": 0,
+    "KWD": 3,
     "KZT": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-0846366670a6",
-  "ledger_window_end": "2026-11-05",
-  "period_end": "2026-10-31",
-  "period_start": "2026-10-01",
+  "episode_id": "ep-3dc9895d8942",
+  "ledger_window_end": "2025-08-05",
+  "period_end": "2025-07-31",
+  "period_start": "2025-07-01",
   "rounding": {
     "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "-05:00"
+  "timezone": "+00:00"
 }

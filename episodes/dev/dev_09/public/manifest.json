@@ -1,27 +1,27 @@
 {
-  "base_currency": "GBP",
-  "company_name": "Tengri Mining Co",
+  "base_currency": "JPY",
+  "company_name": "Zenith Media JSC",
   "counts": {
-    "documents": 123,
-    "fx_rates": 62,
-    "invoices": 81,
-    "ledger_rows": 532,
-    "payments": 42
+    "documents": 100,
+    "fx_rates": 118,
+    "invoices": 66,
+    "ledger_rows": 282,
+    "payments": 34
   },
   "currency_exponents": {
     "GBP": 2,
     "JPY": 0
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-34f7289f2618",
-  "ledger_window_end": "2026-11-05",
-  "period_end": "2026-10-31",
-  "period_start": "2026-10-01",
+  "episode_id": "ep-e28f29dc21f6",
+  "ledger_window_end": "2025-07-05",
+  "period_end": "2025-06-30",
+  "period_start": "2025-06-01",
   "rounding": {
     "fx_conversion": "half_even",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+00:00"
+  "timezone": "+06:00"
 }

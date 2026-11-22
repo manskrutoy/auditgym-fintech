@@ -1,27 +1,28 @@
 {
-  "base_currency": "KZT",
-  "company_name": "Delta Mining SA",
+  "base_currency": "EUR",
+  "company_name": "Willow Studios Ltd",
   "counts": {
-    "documents": 138,
-    "fx_rates": 59,
-    "invoices": 90,
-    "ledger_rows": 914,
-    "payments": 48
+    "documents": 175,
+    "fx_rates": 124,
+    "invoices": 116,
+    "ledger_rows": 1541,
+    "payments": 59
   },
   "currency_exponents": {
-    "KWD": 3,
-    "KZT": 2
+    "EUR": 2,
+    "JPY": 0,
+    "KWD": 3
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-bc104f467749",
-  "ledger_window_end": "2025-03-05",
-  "period_end": "2025-02-28",
-  "period_start": "2025-02-01",
+  "episode_id": "ep-9128e2997d92",
+  "ledger_window_end": "2025-11-05",
+  "period_end": "2025-10-31",
+  "period_start": "2025-10-01",
   "rounding": {
     "fx_conversion": "half_even",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+01:00"
+  "timezone": "-05:00"
 }

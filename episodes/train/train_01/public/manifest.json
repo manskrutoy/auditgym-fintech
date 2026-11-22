@@ -1,28 +1,29 @@
 {
-  "base_currency": "JPY",
-  "company_name": "Borealis Logistics LLP",
+  "base_currency": "EUR",
+  "company_name": "Orbit Media SA",
   "counts": {
-    "documents": 56,
-    "fx_rates": 183,
-    "invoices": 38,
-    "ledger_rows": 282,
-    "payments": 18
+    "documents": 147,
+    "fx_rates": 186,
+    "invoices": 92,
+    "ledger_rows": 401,
+    "payments": 55
   },
   "currency_exponents": {
-    "CHF": 2,
     "CNY": 2,
-    "JPY": 0
+    "EUR": 2,
+    "GBP": 2,
+    "KWD": 3
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-dfb300d1a4dd",
-  "ledger_window_end": "2025-08-05",
-  "period_end": "2025-07-31",
-  "period_start": "2025-07-01",
+  "episode_id": "ep-3f1b1baf030b",
+  "ledger_window_end": "2025-06-05",
+  "period_end": "2025-05-31",
+  "period_start": "2025-05-01",
   "rounding": {
     "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+00:00"
+  "timezone": "+06:00"
 }

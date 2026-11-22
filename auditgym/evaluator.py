@@ -17,16 +17,65 @@ from .policies.scripted import Oracle
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+_SANDBOX = None
+_POLICY_FILES = ["__init__.py", "constants.py", "money.py", "worker.py",
+                 "policies/__init__.py", "policies/base.py", "policies/scripted.py"]
+
+
+def policy_sandbox():
+    """A temp directory holding ONLY the policy code (no generator, env, episodes, configs).
+    Workers run from there with `python -I -S`, so they cannot import the generator or read
+    project files through the package path."""
+    global _SANDBOX
+    if _SANDBOX is None or not os.path.isdir(_SANDBOX):
+        d = tempfile.mkdtemp(prefix="auditgym-policy-")
+        for rel in _POLICY_FILES:
+            dst = os.path.join(d, "auditgym", rel)
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            with open(os.path.join(ROOT, "auditgym", rel), "rb") as fi, open(dst, "wb") as fo:
+                fo.write(fi.read())
+        with open(os.path.join(d, "run_worker.py"), "w") as f:
+            f.write("import sys\nsys.path.insert(0, %r)\nfrom auditgym.worker import main\nmain()\n" % d)
+        for root, dirs, files in os.walk(d):
+            os.chmod(root, 0o755)
+            for fn in files:
+                os.chmod(os.path.join(root, fn), 0o644)
+        _SANDBOX = d
+    return _SANDBOX
+
+
+def _drop_privileges():
+    """When the evaluator runs as root (e.g. in the official container), each policy process
+    runs as `nobody`: it cannot read the evaluator's private files (mode 700), its environment
+    or /proc, nor write into the project."""
+    if hasattr(os, "geteuid") and os.geteuid() == 0:
+        os.setgroups([])
+        os.setgid(65534)
+        os.setuid(65534)
+
+
+def protect_private(root=ROOT):
+    """Make closed episode files unreadable for policy processes (they run as `nobody`)."""
+    base = os.path.join(root, "episodes")
+    for dirpath, dirnames, _ in os.walk(base):
+        if os.path.basename(dirpath) == "private":
+            try:
+                os.chmod(dirpath, 0o700)
+            except OSError:
+                pass
+
+
 class WorkerProcess:
     def __init__(self, policy, seed=0):
-        env = {k: v for k, v in os.environ.items() if not k.startswith("AUDITGYM")}
-        env["PYTHONHASHSEED"] = "0"
-        env["PYTHONPATH"] = ROOT
+        sandbox = policy_sandbox()
+        protect_private()
+        env = {"PATH": "/usr/bin:/bin", "PYTHONHASHSEED": "0", "PYTHONDONTWRITEBYTECODE": "1"}
         self.proc = subprocess.Popen(
-            [sys.executable, "-B", "-m", "auditgym.worker", "--policy", policy, "--seed", str(seed)],
+            [sys.executable, "-I", "-S", "-B", os.path.join(sandbox, "run_worker.py"),
+             "--policy", policy, "--seed", str(seed)],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
-            cwd=tempfile.gettempdir(),     # cwd without any episode data
-            env=env, text=True, bufsize=1,
+            cwd=sandbox, env=env, text=True, bufsize=1,
+            preexec_fn=_drop_privileges if os.name == "posix" else None,
         )
         self.sel = selectors.DefaultSelector()
         self.sel.register(self.proc.stdout, selectors.EVENT_READ)

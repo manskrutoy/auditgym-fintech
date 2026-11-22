@@ -13,6 +13,7 @@ from typing import List, Optional
 
 from .constants import CURRENCY_EXPONENTS, DOC_OFFSETS
 from .timeutil import iso, tz
+from .world import doc_time
 
 
 class InjectionError(RuntimeError):
@@ -72,9 +73,12 @@ class Injector:
         out.sort(key=lambda i: i.key)
         return out
 
-    def when(self, d, lo=8, hi=18):
-        """Random local time on day d (random seconds, like every other document)."""
+    def when(self, d, lo=None, hi=None):
+        """Local time on day d drawn from the SAME distribution as world documents
+        (invoices: doc_time; payments: 7-20h)."""
         r = self.rng
+        if lo is None:
+            return doc_time(r, self.w, d)
         return self.w.local_dt(d, r.randint(lo, hi), r.randint(0, 59), r.randint(0, 59))
 
     def new_invoice(self, cust, local_dt, kind, tags):
@@ -182,8 +186,10 @@ class Injector:
             invs.append(self.new_invoice(cust, self.when(d), "period", []))
         last = max(w.ldate(i.issued_at) for i in invs)
         if pay_day is None:
-            pay_day = min(w.period_end, last + timedelta(days=rng.randint(1, 7)))
-        when = self.when(pay_day, 9, 19)
+            pay_day = last + timedelta(days=rng.randint(1, 7))
+            if pay_day > w.period_end:          # no pile-up on the last day of the period
+                pay_day = last + timedelta(days=rng.randint(0, max(0, (w.period_end - last).days)))
+        when = self.when(pay_day, 7, 20)
         refs = sorted([[i.key, i.total] for i in invs], key=lambda r: (w.invoices[r[0]].issued_at, r[0]))
         p = self.new_payment(cust, when, sum(r[1] for r in refs), refs, ["multi"] if n_invoices > 1 else [])
         return p
@@ -276,7 +282,8 @@ class Injector:
     # ------------------------------------------------------------------ 4. cut-off
     def _boundary_invoice(self, cust, day, early_h, late_h, tz_trick):
         rng, w = self.rng, self.w
-        local = w.local_dt(day, rng.randint(early_h, late_h), rng.randint(5, 55), rng.randint(0, 59))
+        local = doc_time(rng, w, day) if early_h is None else \
+            w.local_dt(day, rng.randint(early_h, late_h), rng.randint(5, 55), rng.randint(0, 59))
         inv = self.new_invoice(cust, local, self.b.kind_of(local), [])
         if tz_trick:
             # show the timestamp in a far-west offset: its printed calendar date looks in-period
@@ -297,7 +304,7 @@ class Injector:
             cands.sort(key=lambda i: i.key)
             if not cands or rng.random() < 0.5:
                 cands = [self._boundary_invoice(self.pick_customer(), w.period_end + timedelta(days=rng.choice([1, 1, 2])),
-                                                0, 9, rng.random() < 0.5)]
+                                                None, None, rng.random() < 0.5)]
             inv = rng.choice(cands)
             post = w.local_dt(w.period_end, rng.randint(17, 23), rng.randint(0, 58), rng.randint(0, 59))
         else:
@@ -305,7 +312,7 @@ class Injector:
                      if w.ldate(i.issued_at) >= w.period_end - timedelta(days=2)]
             if not cands or rng.random() < 0.4:
                 cands = [self._boundary_invoice(self.pick_customer(), w.period_end - timedelta(days=rng.randint(0, 1)),
-                                                9, 22, False)]
+                                                None, None, False)]
             inv = rng.choice(cands)
             pd = w.period_end + timedelta(days=rng.randint(1, max(1, (w.window_end - w.period_end).days - 1)))
             post = w.local_dt(pd, rng.randint(8, 18), rng.randint(0, 59), rng.randint(0, 59))
@@ -333,7 +340,8 @@ class Injector:
         rng, w = self.rng, self.w
         for _attempt in range(10):
             c = self.pick_customer(foreign=True)
-            p = self._fresh_payment(c, 2, pay_day=w.period_end, early_days=max(0, (w.period_end - w.period_start).days - 6))
+            p = self._fresh_payment(c, 2, pay_day=w.period_end - timedelta(days=rng.choice([0, 0, 1])),
+                                    early_days=max(0, (w.period_end - w.period_start).days - 6))
             correct = w.ldate(p.timestamp)
             cands = [("next_day_value_date", correct + timedelta(days=1)),
                      ("utc_calendar_date", p.timestamp.astimezone(tz(0)).date()),
@@ -359,7 +367,7 @@ class Injector:
         rng, w = self.rng, self.w
         for _attempt in range(10):
             c = self.pick_customer(foreign=True)
-            inv = self._boundary_invoice(c, w.period_end + timedelta(days=1), 0, 6, rng.random() < 0.6)
+            inv = self._boundary_invoice(c, w.period_end + timedelta(days=1), None, None, rng.random() < 0.6)
             post = w.local_dt(w.period_end, rng.randint(18, 23), rng.randint(0, 58), rng.randint(0, 59))
             correct = w.ldate(inv.issued_at)
             cands = [("posting_date", w.period_end)] + [

@@ -42,3 +42,33 @@ class TestIsolation(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestHardening(unittest.TestCase):
+    def test_evaluator_secret_changes_world_and_is_deterministic(self):
+        import os
+        from auditgym.generator import generate_episode
+        base = generate_episode(123, {"preset": "single"})
+        os.environ["AUDITGYM_SECRET"] = "closed-eval-secret"
+        try:
+            a = generate_episode(123, {"preset": "single"})
+            b = generate_episode(123, {"preset": "single"})
+        finally:
+            del os.environ["AUDITGYM_SECRET"]
+        self.assertEqual(a.full_hash(), b.full_hash())
+        self.assertNotEqual(a.full_hash(), base.full_hash())
+        self.assertNotEqual(a.episode_id, base.episode_id)
+
+    def test_worker_sandbox_has_only_policy_code(self):
+        import os
+        import subprocess
+        import sys
+        from auditgym.evaluator import _drop_privileges, policy_sandbox
+        d = policy_sandbox()
+        files = sorted(os.path.relpath(os.path.join(r, f), d) for r, _, fs in os.walk(d) for f in fs)
+        self.assertNotIn(os.path.join("auditgym", "generator.py"), files)
+        self.assertNotIn(os.path.join("auditgym", "env.py"), files)
+        code = "import sys; sys.path.insert(0, %r)\ntry:\n import auditgym.generator; print('LEAK')\nexcept ImportError: print('ok')" % d
+        r = subprocess.run([sys.executable, "-I", "-S", "-c", code], capture_output=True, text=True, cwd=d,
+                           env={"PATH": "/usr/bin:/bin", "AUDITGYM_SECRET": ""}, preexec_fn=_drop_privileges)
+        self.assertEqual(r.stdout.strip(), "ok")

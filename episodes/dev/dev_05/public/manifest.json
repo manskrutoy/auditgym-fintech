@@ -1,28 +1,27 @@
 {
   "base_currency": "KZT",
-  "company_name": "Horizon Optics LLP",
+  "company_name": "Lumen Software GmbH",
   "counts": {
-    "documents": 87,
-    "fx_rates": 180,
-    "invoices": 54,
-    "ledger_rows": 410,
-    "payments": 33
+    "documents": 147,
+    "fx_rates": 60,
+    "invoices": 96,
+    "ledger_rows": 557,
+    "payments": 51
   },
   "currency_exponents": {
     "CNY": 2,
-    "GBP": 2,
     "KZT": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-dbb73328cb23",
+  "episode_id": "ep-df48bb8d7eb7",
   "ledger_window_end": "2026-01-05",
   "period_end": "2025-12-31",
   "period_start": "2025-12-01",
   "rounding": {
-    "fx_conversion": "half_even",
+    "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+01:00"
+  "timezone": "-05:00"
 }

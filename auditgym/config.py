@@ -2,7 +2,9 @@
 
 import copy
 import hashlib
+import hmac
 import json
+import os
 import random
 
 from .constants import BASE_CURRENCIES, INTERACTIONS, ISSUE_TYPES
@@ -25,6 +27,7 @@ DEFAULTS = {
         "advances": [0, 2],
         "unidentified_receipts": [0, 2],
         "boundary_documents": [1, 3],
+        "boundary_payments": [1, 3],
     },
     "id_seed": None,                # None -> derived from episode seed
     "order_seed": None,             # None -> canonical (chronological) order
@@ -138,9 +141,22 @@ def config_hash(cfg) -> str:
     return hashlib.sha256(canonical_json(cfg).encode()).hexdigest()[:16]
 
 
+def evaluator_secret() -> str:
+    """Optional evaluator-only secret (env AUDITGYM_SECRET).  When set, it is mixed into every
+    RNG stream and into episode_id, so a policy that sees public records cannot brute-force the
+    seed and regenerate the truth.  Empty for the open train/dev episodes (public by design).
+    Policy worker processes never receive AUDITGYM_* variables."""
+    return os.environ.get("AUDITGYM_SECRET", "")
+
+
 def sub_rng(*parts) -> random.Random:
-    """Independent deterministic RNG stream derived from the given parts."""
-    h = hashlib.sha256("|".join(str(p) for p in parts).encode()).hexdigest()
+    """Independent deterministic RNG stream derived from the given parts (+ evaluator secret)."""
+    msg = "|".join(str(p) for p in parts).encode()
+    secret = evaluator_secret()
+    if secret:
+        h = hmac.new(secret.encode(), msg, hashlib.sha256).hexdigest()
+    else:
+        h = hashlib.sha256(msg).hexdigest()
     return random.Random(int(h, 16))
 
 

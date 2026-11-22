@@ -1,41 +1,39 @@
 {
-  "episode_id": "ep-4672a10626b5",
+  "episode_id": "ep-162c4857c5a5",
   "issues": [
     {
       "affected_ids": [
-        "INV-556253",
-        "INV-831187"
+        "PAY-476034"
       ],
-      "amount_tolerance_minor": 0,
-      "currency": "EUR",
+      "amount_tolerance_minor": 1,
+      "currency": "USD",
       "evidence_sets": [
         [
-          "DOC-1cc17161",
-          "DOC-aa50be37",
-          "ROW-1c5bc50e",
-          "ROW-c50f2f5c"
+          "DOC-203ade12",
+          "FX-2026-01-30-CNY-USD",
+          "ROW-513f83d1"
         ]
       ],
-      "expected_amount_minor": 654800,
+      "expected_amount_minor": 1417,
       "interaction_group": null,
-      "issue_id": "ep-4672a10626b5-I01",
-      "type": "duplicate_invoice"
+      "issue_id": "ep-162c4857c5a5-I01",
+      "type": "fx_misconversion"
     },
     {
       "affected_ids": [
-        "INV-119584"
+        "INV-286700"
       ],
       "amount_tolerance_minor": 0,
-      "currency": "EUR",
+      "currency": "USD",
       "evidence_sets": [
         [
-          "DOC-24229c96",
-          "ROW-f2c75e84"
+          "DOC-bf402422",
+          "ROW-df1ef78a"
         ]
       ],
-      "expected_amount_minor": 98200,
+      "expected_amount_minor": 326400,
       "interaction_group": null,
-      "issue_id": "ep-4672a10626b5-I02",
+      "issue_id": "ep-162c4857c5a5-I02",
       "type": "period_cutoff"
     }
   ],

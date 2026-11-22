@@ -1,28 +1,27 @@
 {
-  "base_currency": "JPY",
-  "company_name": "Baikonur Energy SA",
+  "base_currency": "EUR",
+  "company_name": "Lumen Optics SA",
   "counts": {
-    "documents": 116,
-    "fx_rates": 180,
-    "invoices": 79,
-    "ledger_rows": 363,
-    "payments": 37
+    "documents": 68,
+    "fx_rates": 118,
+    "invoices": 45,
+    "ledger_rows": 556,
+    "payments": 23
   },
   "currency_exponents": {
-    "CNY": 2,
-    "JPY": 0,
-    "KWD": 3
+    "EUR": 2,
+    "KZT": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-2bfcc169fb19",
-  "ledger_window_end": "2025-12-05",
-  "period_end": "2025-11-30",
-  "period_start": "2025-11-01",
+  "episode_id": "ep-2e96b5cc7a42",
+  "ledger_window_end": "2026-03-05",
+  "period_end": "2026-02-28",
+  "period_start": "2026-02-01",
   "rounding": {
-    "fx_conversion": "half_up",
+    "fx_conversion": "half_even",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "-05:00"
+  "timezone": "+06:00"
 }

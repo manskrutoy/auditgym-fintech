@@ -1,27 +1,28 @@
 {
-  "base_currency": "JPY",
-  "company_name": "Esil Optics Co",
+  "base_currency": "USD",
+  "company_name": "Riverbend Logistics SA",
   "counts": {
-    "documents": 74,
-    "fx_rates": 60,
-    "invoices": 47,
-    "ledger_rows": 277,
-    "payments": 27
+    "documents": 72,
+    "fx_rates": 177,
+    "invoices": 52,
+    "ledger_rows": 586,
+    "payments": 20
   },
   "currency_exponents": {
     "JPY": 0,
-    "KWD": 3
+    "KWD": 3,
+    "USD": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-626042f6471a",
-  "ledger_window_end": "2025-10-05",
-  "period_end": "2025-09-30",
-  "period_start": "2025-09-01",
+  "episode_id": "ep-94a55359c4f9",
+  "ledger_window_end": "2026-03-05",
+  "period_end": "2026-02-28",
+  "period_start": "2026-02-01",
   "rounding": {
-    "fx_conversion": "half_even",
+    "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+03:00"
+  "timezone": "+09:00"
 }

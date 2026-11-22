@@ -225,6 +225,14 @@ def _random_local_time(rng, w: World, d: date, early=8, late=19) -> datetime:
     return w.local_dt(d, rng.randint(early, late), rng.randint(0, 59), rng.randint(0, 59))
 
 
+def doc_time(rng, w: World, d: date) -> datetime:
+    """Issue time of an invoice: mostly business hours, a quarter at any hour of the day.
+    World documents AND injected documents use this same distribution (no hour tells)."""
+    if rng.random() < 0.25:
+        return w.local_dt(d, rng.randint(0, 23), rng.randint(0, 59), rng.randint(0, 59))
+    return _random_local_time(rng, w, d, 8, 19)
+
+
 class Builder:
     """Builds a clean world.  All randomness comes from the given rng."""
 
@@ -348,26 +356,26 @@ class Builder:
                 lines = [{"description": label, "quantity": 1,
                           "unit_price_minor": c.recurring["unit_price_minor"],
                           "amount_minor": c.recurring["unit_price_minor"]}]
-                self.add_invoice(c, _random_local_time(rng, w, d), self.kind_of(w.local_dt(d, 12, 0)), lines, ["recurring"])
+                self.add_invoice(c, doc_time(rng, w, d), self.kind_of(w.local_dt(d, 12, 0)), lines, ["recurring"])
             # a second same-amount service in the same month: legitimate repeated amount
             if rng.random() < 0.5:
                 d = w.period_start + timedelta(days=rng.randint(0, days))
                 lines = [{"description": "%s (additional site) — %04d-%02d" % (c.recurring["description"], d.year, d.month),
                           "quantity": 1, "unit_price_minor": c.recurring["unit_price_minor"],
                           "amount_minor": c.recurring["unit_price_minor"]}]
-                self.add_invoice(c, _random_local_time(rng, w, d), "period", lines, ["recurring", "repeated_amount"])
+                self.add_invoice(c, doc_time(rng, w, d), "period", lines, ["recurring", "repeated_amount"])
         # opening (prior period, still open at period start)
         for _ in range(max(3, n // 6)):
             d = w.period_start - timedelta(days=rng.randint(1, 45))
-            self.add_invoice(rng.choice(custs), _random_local_time(rng, w, d), "opening")
+            self.add_invoice(rng.choice(custs), doc_time(rng, w, d), "opening")
         # in-period invoices
         for _ in range(n):
             d = w.period_start + timedelta(days=rng.randint(0, days))
-            self.add_invoice(rng.choice(custs), _random_local_time(rng, w, d), "period")
+            self.add_invoice(rng.choice(custs), doc_time(rng, w, d), "period")
         # subsequent-window invoices (correctly booked after the period)
         for _ in range(max(1, n // 12)):
             d = w.period_end + timedelta(days=rng.randint(1, cfg["subsequent_days"]))
-            self.add_invoice(rng.choice(custs), _random_local_time(rng, w, d), "subsequent")
+            self.add_invoice(rng.choice(custs), doc_time(rng, w, d), "subsequent")
         # boundary distractors: correct documents right at the period edges, shown in
         # other UTC offsets so that the naive (non-local) calendar date is misleading
         for _ in range(sample_range(rng, cfg["distractors"]["boundary_documents"])):
@@ -485,6 +493,20 @@ class Builder:
             self.add_payment(cust, _random_local_time(rng, w, d3, 7, 20), p.currency, -p.amount, None, "refund", ["refund"])
             p.tags.append("was_duplicated")
             dup.tags.append("refunded")
+        # payments received on the last days of the period (several invoices, foreign when
+        # possible), correctly applied: same shape as the boundary interaction scenario
+        foreign = [c for c in custs if c.currency != w.base] or custs
+        for _ in range(sample_range(rng, cfg["distractors"]["boundary_payments"])):
+            c = rng.choice(foreign)
+            span = max(0, (w.period_end - w.period_start).days - 3)
+            invs = []
+            for _ in range(rng.choice([1, 2, 2, 3])):
+                d = w.period_start + timedelta(days=rng.randint(0, span))
+                invs.append(self.add_invoice(c, doc_time(rng, w, d), "period", tags=["boundary_payment"]))
+            pay_day = w.period_end - timedelta(days=rng.choice([0, 0, 1]))
+            refs = sorted([[i.key, i.total] for i in invs], key=lambda r: (w.invoices[r[0]].issued_at, r[0]))
+            self.add_payment(c, _random_local_time(rng, w, pay_day, 7, 20), c.currency, sum(r[1] for r in refs),
+                             refs, "settlement", ["boundary_payment"] + (["multi"] if len(refs) > 1 else []))
         # customer advances (prepayments without remittance)
         days = (w.period_end - w.period_start).days
         for _ in range(sample_range(rng, cfg["distractors"]["advances"])):

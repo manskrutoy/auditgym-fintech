@@ -1,28 +1,28 @@
 {
   "base_currency": "JPY",
-  "company_name": "Steppe Robotics JSC",
+  "company_name": "Falcon Logistics GmbH",
   "counts": {
-    "documents": 84,
-    "fx_rates": 180,
-    "invoices": 52,
-    "ledger_rows": 561,
-    "payments": 32
+    "documents": 127,
+    "fx_rates": 120,
+    "invoices": 84,
+    "ledger_rows": 353,
+    "payments": 43
   },
   "currency_exponents": {
-    "EUR": 2,
+    "CHF": 2,
     "JPY": 0,
-    "KZT": 2
+    "KWD": 3
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-8af178b033b6",
-  "ledger_window_end": "2026-07-05",
-  "period_end": "2026-06-30",
-  "period_start": "2026-06-01",
+  "episode_id": "ep-3b5d2afaf63a",
+  "ledger_window_end": "2026-09-05",
+  "period_end": "2026-08-31",
+  "period_start": "2026-08-01",
   "rounding": {
     "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+06:00"
+  "timezone": "+01:00"
 }

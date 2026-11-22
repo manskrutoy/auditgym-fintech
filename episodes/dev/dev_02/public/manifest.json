@@ -1,23 +1,23 @@
 {
-  "base_currency": "GBP",
-  "company_name": "Horizon Energy JSC",
+  "base_currency": "EUR",
+  "company_name": "Esil Freight SA",
   "counts": {
-    "documents": 79,
-    "fx_rates": 124,
-    "invoices": 52,
-    "ledger_rows": 275,
-    "payments": 27
+    "documents": 103,
+    "fx_rates": 122,
+    "invoices": 71,
+    "ledger_rows": 382,
+    "payments": 32
   },
   "currency_exponents": {
-    "CHF": 2,
-    "GBP": 2,
+    "CNY": 2,
+    "EUR": 2,
     "KZT": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-e09849d93004",
-  "ledger_window_end": "2025-09-05",
-  "period_end": "2025-08-31",
-  "period_start": "2025-08-01",
+  "episode_id": "ep-62fd8f71b0aa",
+  "ledger_window_end": "2026-01-05",
+  "period_end": "2025-12-31",
+  "period_start": "2025-12-01",
   "rounding": {
     "fx_conversion": "half_even",
     "fx_rate_format": "decimal string",

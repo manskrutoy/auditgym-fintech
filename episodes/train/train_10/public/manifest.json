@@ -1,25 +1,26 @@
 {
   "base_currency": "JPY",
-  "company_name": "Caspian Optics SA",
+  "company_name": "Willow Textiles GmbH",
   "counts": {
-    "documents": 107,
+    "documents": 200,
     "fx_rates": 186,
-    "invoices": 77,
-    "ledger_rows": 1645,
-    "payments": 30
+    "invoices": 133,
+    "ledger_rows": 1383,
+    "payments": 67
   },
   "currency_exponents": {
-    "EUR": 2,
+    "GBP": 2,
     "JPY": 0,
-    "KZT": 2
+    "KWD": 3,
+    "USD": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-3b589f6e6c00",
-  "ledger_window_end": "2025-11-05",
-  "period_end": "2025-10-31",
-  "period_start": "2025-10-01",
+  "episode_id": "ep-632f16592f64",
+  "ledger_window_end": "2025-09-05",
+  "period_end": "2025-08-31",
+  "period_start": "2025-08-01",
   "rounding": {
-    "fx_conversion": "half_up",
+    "fx_conversion": "half_even",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },

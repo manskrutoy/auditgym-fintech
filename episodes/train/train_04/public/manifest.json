@@ -1,28 +1,28 @@
 {
-  "base_currency": "GBP",
-  "company_name": "Riverbend Software JSC",
+  "base_currency": "JPY",
+  "company_name": "Steppe Systems Co",
   "counts": {
-    "documents": 84,
-    "fx_rates": 122,
-    "invoices": 56,
-    "ledger_rows": 299,
-    "payments": 28
+    "documents": 101,
+    "fx_rates": 120,
+    "invoices": 63,
+    "ledger_rows": 576,
+    "payments": 38
   },
   "currency_exponents": {
-    "CHF": 2,
     "GBP": 2,
-    "JPY": 0
+    "JPY": 0,
+    "USD": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-bf2c4e86a19c",
+  "episode_id": "ep-b69dbd9e9b51",
   "ledger_window_end": "2026-05-05",
   "period_end": "2026-04-30",
   "period_start": "2026-04-01",
   "rounding": {
-    "fx_conversion": "half_even",
+    "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+00:00"
+  "timezone": "-05:00"
 }

@@ -1,27 +1,28 @@
 {
-  "base_currency": "EUR",
-  "company_name": "Cobalt Freight SA",
+  "base_currency": "GBP",
+  "company_name": "Nova Labs SA",
   "counts": {
-    "documents": 130,
-    "fx_rates": 122,
-    "invoices": 92,
-    "ledger_rows": 527,
-    "payments": 38
+    "documents": 99,
+    "fx_rates": 124,
+    "invoices": 63,
+    "ledger_rows": 368,
+    "payments": 36
   },
   "currency_exponents": {
-    "EUR": 2,
-    "KZT": 2
+    "GBP": 2,
+    "KWD": 3,
+    "USD": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-e9a1ed6eb228",
-  "ledger_window_end": "2026-05-05",
-  "period_end": "2026-04-30",
-  "period_start": "2026-04-01",
+  "episode_id": "ep-468ec718552e",
+  "ledger_window_end": "2025-06-05",
+  "period_end": "2025-05-31",
+  "period_start": "2025-05-01",
   "rounding": {
-    "fx_conversion": "half_even",
+    "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+06:00"
+  "timezone": "+09:00"
 }

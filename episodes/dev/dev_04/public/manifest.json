@@ -1,29 +1,28 @@
 {
   "base_currency": "JPY",
-  "company_name": "Quartz Textiles GmbH",
+  "company_name": "Altyn Textiles LLP",
   "counts": {
-    "documents": 68,
-    "fx_rates": 183,
-    "invoices": 42,
-    "ledger_rows": 426,
-    "payments": 26
+    "documents": 148,
+    "fx_rates": 186,
+    "invoices": 95,
+    "ledger_rows": 446,
+    "payments": 53
   },
   "currency_exponents": {
-    "CNY": 2,
-    "EUR": 2,
+    "GBP": 2,
     "JPY": 0,
-    "USD": 2
+    "KWD": 3
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-507493f6683c",
-  "ledger_window_end": "2025-12-05",
-  "period_end": "2025-11-30",
-  "period_start": "2025-11-01",
+  "episode_id": "ep-3bdf2a465230",
+  "ledger_window_end": "2025-08-05",
+  "period_end": "2025-07-31",
+  "period_start": "2025-07-01",
   "rounding": {
-    "fx_conversion": "half_even",
+    "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+06:00"
+  "timezone": "+05:30"
 }

@@ -2,10 +2,11 @@
 
 import copy
 import hashlib
+import hmac
 from datetime import timedelta
 
 from . import money
-from .config import canonical_json, config_hash, normalize_config, sample_range, sub_rng
+from .config import canonical_json, config_hash, evaluator_secret, normalize_config, sample_range, sub_rng
 from .constants import (
     ACC_AR, ACC_CASH, CHART_OF_ACCOUNTS, CURRENCY_EXPONENTS, ENV_VERSION, INTERACTIONS,
     ISSUE_TYPES, SCHEMA_VERSION,
@@ -29,7 +30,9 @@ class InvariantError(RuntimeError):
 
 
 def episode_id_for(seed, cfg) -> str:
-    h = hashlib.sha256(("%s|%s|%s" % (ENV_VERSION, seed, config_hash(cfg))).encode()).hexdigest()
+    msg = ("%s|%s|%s" % (ENV_VERSION, seed, config_hash(cfg))).encode()
+    secret = evaluator_secret()
+    h = (hmac.new(secret.encode(), msg, hashlib.sha256) if secret else hashlib.sha256(msg)).hexdigest()
     return "ep-" + h[:12]
 
 
@@ -259,14 +262,21 @@ def _fx_id(date, src, dst):
 
 def _render(seed, cfg, attempt, w, lines, planned, clean_lines):
     id_seed = cfg["id_seed"] if cfg["id_seed"] is not None else seed
-    ids = _Ids(sub_rng("ids", ENV_VERSION, id_seed))
+    id_rng = sub_rng("ids", ENV_VERSION, id_seed)
+    ids = _Ids(id_rng)
     hexa = "0123456789abcdef"
-    cust_id = {k: ids.new("CUST", 5) for k in sorted(w.customers)}
-    vend_id = {k: ids.new("VEND", 5) for k in sorted(w.vendors)}
-    inv_id = {k: ids.new("INV", 6) for k in sorted(w.invoices)}
-    inv_doc = {k: ids.new("DOC", 8, hexa) for k in sorted(w.invoices)}
-    pay_id = {k: ids.new("PAY", 6) for k in sorted(w.payments)}
-    pay_doc = {k: ids.new("DOC", 8, hexa) for k in sorted(w.payments)}
+
+    def shuffled(keys):
+        # ids are drawn in a random order, so the id stream never reveals creation order
+        ks = sorted(keys)
+        id_rng.shuffle(ks)
+        return ks
+    cust_id = {k: ids.new("CUST", 5) for k in shuffled(w.customers)}
+    vend_id = {k: ids.new("VEND", 5) for k in shuffled(w.vendors)}
+    inv_id = {k: ids.new("INV", 6) for k in shuffled(w.invoices)}
+    inv_doc = {k: ids.new("DOC", 8, hexa) for k in shuffled(w.invoices)}
+    pay_id = {k: ids.new("PAY", 6) for k in shuffled(w.payments)}
+    pay_doc = {k: ids.new("DOC", 8, hexa) for k in shuffled(w.payments)}
     row_id = [ids.new("ROW", 8, hexa) for _ in lines]
 
     def ent(e):

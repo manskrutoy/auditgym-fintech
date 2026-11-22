@@ -1,24 +1,24 @@
 {
-  "base_currency": "GBP",
-  "company_name": "Baikonur Freight Ltd",
+  "base_currency": "KZT",
+  "company_name": "Quartz Studios LLC",
   "counts": {
-    "documents": 70,
+    "documents": 114,
     "fx_rates": 60,
-    "invoices": 48,
-    "ledger_rows": 369,
-    "payments": 22
+    "invoices": 69,
+    "ledger_rows": 428,
+    "payments": 45
   },
   "currency_exponents": {
-    "CNY": 2,
-    "GBP": 2
+    "CHF": 2,
+    "KZT": 2
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-c85ef99eb9ae",
-  "ledger_window_end": "2025-05-05",
-  "period_end": "2025-04-30",
-  "period_start": "2025-04-01",
+  "episode_id": "ep-865372529482",
+  "ledger_window_end": "2025-10-05",
+  "period_end": "2025-09-30",
+  "period_start": "2025-09-01",
   "rounding": {
-    "fx_conversion": "half_up",
+    "fx_conversion": "half_even",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },

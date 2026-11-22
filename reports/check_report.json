@@ -1,10 +1,10 @@
 {
   "env_version": "1.0.0",
-  "python": "3.13.18",
+  "python": "3.11.18",
   "platform": "Linux-6.18.44-fc-v726-x86_64-with-glibc2.39",
-  "started": "2026-11-22T12:47:44Z",
+  "started": "2026-11-22T12:51:12Z",
   "unit_tests": {
-    "ran": 62,
+    "ran": 64,
     "failures": 0,
     "errors": 0,
     "ok": true,
@@ -164,21 +164,21 @@
         "name": "train_04",
         "ok": true,
         "errors": [],
-        "issues": 3
+        "issues": 1
       },
       {
         "split": "train",
         "name": "train_05",
         "ok": true,
         "errors": [],
-        "issues": 4
+        "issues": 3
       },
       {
         "split": "train",
         "name": "train_06",
         "ok": true,
         "errors": [],
-        "issues": 4
+        "issues": 6
       },
       {
         "split": "train",
@@ -192,21 +192,21 @@
         "name": "train_08",
         "ok": true,
         "errors": [],
-        "issues": 6
+        "issues": 4
       },
       {
         "split": "train",
         "name": "train_09",
         "ok": true,
         "errors": [],
-        "issues": 6
+        "issues": 7
       },
       {
         "split": "train",
         "name": "train_10",
         "ok": true,
         "errors": [],
-        "issues": 10
+        "issues": 4
       },
       {
         "split": "dev",
@@ -227,21 +227,21 @@
         "name": "dev_03",
         "ok": true,
         "errors": [],
-        "issues": 3
+        "issues": 2
       },
       {
         "split": "dev",
         "name": "dev_04",
         "ok": true,
         "errors": [],
-        "issues": 2
+        "issues": 5
       },
       {
         "split": "dev",
         "name": "dev_05",
         "ok": true,
         "errors": [],
-        "issues": 6
+        "issues": 5
       },
       {
         "split": "dev",
@@ -262,21 +262,21 @@
         "name": "dev_08",
         "ok": true,
         "errors": [],
-        "issues": 7
+        "issues": 4
       },
       {
         "split": "dev",
         "name": "dev_09",
         "ok": true,
         "errors": [],
-        "issues": 6
+        "issues": 7
       },
       {
         "split": "dev",
         "name": "dev_10",
         "ok": true,
         "errors": [],
-        "issues": 9
+        "issues": 6
       },
       {
         "split": "local_holdout",
@@ -318,7 +318,7 @@
         "name": "hold_06",
         "ok": true,
         "errors": [],
-        "issues": 6
+        "issues": 7
       },
       {
         "split": "local_holdout",
@@ -332,28 +332,28 @@
         "name": "hold_08",
         "ok": true,
         "errors": [],
-        "issues": 4
+        "issues": 6
       },
       {
         "split": "local_holdout",
         "name": "hold_09",
         "ok": true,
         "errors": [],
-        "issues": 6
+        "issues": 7
       },
       {
         "split": "local_holdout",
         "name": "hold_10",
         "ok": true,
         "errors": [],
-        "issues": 6
+        "issues": 7
       },
       {
         "split": "local_holdout",
         "name": "hold_11",
         "ok": true,
         "errors": [],
-        "issues": 4
+        "issues": 3
       },
       {
         "split": "local_holdout",
@@ -367,14 +367,14 @@
         "name": "hold_13",
         "ok": true,
         "errors": [],
-        "issues": 5
+        "issues": 1
       },
       {
         "split": "local_holdout",
         "name": "hold_14",
         "ok": true,
         "errors": [],
-        "issues": 3
+        "issues": 6
       },
       {
         "split": "local_holdout",
@@ -426,58 +426,59 @@
         "episodes": 10,
         "mean_precision": 0.0,
         "mean_recall": 0.0,
-        "mean_f1": 0.0,
-        "mean_return": -1.0,
-        "mean_experimental_return": -1.0,
+        "mean_f1": 0.1,
+        "mean_return": -0.8052,
+        "mean_experimental_return": -0.8052,
         "micro_tp_fp_fn": [
           0,
-          18,
-          41
+          14,
+          37
         ],
-        "mean_steps": 17.2,
-        "mean_wall_time_s": 0.0069,
+        "mean_steps": 17.5,
+        "mean_wall_time_s": 0.0065,
         "invalid_submissions": 0,
         "truncated": 0,
-        "clean_mean_return": -1.0,
+        "clean_mean_return": -0.026,
         "erroneous_mean_return": -1.0,
         "missed_by_type": {
           "duplicate_invoice": 8,
-          "fx_misconversion": 13,
-          "period_cutoff": 10,
-          "unallocated_payment": 10
+          "fx_misconversion": 12,
+          "period_cutoff": 9,
+          "unallocated_payment": 8
         },
         "false_positives_by_type": {
-          "duplicate_invoice": 8,
-          "fx_misconversion": 3,
+          "duplicate_invoice": 3,
+          "fx_misconversion": 4,
           "period_cutoff": 4,
           "unallocated_payment": 3
         }
       },
       "reconciler": {
         "episodes": 10,
-        "mean_precision": 0.4146,
-        "mean_recall": 0.6687,
-        "mean_f1": 0.4984,
-        "mean_return": -0.0298,
-        "mean_experimental_return": -0.1405,
+        "mean_precision": 0.2167,
+        "mean_recall": 0.584,
+        "mean_f1": 0.3102,
+        "mean_return": -0.4092,
+        "mean_experimental_return": -0.5376,
         "micro_tp_fp_fn": [
-          34,
-          51,
-          7
+          27,
+          79,
+          10
         ],
-        "mean_steps": 17.0,
-        "mean_wall_time_s": 0.0095,
+        "mean_steps": 18.9,
+        "mean_wall_time_s": 0.009,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
-        "erroneous_mean_return": 0.2128,
+        "erroneous_mean_return": -0.2616,
         "missed_by_type": {
-          "fx_misconversion": 7
+          "fx_misconversion": 9,
+          "period_cutoff": 1
         },
         "false_positives_by_type": {
-          "duplicate_invoice": 18,
-          "fx_misconversion": 23,
-          "period_cutoff": 10
+          "duplicate_invoice": 19,
+          "fx_misconversion": 44,
+          "period_cutoff": 16
         }
       },
       "flag_all": {
@@ -490,19 +491,19 @@
         "micro_tp_fp_fn": [
           0,
           300,
-          41
+          37
         ],
-        "mean_steps": 3.9,
-        "mean_wall_time_s": 0.0052,
+        "mean_steps": 4.5,
+        "mean_wall_time_s": 0.0058,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
         "erroneous_mean_return": -1.0,
         "missed_by_type": {
           "duplicate_invoice": 8,
-          "fx_misconversion": 13,
-          "period_cutoff": 10,
-          "unallocated_payment": 10
+          "fx_misconversion": 12,
+          "period_cutoff": 9,
+          "unallocated_payment": 8
         },
         "false_positives_by_type": {
           "duplicate_invoice": 80,
@@ -519,12 +520,12 @@
         "mean_return": 1.0,
         "mean_experimental_return": 1.0,
         "micro_tp_fp_fn": [
-          41,
+          37,
           0,
           0
         ],
         "mean_steps": 1.0,
-        "mean_wall_time_s": 0.0004,
+        "mean_wall_time_s": 0.0003,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 1.0,
@@ -537,19 +538,19 @@
         "mean_precision": 0.8,
         "mean_recall": 0.8,
         "mean_f1": 1.0,
-        "mean_return": 0.968,
-        "mean_experimental_return": 0.968,
+        "mean_return": 0.9642,
+        "mean_experimental_return": 0.9642,
         "micro_tp_fp_fn": [
-          41,
+          37,
           0,
           0
         ],
-        "mean_steps": 17.0,
-        "mean_wall_time_s": 0.0113,
+        "mean_steps": 18.9,
+        "mean_wall_time_s": 0.0096,
         "invalid_submissions": 0,
         "truncated": 0,
-        "clean_mean_return": 0.973,
-        "erroneous_mean_return": 0.9667,
+        "clean_mean_return": 0.969,
+        "erroneous_mean_return": 0.963,
         "missed_by_type": {},
         "false_positives_by_type": {}
       }
@@ -559,59 +560,58 @@
         "episodes": 20,
         "mean_precision": 0.0,
         "mean_recall": 0.0,
-        "mean_f1": 0.05,
-        "mean_return": -0.9005,
-        "mean_experimental_return": -0.9005,
+        "mean_f1": 0.1,
+        "mean_return": -0.8046,
+        "mean_experimental_return": -0.8046,
         "micro_tp_fp_fn": [
           0,
-          27,
-          73
+          24,
+          76
         ],
-        "mean_steps": 18.1,
-        "mean_wall_time_s": 0.0054,
+        "mean_steps": 16.05,
+        "mean_wall_time_s": 0.0051,
         "invalid_submissions": 0,
         "truncated": 0,
-        "clean_mean_return": -0.602,
+        "clean_mean_return": -0.2184,
         "erroneous_mean_return": -1.0,
         "missed_by_type": {
-          "duplicate_invoice": 15,
-          "fx_misconversion": 24,
-          "period_cutoff": 16,
+          "duplicate_invoice": 11,
+          "fx_misconversion": 27,
+          "period_cutoff": 20,
           "unallocated_payment": 18
         },
         "false_positives_by_type": {
-          "duplicate_invoice": 9,
-          "fx_misconversion": 10,
-          "period_cutoff": 6,
-          "unallocated_payment": 2
+          "duplicate_invoice": 5,
+          "fx_misconversion": 6,
+          "period_cutoff": 4,
+          "unallocated_payment": 9
         }
       },
       "reconciler": {
         "episodes": 20,
-        "mean_precision": 0.3418,
-        "mean_recall": 0.5558,
-        "mean_f1": 0.4109,
-        "mean_return": -0.2058,
-        "mean_experimental_return": -0.2971,
+        "mean_precision": 0.3576,
+        "mean_recall": 0.6823,
+        "mean_f1": 0.4509,
+        "mean_return": -0.1229,
+        "mean_experimental_return": -0.2477,
         "micro_tp_fp_fn": [
-          53,
-          105,
-          20
+          68,
+          101,
+          8
         ],
-        "mean_steps": 18.75,
-        "mean_wall_time_s": 0.0089,
+        "mean_steps": 16.7,
+        "mean_wall_time_s": 0.0085,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
-        "erroneous_mean_return": 0.0589,
+        "erroneous_mean_return": 0.1695,
         "missed_by_type": {
-          "fx_misconversion": 14,
-          "period_cutoff": 6
+          "fx_misconversion": 8
         },
         "false_positives_by_type": {
-          "duplicate_invoice": 41,
-          "fx_misconversion": 40,
-          "period_cutoff": 24
+          "duplicate_invoice": 37,
+          "fx_misconversion": 42,
+          "period_cutoff": 22
         }
       },
       "flag_all": {
@@ -623,26 +623,26 @@
         "mean_experimental_return": -1.0,
         "micro_tp_fp_fn": [
           0,
-          600,
-          73
+          540,
+          76
         ],
-        "mean_steps": 3.95,
-        "mean_wall_time_s": 0.0039,
-        "invalid_submissions": 0,
+        "mean_steps": 3.9,
+        "mean_wall_time_s": 0.0053,
+        "invalid_submissions": 2,
         "truncated": 0,
         "clean_mean_return": -1.0,
         "erroneous_mean_return": -1.0,
         "missed_by_type": {
-          "duplicate_invoice": 15,
+          "duplicate_invoice": 11,
           "fx_misconversion": 24,
-          "period_cutoff": 16,
-          "unallocated_payment": 18
+          "period_cutoff": 19,
+          "unallocated_payment": 17
         },
         "false_positives_by_type": {
-          "duplicate_invoice": 160,
-          "fx_misconversion": 160,
-          "period_cutoff": 140,
-          "unallocated_payment": 140
+          "duplicate_invoice": 144,
+          "fx_misconversion": 144,
+          "period_cutoff": 126,
+          "unallocated_payment": 126
         }
       },
       "oracle": {
@@ -653,12 +653,12 @@
         "mean_return": 1.0,
         "mean_experimental_return": 1.0,
         "micro_tp_fp_fn": [
-          73,
+          76,
           0,
           0
         ],
         "mean_steps": 1.0,
-        "mean_wall_time_s": 0.0002,
+        "mean_wall_time_s": 0.0003,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 1.0,
@@ -671,19 +671,19 @@
         "mean_precision": 0.75,
         "mean_recall": 0.75,
         "mean_f1": 1.0,
-        "mean_return": 0.9645,
-        "mean_experimental_return": 0.9645,
+        "mean_return": 0.9686,
+        "mean_experimental_return": 0.9686,
         "micro_tp_fp_fn": [
-          73,
+          76,
           0,
           0
         ],
-        "mean_steps": 18.75,
-        "mean_wall_time_s": 0.0095,
+        "mean_steps": 16.7,
+        "mean_wall_time_s": 0.0084,
         "invalid_submissions": 0,
         "truncated": 0,
-        "clean_mean_return": 0.9684,
-        "erroneous_mean_return": 0.9632,
+        "clean_mean_return": 0.9728,
+        "erroneous_mean_return": 0.9672,
         "missed_by_type": {},
         "false_positives_by_type": {}
       }
@@ -692,119 +692,105 @@
   "failure_analysis": {
     "random": {
       "fp": {
-        "duplicate claim without identical documents": 9,
-        "cut-off claim on a correctly dated posting": 6,
-        "unknown document": 6,
-        "allocation claim on an applied payment": 2,
-        "trap: no rate that day (weekend/holiday) -> previous business day": 2,
-        "trap: printed/UTC date differs from company-local date": 1,
-        "fx claim on a correctly converted document": 1
+        "allocation claim on an applied payment": 9,
+        "duplicate claim without identical documents": 5,
+        "unknown document": 4,
+        "cut-off claim on a correctly dated posting": 4,
+        "trap: no rate that day (weekend/holiday) -> previous business day": 2
       },
       "fn": {
-        "duplicate_invoice": 15,
-        "unallocated_payment | variant=missing": 7,
-        "unallocated_payment | variant=partial | interaction=fx_partial_payment": 6,
-        "period_cutoff | variant=early": 6,
-        "period_cutoff | variant=early | interaction=cutoff_fx_boundary": 5,
-        "unallocated_payment | variant=partial": 5,
-        "period_cutoff | variant=late": 5,
-        "fx_misconversion | wrong_date_rule=posting_date | document=invoice | interaction=cutoff_fx_boundary": 4,
-        "fx_misconversion | wrong_date_rule=next_day_value_date | document=payment | interaction=fx_partial_payment": 4,
-        "fx_misconversion | wrong_date_rule=stale_rate_0d | document=invoice": 3,
-        "fx_misconversion | wrong_date_rule=due_date | document=invoice": 3,
+        "duplicate_invoice": 11,
+        "period_cutoff | variant=early | interaction=cutoff_fx_boundary": 7,
+        "unallocated_payment | variant=partial": 7,
+        "period_cutoff | variant=early": 7,
+        "period_cutoff | variant=late": 6,
+        "unallocated_payment | variant=missing": 6,
+        "unallocated_payment | variant=partial | interaction=fx_partial_payment": 5,
+        "fx_misconversion | wrong_date_rule=next_day_value_date | document=invoice": 5,
+        "fx_misconversion | wrong_date_rule=posting_date_minus_1 | document=invoice | interaction=cutoff_fx_boundary": 4,
         "fx_misconversion | wrong_date_rule=stale_rate_0d | document=payment": 3,
-        "fx_misconversion | wrong_date_rule=posting_date_minus_1 | document=invoice | interaction=cutoff_fx_boundary": 1,
-        "fx_misconversion | wrong_date_rule=previous_day | document=payment | interaction=fx_partial_payment": 1,
-        "fx_misconversion | wrong_date_rule=period_end_rate | document=invoice": 1,
-        "fx_misconversion | wrong_date_rule=previous_day | document=payment": 1,
-        "fx_misconversion | wrong_date_rule=period_end_rate | document=payment": 1,
-        "fx_misconversion | wrong_date_rule=value_date_plus_2 | document=payment | interaction=fx_partial_payment": 1,
-        "fx_misconversion | wrong_date_rule=previous_day | document=invoice": 1
+        "fx_misconversion | wrong_date_rule=stale_rate_0d | document=invoice": 3,
+        "fx_misconversion | wrong_date_rule=posting_date | document=invoice | interaction=cutoff_fx_boundary": 3,
+        "fx_misconversion | wrong_date_rule=next_day_value_date | document=payment | interaction=fx_partial_payment": 3,
+        "fx_misconversion | wrong_date_rule=previous_day | document=payment | interaction=fx_partial_payment": 2,
+        "fx_misconversion | wrong_date_rule=previous_day | document=invoice": 2,
+        "fx_misconversion | wrong_date_rule=due_date | document=invoice": 1,
+        "fx_misconversion | wrong_date_rule=period_end_rate | document=invoice": 1
       },
       "invalid": 0,
       "truncated": 0,
       "examples": {
-        "cut-off claim on a correctly dated posting": "ep-1b7527ca16cf: period_cutoff ['FX-2024-12-27-EUR-JPY']",
-        "allocation claim on an applied payment": "ep-1b7527ca16cf: unallocated_payment ['CUST-55661']",
-        "duplicate claim without identical documents": "ep-b49b953be0ff: duplicate_invoice ['DOC-d1ca4424']",
-        "trap: printed/UTC date differs from company-local date": "ep-94aa8ffa2fa3: fx_misconversion ['INV-823830']",
-        "unknown document": "ep-90298cd41fda: fx_misconversion ['ROW-1fb193eb']",
-        "trap: no rate that day (weekend/holiday) -> previous business day": "ep-edba1fd0fc8c: fx_misconversion ['PAY-716682']",
-        "fx claim on a correctly converted document": "ep-3287689bcef1: fx_misconversion ['INV-432910']"
+        "trap: no rate that day (weekend/holiday) -> previous business day": "ep-e6f087fa84af: fx_misconversion ['INV-750845']",
+        "duplicate claim without identical documents": "ep-064290a24986: duplicate_invoice ['CUST-32350']",
+        "allocation claim on an applied payment": "ep-064290a24986: unallocated_payment ['PAY-638902']",
+        "unknown document": "ep-0d83586844a9: fx_misconversion ['CUST-53807']",
+        "cut-off claim on a correctly dated posting": "ep-f34f524094af: period_cutoff ['DOC-8154e0a2']"
       }
     },
     "reconciler": {
       "fp": {
-        "trap: legitimate recurring / repeated amount": 41,
-        "trap: printed/UTC date differs from company-local date": 39,
-        "trap: period boundary in another time zone": 24,
-        "right documents, wrong type": 1
+        "trap: printed/UTC date differs from company-local date": 42,
+        "trap: legitimate recurring / repeated amount": 37,
+        "trap: period boundary in another time zone": 22
       },
       "fn": {
-        "fx_misconversion | wrong_date_rule=next_day_value_date | document=payment | interaction=fx_partial_payment": 4,
-        "period_cutoff | variant=early | interaction=cutoff_fx_boundary": 4,
-        "fx_misconversion | wrong_date_rule=posting_date | document=invoice | interaction=cutoff_fx_boundary": 3,
         "fx_misconversion | wrong_date_rule=stale_rate_0d | document=payment": 3,
-        "period_cutoff | variant=early": 2,
-        "fx_misconversion | wrong_date_rule=previous_day | document=payment | interaction=fx_partial_payment": 1,
-        "fx_misconversion | wrong_date_rule=previous_day | document=payment": 1,
-        "fx_misconversion | wrong_date_rule=period_end_rate | document=payment": 1,
-        "fx_misconversion | wrong_date_rule=value_date_plus_2 | document=payment | interaction=fx_partial_payment": 1
+        "fx_misconversion | wrong_date_rule=next_day_value_date | document=payment | interaction=fx_partial_payment": 3,
+        "fx_misconversion | wrong_date_rule=previous_day | document=payment | interaction=fx_partial_payment": 2
       },
       "invalid": 0,
       "truncated": 0,
       "examples": {
-        "trap: legitimate recurring / repeated amount": "ep-1b7527ca16cf: duplicate_invoice ['INV-405852', 'INV-939313']",
-        "trap: period boundary in another time zone": "ep-1b7527ca16cf: period_cutoff ['INV-243801']",
-        "trap: printed/UTC date differs from company-local date": "ep-18df55595944: fx_misconversion ['INV-359578']",
-        "right documents, wrong type": "ep-5e7744992fde: fx_misconversion ['INV-890038']"
+        "trap: legitimate recurring / repeated amount": "ep-e6f087fa84af: duplicate_invoice ['INV-001445', 'INV-438010']",
+        "trap: period boundary in another time zone": "ep-e6f087fa84af: period_cutoff ['INV-854093']",
+        "trap: printed/UTC date differs from company-local date": "ep-064290a24986: fx_misconversion ['INV-903251']"
       }
     },
     "flag_all": {
       "fp": {
-        "cut-off claim on a correctly dated posting": 140,
-        "duplicate claim without identical documents": 129,
-        "allocation claim on an applied payment": 123,
-        "trap: no rate that day (weekend/holiday) -> previous business day": 107,
-        "fx claim on a correctly converted document": 43,
-        "trap: legitimate recurring / repeated amount": 31,
-        "trap: legitimate unapplied receipt / advance / refund": 15,
-        "trap: printed/UTC date differs from company-local date": 10,
-        "right issue, incomplete evidence": 2
+        "cut-off claim on a correctly dated posting": 126,
+        "duplicate claim without identical documents": 118,
+        "allocation claim on an applied payment": 110,
+        "trap: no rate that day (weekend/holiday) -> previous business day": 98,
+        "fx claim on a correctly converted document": 38,
+        "trap: legitimate recurring / repeated amount": 26,
+        "trap: legitimate unapplied receipt / advance / refund": 14,
+        "trap: printed/UTC date differs from company-local date": 8,
+        "right issue, incomplete evidence": 1,
+        "partially right ids (guessed/incomplete affected_ids)": 1
       },
       "fn": {
-        "duplicate_invoice": 15,
-        "unallocated_payment | variant=missing": 7,
-        "unallocated_payment | variant=partial | interaction=fx_partial_payment": 6,
-        "period_cutoff | variant=early": 6,
-        "period_cutoff | variant=early | interaction=cutoff_fx_boundary": 5,
-        "unallocated_payment | variant=partial": 5,
-        "period_cutoff | variant=late": 5,
-        "fx_misconversion | wrong_date_rule=posting_date | document=invoice | interaction=cutoff_fx_boundary": 4,
-        "fx_misconversion | wrong_date_rule=next_day_value_date | document=payment | interaction=fx_partial_payment": 4,
-        "fx_misconversion | wrong_date_rule=stale_rate_0d | document=invoice": 3,
-        "fx_misconversion | wrong_date_rule=due_date | document=invoice": 3,
+        "duplicate_invoice": 11,
+        "unallocated_payment | variant=partial": 7,
+        "period_cutoff | variant=early": 7,
+        "period_cutoff | variant=late": 6,
+        "period_cutoff | variant=early | interaction=cutoff_fx_boundary": 6,
+        "unallocated_payment | variant=missing": 6,
+        "fx_misconversion | wrong_date_rule=next_day_value_date | document=invoice": 5,
+        "fx_misconversion | wrong_date_rule=posting_date_minus_1 | document=invoice | interaction=cutoff_fx_boundary": 4,
+        "unallocated_payment | variant=partial | interaction=fx_partial_payment": 4,
         "fx_misconversion | wrong_date_rule=stale_rate_0d | document=payment": 3,
-        "fx_misconversion | wrong_date_rule=posting_date_minus_1 | document=invoice | interaction=cutoff_fx_boundary": 1,
-        "fx_misconversion | wrong_date_rule=previous_day | document=payment | interaction=fx_partial_payment": 1,
-        "fx_misconversion | wrong_date_rule=period_end_rate | document=invoice": 1,
-        "fx_misconversion | wrong_date_rule=previous_day | document=payment": 1,
-        "fx_misconversion | wrong_date_rule=period_end_rate | document=payment": 1,
-        "fx_misconversion | wrong_date_rule=value_date_plus_2 | document=payment | interaction=fx_partial_payment": 1,
-        "fx_misconversion | wrong_date_rule=previous_day | document=invoice": 1
+        "fx_misconversion | wrong_date_rule=previous_day | document=payment | interaction=fx_partial_payment": 2,
+        "fx_misconversion | wrong_date_rule=stale_rate_0d | document=invoice": 2,
+        "fx_misconversion | wrong_date_rule=posting_date | document=invoice | interaction=cutoff_fx_boundary": 2,
+        "fx_misconversion | wrong_date_rule=next_day_value_date | document=payment | interaction=fx_partial_payment": 2,
+        "fx_misconversion | wrong_date_rule=previous_day | document=invoice": 2,
+        "fx_misconversion | wrong_date_rule=due_date | document=invoice": 1,
+        "fx_misconversion | wrong_date_rule=period_end_rate | document=invoice": 1
       },
-      "invalid": 0,
+      "invalid": 2,
       "truncated": 0,
       "examples": {
-        "duplicate claim without identical documents": "ep-1b7527ca16cf: duplicate_invoice ['INV-141093']",
-        "trap: no rate that day (weekend/holiday) -> previous business day": "ep-1b7527ca16cf: fx_misconversion ['INV-141093']",
-        "cut-off claim on a correctly dated posting": "ep-1b7527ca16cf: period_cutoff ['INV-141093']",
-        "allocation claim on an applied payment": "ep-1b7527ca16cf: unallocated_payment ['INV-625499', 'PAY-392602']",
-        "trap: legitimate unapplied receipt / advance / refund": "ep-1b7527ca16cf: unallocated_payment ['INV-641432', 'PAY-022557']",
-        "fx claim on a correctly converted document": "ep-1b7527ca16cf: fx_misconversion ['INV-113505']",
-        "trap: legitimate recurring / repeated amount": "ep-1b7527ca16cf: duplicate_invoice ['INV-405852']",
-        "trap: printed/UTC date differs from company-local date": "ep-b49b953be0ff: fx_misconversion ['INV-859398']",
-        "right issue, incomplete evidence": "ep-0f01f8c85793: unallocated_payment ['INV-772061', 'PAY-850108']"
+        "duplicate claim without identical documents": "ep-e6f087fa84af: duplicate_invoice ['INV-777486']",
+        "trap: no rate that day (weekend/holiday) -> previous business day": "ep-e6f087fa84af: fx_misconversion ['INV-777486']",
+        "cut-off claim on a correctly dated posting": "ep-e6f087fa84af: period_cutoff ['INV-777486']",
+        "allocation claim on an applied payment": "ep-e6f087fa84af: unallocated_payment ['INV-185956', 'PAY-511128']",
+        "trap: legitimate unapplied receipt / advance / refund": "ep-e6f087fa84af: unallocated_payment ['INV-872385', 'PAY-268118']",
+        "trap: printed/UTC date differs from company-local date": "ep-e6f087fa84af: fx_misconversion ['INV-494258']",
+        "trap: legitimate recurring / repeated amount": "ep-e6f087fa84af: duplicate_invoice ['INV-438010']",
+        "fx claim on a correctly converted document": "ep-064290a24986: fx_misconversion ['INV-062455']",
+        "right issue, incomplete evidence": "ep-db81876cd2ca: unallocated_payment ['INV-742303', 'PAY-159759']",
+        "partially right ids (guessed/incomplete affected_ids)": "ep-ac446d7f0fd1: unallocated_payment ['INV-971614', 'PAY-070966']"
       }
     },
     "oracle": {
@@ -1100,5 +1086,5 @@
     "hits": []
   },
   "ok": true,
-  "duration_s": 8.0
+  "duration_s": 10.6
 }

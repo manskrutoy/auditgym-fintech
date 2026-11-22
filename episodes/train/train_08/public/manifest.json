@@ -1,28 +1,27 @@
 {
-  "base_currency": "USD",
-  "company_name": "Ural Systems BV",
+  "base_currency": "JPY",
+  "company_name": "Granite Optics Co",
   "counts": {
-    "documents": 72,
-    "fx_rates": 186,
-    "invoices": 47,
-    "ledger_rows": 464,
-    "payments": 25
+    "documents": 134,
+    "fx_rates": 122,
+    "invoices": 86,
+    "ledger_rows": 573,
+    "payments": 48
   },
   "currency_exponents": {
-    "KWD": 3,
-    "KZT": 2,
-    "USD": 2
+    "EUR": 2,
+    "JPY": 0
   },
   "env_version": "1.0.0",
-  "episode_id": "ep-c7c259c497af",
-  "ledger_window_end": "2025-06-05",
-  "period_end": "2025-05-31",
-  "period_start": "2025-05-01",
+  "episode_id": "ep-a6cb35e2db92",
+  "ledger_window_end": "2026-09-05",
+  "period_end": "2026-08-31",
+  "period_start": "2026-08-01",
   "rounding": {
     "fx_conversion": "half_up",
     "fx_rate_format": "decimal string",
     "money": "integer minor units; exponent per currency in currency_exponents"
   },
   "schema_version": "1.0",
-  "timezone": "+00:00"
+  "timezone": "+09:00"
 }

@@ -1,40 +1,95 @@
 {
-  "episode_id": "ep-507493f6683c",
+  "episode_id": "ep-3bdf2a465230",
   "issues": [
     {
       "affected_ids": [
-        "INV-404485"
+        "INV-367146",
+        "INV-561122"
       ],
       "amount_tolerance_minor": 0,
       "currency": "JPY",
       "evidence_sets": [
         [
-          "DOC-b66e488f",
-          "ROW-08af6a4a"
+          "DOC-1674a266",
+          "DOC-fa84d887",
+          "ROW-8236fb56",
+          "ROW-9e48428f"
         ]
       ],
-      "expected_amount_minor": 709000,
+      "expected_amount_minor": 3138500,
       "interaction_group": null,
-      "issue_id": "ep-507493f6683c-I01",
+      "issue_id": "ep-3bdf2a465230-I01",
+      "type": "duplicate_invoice"
+    },
+    {
+      "affected_ids": [
+        "PAY-739382"
+      ],
+      "amount_tolerance_minor": 1,
+      "currency": "JPY",
+      "evidence_sets": [
+        [
+          "DOC-c4f2e732",
+          "FX-2025-07-24-KWD-JPY",
+          "ROW-941eaad4"
+        ]
+      ],
+      "expected_amount_minor": 4859,
+      "interaction_group": null,
+      "issue_id": "ep-3bdf2a465230-I02",
+      "type": "fx_misconversion"
+    },
+    {
+      "affected_ids": [
+        "PAY-957230"
+      ],
+      "amount_tolerance_minor": 1,
+      "currency": "JPY",
+      "evidence_sets": [
+        [
+          "DOC-9bbe48c3",
+          "FX-2025-07-23-KWD-JPY",
+          "ROW-1714acb3"
+        ]
+      ],
+      "expected_amount_minor": 355,
+      "interaction_group": null,
+      "issue_id": "ep-3bdf2a465230-I03",
+      "type": "fx_misconversion"
+    },
+    {
+      "affected_ids": [
+        "INV-135104"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "JPY",
+      "evidence_sets": [
+        [
+          "DOC-ee25e854",
+          "ROW-5951828a"
+        ]
+      ],
+      "expected_amount_minor": 2596300,
+      "interaction_group": null,
+      "issue_id": "ep-3bdf2a465230-I04",
       "type": "period_cutoff"
     },
     {
       "affected_ids": [
-        "INV-527536",
-        "PAY-720178"
+        "INV-953624"
       ],
       "amount_tolerance_minor": 0,
-      "currency": "EUR",
+      "currency": "JPY",
       "evidence_sets": [
         [
-          "DOC-8c1f174f",
-          "ROW-7e757910"
+          "DOC-15b30a74",
+          "ROW-df2df0ed"
         ]
       ],
-      "expected_amount_minor": 2103049,
+      "expected_amount_minor": 303800,
       "interaction_group": null,
-      "issue_id": "ep-507493f6683c-I02",
-      "type": "unallocated_payment"
+      "issue_id": "ep-3bdf2a465230-I05",
+      "type": "period_cutoff"
     }
   ],
   "schema_version": "1.0"
