@@ -79,6 +79,8 @@ python3 -m unittest discover -s tests -t .            # только тесты 
 
 ## 2. Что сдаём (раздел 09)
 
+Полная карта «пункт ТЗ → реализация → тест» лежит в [`CONFORMANCE.md`](CONFORMANCE.md).
+
 | требование | где |
 |---|---|
 | Исходный код с лицензией и зафиксированными зависимостями | `auditgym/`, `LICENSE` (MIT), `pyproject.toml`, `requirements.txt` (сторонних runtime-зависимостей нет) |
