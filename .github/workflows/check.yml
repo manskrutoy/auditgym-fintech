@@ -1,5 +1,5 @@
 name: check
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -13,3 +13,25 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Official single-command check (offline, stdlib only)
         run: python -m auditgym check
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the official container
+        run: docker build -t auditgym:1.0.0 .
+      - name: Run the check inside the container without network (as the jury does)
+        run: docker run --rm --network none --cpus=2 --memory=4g auditgym:1.0.0
+      - name: Jury adapter smoke test inside the container
+        run: |
+          docker run --rm --network none auditgym:1.0.0 python -c "
+          import judge_adapter as ja, tempfile, json, os
+          d = tempfile.mkdtemp(); ja.generate_episode(7, {'preset': 'interacting'}, d)
+          env = ja.make_env(); obs, info = env.reset(7, {'mode': 'closed', 'episode_dir': d})
+          o = env.step({'name': 'list_records', 'args': {'table': 'ledger', 'cursor': None, 'limit': 50}})[0]
+          assert len(o['result']['records']) == 50
+          t = json.load(open(os.path.join(d, 'truth.json')))
+          fs = [{'type': i['type'], 'affected_ids': i['affected_ids'], 'claimed_amount_minor': i['expected_amount_minor'],
+                 'currency': i['currency'], 'evidence_ids': i['evidence_sets'][0], 'explanation': ''} for i in t['issues']]
+          r = ja.score_episode(d, {'episode_id': t['episode_id'], 'findings': fs}, 1)
+          assert r['f1'] == 1.0, r; print('adapter OK', r)
+          "
