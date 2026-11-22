@@ -165,6 +165,18 @@ def cmd_serve(a):
         sys.stdout.flush()
 
 
+def cmd_viewer(a):
+    from .viewer import build
+    split, name = a.episode.split("/")
+    e = [x for x in load_split(split) if x["name"] == name][0]
+    ep = generate_episode(e["seed"], e["config"])
+    out = a.out or os.path.join(ROOT, "reports", "demo_%s.html" % name)
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
+    with open(out, "w", encoding="utf-8") as f:
+        f.write(build(ep, a.policy))
+    print("wrote", out)
+
+
 # ------------------------------------------------------------------------ check
 def _run_unit_tests():
     loader = unittest.TestLoader()
@@ -395,6 +407,11 @@ def main(argv=None):
     s = sub.add_parser("serve")
     s.add_argument("--mode", default="eval", choices=["train", "eval"])
     s.set_defaults(fn=cmd_serve)
+    s = sub.add_parser("viewer")
+    s.add_argument("--episode", default="dev/dev_09")
+    s.add_argument("--policy", default="expert", choices=["expert", "reconciler", "random", "flag_all"])
+    s.add_argument("--out", default=None)
+    s.set_defaults(fn=cmd_viewer)
     s = sub.add_parser("demo")
     s.add_argument("--episode", default="dev/dev_08")
     s.set_defaults(fn=cmd_demo)

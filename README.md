@@ -33,7 +33,7 @@ python3 -m auditgym check
 
 | шаг | что проверяется |
 |---|---|
-| 1 | 54 юнит-теста: контракт, лимиты, неверный ввод, схемы, matcher, награда, атаки, генератор, изоляция |
+| 1 | 56 юнит-тестов: контракт, лимиты, неверный ввод, схемы, matcher, награда, атаки, генератор, изоляция |
 | 2 | воспроизводимость: 10 train + 10 dev эпизодов заново генерируются и совпадают по SHA-256 с закоммиченными |
 | 3 | независимая проверка данных на 40 эпизодах: схемы, баланс проводок, каждый эталон пересчитан из каждого допустимого набора доказательств, независимый детектор находит ровно объявленные ошибки |
 | 4 | 4 базовые политики (плюс скриптовый эксперт) в отдельных процессах, eval-режим: P, R, F1, возврат, шаги, время |
@@ -53,6 +53,7 @@ python3 -m auditgym verify                            # независимая �
 python3 -m auditgym evaluate --split dev              # метрики базовых политик
 python3 -m auditgym run                               # записать trajectories/trajectories.jsonl
 python3 -m auditgym serve --mode eval                 # JSON-lines сервер среды (любой язык)
+python3 -m auditgym viewer --episode dev/dev_09       # HTML-просмотр эпизода для демо (reports/demo_dev_09.html)
 python3 -m unittest discover -s tests -t .            # только тесты (pytest тоже работает)
 ```
 
@@ -68,7 +69,7 @@ python3 -m unittest discover -s tests -t .            # только тесты 
 | Четыре адаптера базовых политик | `auditgym/policies/scripted.py`: `RandomExplorer`, `SimpleReconciler`, `FlagAll`, `Oracle` (+ демо `ExpertAuditor`) |
 | Траектории | `trajectories/trajectories.jsonl` (train-эпизоды, 4 политики, train-режим) |
 | Записка о дизайне | `DESIGN.md` |
-| Демо | `python3 -m auditgym demo` (скриптовая политика, без модели) |
+| Демо | `python3 -m auditgym demo` (скриптовая политика, без модели); HTML-просмотр `reports/demo_dev_09.html` |
 
 ## 3. Контракт среды
 
@@ -81,7 +82,9 @@ obs, reward, terminated, truncated, info = env.step(
     {"action": "list_records", "table": "ledger", "cursor": None, "limit": 50})
 ```
 
-Наследование от `gymnasium.Env` не требуется: это чистый JSON-контракт. Его же отдаёт
+Наследование от `gymnasium.Env` не требуется: это чистый JSON-контракт. Если Gymnasium
+установлен, `auditgym.gym_adapter.AuditGymEnv` даёт обёртку `gymnasium.Env` с Text-пространствами
+(без Gymnasium она работает как обычный класс с теми же методами). Его же отдаёт
 `python -m auditgym serve` построчно через stdin/stdout.
 
 | действие | аргументы | результат |
