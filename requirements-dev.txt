@@ -1,0 +1,2 @@
+# Optional: tests also run with `python -m unittest discover -s tests -t .`
+pytest==8.3.3

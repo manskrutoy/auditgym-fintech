@@ -54,6 +54,9 @@ class Episode:
         _write_jsonl(os.path.join(pub, "payments.jsonl"), self.tables["payments"])
         _write_json(os.path.join(priv, "truth.json"), self.truth)
         _write_json(os.path.join(priv, "provenance.json"), self.provenance)
+        if getattr(self, "clean_ledger", None) is not None:
+            # books before error injection (same row_ids where the line still exists)
+            _write_csv(os.path.join(priv, "clean_ledger.csv"), LEDGER_COLS, self.clean_ledger)
 
     @classmethod
     def load(cls, path: str, with_private: bool = True) -> "Episode":
@@ -71,7 +74,11 @@ class Episode:
         if with_private:
             truth = _read_json(os.path.join(priv, "truth.json"))
             provenance = _read_json(os.path.join(priv, "provenance.json"))
-        return cls(manifest, policy, tables, truth, provenance)
+        ep = cls(manifest, policy, tables, truth, provenance)
+        cl = os.path.join(priv, "clean_ledger.csv")
+        if with_private and os.path.exists(cl):
+            ep.clean_ledger = _read_csv(cl)
+        return ep
 
 
 # ---------------------------------------------------------------------- file helpers

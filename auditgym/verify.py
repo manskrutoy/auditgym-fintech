@@ -231,6 +231,76 @@ def verify_issue(ep, issue, evidence, idx=None):
     return False, "unknown type"
 
 
+def check_clean_ledger(ep, rep):
+    """Equalities of the books BEFORE error injection (closed clean_ledger.csv) and that
+    the recorded books differ from them only on rows tied to declared issues."""
+    cl = getattr(ep, "clean_ledger", None)
+    if cl is None:
+        return
+    if sum(r["debit_minor"] for r in cl) != sum(r["credit_minor"] for r in cl):
+        rep.fail("clean books: trial balance does not balance")
+    base = ep.manifest["base_currency"]
+    rnd = ep.policy["fx"]["rounding"]
+    fx = {}
+    for r in ep.tables["fx"]:
+        fx.setdefault(r["source_currency"], []).append((r["date"], r["rate"]))
+    for v in fx.values():
+        v.sort()
+
+    def conv(amount, cur, d):
+        if cur == base:
+            return amount
+        rate = [x for x in fx.get(cur, []) if x[0] <= d][-1][1]
+        return money.convert_minor(amount, cur, base, rate, rnd)
+
+    dup_ids = {i for iss in ep.truth["issues"] if iss["type"] == "duplicate_invoice" for i in iss["affected_ids"]}
+    ar_debit, ar_credit, cash = {}, set(), {}
+    for r in cl:
+        if r["account"] == ACC_AR and r["debit_minor"] > 0:
+            ar_debit.setdefault(r["invoice_id"], []).append(r)
+        if r["account"] == ACC_AR and r["credit_minor"] > 0:
+            ar_credit.add((r["payment_id"], r["invoice_id"]))
+        if r["account"] == ACC_CASH and r["payment_id"]:
+            cash[r["payment_id"]] = r
+    n_inv_clean = 0
+    for d in ep.tables["invoices"]:
+        rows = ar_debit.get(d["invoice_id"], [])
+        if not rows:
+            if d["invoice_id"] in dup_ids:      # the bogus duplicate does not exist in clean books
+                continue
+            rep.fail("clean books: invoice %s not posted" % d["invoice_id"])
+            continue
+        n_inv_clean += 1
+        if len(rows) != 1:
+            rep.fail("clean books: invoice posted twice")
+        ld = _local(ep, d["issued_at"])
+        if rows[0]["debit_minor"] != conv(d["total_minor"], d["currency"], ld):
+            rep.fail("clean books: invoice %s not at policy rate" % d["invoice_id"])
+        if ld >= ep.manifest["period_start"] and _local(ep, rows[0]["timestamp"]) != ld:
+            rep.fail("clean books: invoice %s posted on another date" % d["invoice_id"])
+    if n_inv_clean != len(ep.tables["invoices"]) - sum(1 for iss in ep.truth["issues"] if iss["type"] == "duplicate_invoice"):
+        rep.fail("clean books: unexpected number of posted invoices")
+    for p in ep.tables["payments"]:
+        c = cash.get(p["payment_id"])
+        if c is None or (c["debit_minor"] or c["credit_minor"]) != conv(abs(p["amount_minor"]), p["currency"], _local(ep, p["timestamp"])):
+            rep.fail("clean books: payment %s cash not at policy rate" % p["payment_id"])
+        for ref in p["invoice_refs"] or []:
+            if (p["payment_id"], ref["invoice_id"]) not in ar_credit:
+                rep.fail("clean books: allocation not applied")
+    # recorded vs clean: differences only on declared documents (and payments settling them)
+    affected = {i for iss in ep.truth["issues"] for i in iss["affected_ids"]}
+    for p in ep.tables["payments"]:
+        if any(r["invoice_id"] in affected for r in p["invoice_refs"] or []):
+            affected.add(p["payment_id"])
+    key = lambda r: (r["row_id"], r["timestamp"], r["account"], r["debit_minor"], r["credit_minor"])
+    a = {key(r): r for r in cl}
+    b = {key(r): r for r in ep.tables["ledger"]}
+    for k in set(a) ^ set(b):
+        r = a.get(k) or b.get(k)
+        if not ({r["invoice_id"], r["payment_id"]} & affected):
+            rep.fail("recorded books differ from clean books on an undeclared row %s" % r["row_id"])
+
+
 def detect_public(ep):
     """Independent detector over public data (same rules an expert auditor applies)."""
     from .policies.base import Reader
@@ -250,6 +320,7 @@ def verify_episode(ep, consistency=True):
         return rep
     if ep.truth["episode_id"] != ep.episode_id:
         rep.fail("truth episode_id mismatch")
+    check_clean_ledger(ep, rep)
     idx = _idx(ep)
     seen = set()
     for iss in ep.truth["issues"]:

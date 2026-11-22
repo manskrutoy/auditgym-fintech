@@ -1,0 +1,25 @@
+episode ep-dd48559b2442 | Esil Labs JSC | base JPY | period 2025-01-01..2025-01-31 (UTC+09:00) | rows=508 docs=114
+step   1 list_records invoices cursor=None           -> 50 records
+step   2 list_records invoices cursor=c1:invoices:50 -> 27 records
+step   3 list_records payments cursor=None           -> 37 records
+step   4 list_records fx       cursor=None           -> 50 records
+step   5 list_records fx       cursor=c1:fx:50       -> 11 records
+step   6 list_records ledger   cursor=None           -> 50 records
+step   7 list_records ledger   cursor=c1:ledger:50   -> 50 records
+step   8 list_records ledger   cursor=c1:ledger:100  -> 50 records
+step   9 list_records ledger   cursor=c1:ledger:150  -> 50 records
+step  10 list_records ledger   cursor=c1:ledger:200  -> 50 records
+step  11 list_records ledger   cursor=c1:ledger:250  -> 50 records
+step  12 list_records ledger   cursor=c1:ledger:300  -> 50 records
+step  13 list_records ledger   cursor=c1:ledger:350  -> 50 records
+step  14 list_records ledger   cursor=c1:ledger:400  -> 50 records
+step  15 list_records ledger   cursor=c1:ledger:450  -> 50 records
+step  16 list_records ledger   cursor=c1:ledger:500  -> 8 records
+step  17 submit: 5 findings
+   - duplicate_invoice    INV-482556,INV-705054                184099 GBP  evidence=DOC-92a28f7e,DOC-dcf0c73b,ROW-1c73267f,ROW-4c1e8732
+   - unallocated_payment  INV-442936,PAY-838611                194398 GBP  evidence=DOC-555970bd,ROW-81025e76
+   - fx_misconversion     INV-690249                             2312 JPY  evidence=DOC-70e87f4e,ROW-ff04a1e4,FX-2025-01-31-GBP-JPY
+   - fx_misconversion     PAY-838611                             3630 JPY  evidence=DOC-555970bd,ROW-05bf52d4,FX-2025-01-31-GBP-JPY
+   - period_cutoff        INV-690249                           739539 JPY  evidence=DOC-70e87f4e,ROW-ff04a1e4
+reward=0.968  P=1.00 R=1.00 F1=1.00  TP=5 FP=0 FN=0  inspection_steps=16
+truth (closed, shown for the demo only): [('duplicate_invoice', ['INV-482556', 'INV-705054']), ('fx_misconversion', ['INV-690249']), ('fx_misconversion', ['PAY-838611']), ('period_cutoff', ['INV-690249']), ('unallocated_payment', ['INV-442936', 'PAY-838611'])]

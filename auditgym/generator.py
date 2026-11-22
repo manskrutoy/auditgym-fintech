@@ -42,8 +42,9 @@ def world_config(cfg):
 
 
 def generate_episode(seed: int, config=None) -> Episode:
-    if isinstance(seed, bool) or not isinstance(seed, int):
-        raise TypeError("seed must be an int")
+    if isinstance(seed, bool) or not hasattr(seed, "__index__"):
+        raise TypeError("seed must be an integer")
+    seed = int(seed.__index__())
     cfg = normalize_config(config)
     last = None
     for attempt in range(30):
@@ -420,8 +421,19 @@ def _render(seed, cfg, attempt, w, lines, planned, clean_lines):
         "clean_ledger_lines": len(clean_lines),
         "dirty_ledger_lines": len(lines),
     }
-    return Episode(manifest, policy, {"ledger": ledger, "invoices": invoices, "payments": payments, "fx": fx},
-                   truth, provenance)
+    clean_rows = []
+    for n, l in enumerate(clean_lines):
+        clean_rows.append({
+            "row_id": row_id[dirty_idx[l.role]] if l.role in dirty_idx else "CLEAN-%05d" % n,
+            "timestamp": iso(l.ts), "account": l.account, "debit_minor": l.debit, "credit_minor": l.credit,
+            "currency": w.base, "entity_id": ent(l.entity),
+            "invoice_id": inv_id[l.inv] if l.inv is not None and l.inv in inv_id else None,
+            "payment_id": pay_id[l.pay] if l.pay is not None else None,
+        })
+    ep = Episode(manifest, policy, {"ledger": ledger, "invoices": invoices, "payments": payments, "fx": fx},
+                 truth, provenance)
+    ep.clean_ledger = clean_rows
+    return ep
 
 
 def _amount(w, lines, rule):

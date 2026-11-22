@@ -2,7 +2,7 @@
   "env_version": "1.0.0",
   "python": "3.13.18",
   "platform": "Linux-6.18.44-fc-v726-x86_64-with-glibc2.39",
-  "started": "2026-11-22T11:49:49Z",
+  "started": "2026-11-22T11:53:34Z",
   "unit_tests": {
     "ran": 53,
     "failures": 0,
@@ -435,7 +435,7 @@
           38
         ],
         "mean_steps": 24.2,
-        "mean_wall_time_s": 0.0101,
+        "mean_wall_time_s": 0.009,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -0.03,
@@ -466,7 +466,7 @@
           8
         ],
         "mean_steps": 15.8,
-        "mean_wall_time_s": 0.0107,
+        "mean_wall_time_s": 0.0097,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -494,7 +494,7 @@
           38
         ],
         "mean_steps": 3.9,
-        "mean_wall_time_s": 0.0067,
+        "mean_wall_time_s": 0.0057,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -546,7 +546,7 @@
           0
         ],
         "mean_steps": 15.8,
-        "mean_wall_time_s": 0.0102,
+        "mean_wall_time_s": 0.0085,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 0.975,
@@ -569,7 +569,7 @@
           70
         ],
         "mean_steps": 15.65,
-        "mean_wall_time_s": 0.0056,
+        "mean_wall_time_s": 0.0046,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -0.6028,
@@ -600,7 +600,7 @@
           14
         ],
         "mean_steps": 17.0,
-        "mean_wall_time_s": 0.0058,
+        "mean_wall_time_s": 0.0075,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -628,7 +628,7 @@
           70
         ],
         "mean_steps": 4.1,
-        "mean_wall_time_s": 0.0037,
+        "mean_wall_time_s": 0.0057,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -659,7 +659,7 @@
           0
         ],
         "mean_steps": 1.0,
-        "mean_wall_time_s": 0.0002,
+        "mean_wall_time_s": 0.0003,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 1.0,
@@ -680,7 +680,7 @@
           0
         ],
         "mean_steps": 17.0,
-        "mean_wall_time_s": 0.0094,
+        "mean_wall_time_s": 0.0115,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 0.9732,
@@ -928,5 +928,5 @@
     "hits": []
   },
   "ok": true,
-  "duration_s": 6.1
+  "duration_s": 6.7
 }
