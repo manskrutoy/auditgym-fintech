@@ -1,10 +1,10 @@
 {
   "env_version": "1.0.0",
-  "python": "3.13.18",
+  "python": "3.11.18",
   "platform": "Linux-6.18.44-fc-v726-x86_64-with-glibc2.39",
-  "started": "2026-11-22T12:00:40Z",
+  "started": "2026-11-22T12:34:34Z",
   "unit_tests": {
-    "ran": 56,
+    "ran": 58,
     "failures": 0,
     "errors": 0,
     "ok": true,
@@ -435,7 +435,7 @@
           41
         ],
         "mean_steps": 17.2,
-        "mean_wall_time_s": 0.0072,
+        "mean_wall_time_s": 0.008,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -466,7 +466,7 @@
           7
         ],
         "mean_steps": 17.0,
-        "mean_wall_time_s": 0.0115,
+        "mean_wall_time_s": 0.0125,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -493,7 +493,7 @@
           41
         ],
         "mean_steps": 3.9,
-        "mean_wall_time_s": 0.0056,
+        "mean_wall_time_s": 0.0062,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -524,7 +524,7 @@
           0
         ],
         "mean_steps": 1.0,
-        "mean_wall_time_s": 0.0002,
+        "mean_wall_time_s": 0.0003,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 1.0,
@@ -545,7 +545,7 @@
           0
         ],
         "mean_steps": 17.0,
-        "mean_wall_time_s": 0.0123,
+        "mean_wall_time_s": 0.0137,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 0.973,
@@ -568,7 +568,7 @@
           73
         ],
         "mean_steps": 18.1,
-        "mean_wall_time_s": 0.007,
+        "mean_wall_time_s": 0.0081,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -0.602,
@@ -599,7 +599,7 @@
           20
         ],
         "mean_steps": 18.75,
-        "mean_wall_time_s": 0.0119,
+        "mean_wall_time_s": 0.0123,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -627,7 +627,7 @@
           73
         ],
         "mean_steps": 3.95,
-        "mean_wall_time_s": 0.0039,
+        "mean_wall_time_s": 0.0062,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": -1.0,
@@ -658,7 +658,7 @@
           0
         ],
         "mean_steps": 1.0,
-        "mean_wall_time_s": 0.0002,
+        "mean_wall_time_s": 0.0003,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 1.0,
@@ -679,7 +679,7 @@
           0
         ],
         "mean_steps": 18.75,
-        "mean_wall_time_s": 0.0078,
+        "mean_wall_time_s": 0.0143,
         "invalid_submissions": 0,
         "truncated": 0,
         "clean_mean_return": 0.9684,
@@ -687,6 +687,139 @@
         "missed_by_type": {},
         "false_positives_by_type": {}
       }
+    }
+  },
+  "failure_analysis": {
+    "random": {
+      "fp": {
+        "duplicate claim without identical documents": 9,
+        "cut-off claim on a correctly dated posting": 6,
+        "unknown document": 6,
+        "allocation claim on an applied payment": 2,
+        "trap: no rate that day (weekend/holiday) -> previous business day": 2,
+        "trap: printed/UTC date differs from company-local date": 1,
+        "fx claim on a correctly converted document": 1
+      },
+      "fn": {
+        "duplicate_invoice": 15,
+        "unallocated_payment | variant=missing": 7,
+        "unallocated_payment | variant=partial | interaction=fx_partial_payment": 6,
+        "period_cutoff | variant=early": 6,
+        "period_cutoff | variant=early | interaction=cutoff_fx_boundary": 5,
+        "unallocated_payment | variant=partial": 5,
+        "period_cutoff | variant=late": 5,
+        "fx_misconversion | wrong_date_rule=posting_date | document=invoice | interaction=cutoff_fx_boundary": 4,
+        "fx_misconversion | wrong_date_rule=next_day_value_date | document=payment | interaction=fx_partial_payment": 4,
+        "fx_misconversion | wrong_date_rule=stale_rate_0d | document=invoice": 3,
+        "fx_misconversion | wrong_date_rule=due_date | document=invoice": 3,
+        "fx_misconversion | wrong_date_rule=stale_rate_0d | document=payment": 3,
+        "fx_misconversion | wrong_date_rule=posting_date_minus_1 | document=invoice | interaction=cutoff_fx_boundary": 1,
+        "fx_misconversion | wrong_date_rule=previous_day | document=payment | interaction=fx_partial_payment": 1,
+        "fx_misconversion | wrong_date_rule=period_end_rate | document=invoice": 1,
+        "fx_misconversion | wrong_date_rule=previous_day | document=payment": 1,
+        "fx_misconversion | wrong_date_rule=period_end_rate | document=payment": 1,
+        "fx_misconversion | wrong_date_rule=value_date_plus_2 | document=payment | interaction=fx_partial_payment": 1,
+        "fx_misconversion | wrong_date_rule=previous_day | document=invoice": 1
+      },
+      "invalid": 0,
+      "truncated": 0,
+      "examples": {
+        "cut-off claim on a correctly dated posting": "ep-1b7527ca16cf: period_cutoff ['FX-2024-12-27-EUR-JPY']",
+        "allocation claim on an applied payment": "ep-1b7527ca16cf: unallocated_payment ['CUST-55661']",
+        "duplicate claim without identical documents": "ep-b49b953be0ff: duplicate_invoice ['DOC-d1ca4424']",
+        "trap: printed/UTC date differs from company-local date": "ep-94aa8ffa2fa3: fx_misconversion ['INV-823830']",
+        "unknown document": "ep-90298cd41fda: fx_misconversion ['ROW-1fb193eb']",
+        "trap: no rate that day (weekend/holiday) -> previous business day": "ep-edba1fd0fc8c: fx_misconversion ['PAY-716682']",
+        "fx claim on a correctly converted document": "ep-3287689bcef1: fx_misconversion ['INV-432910']"
+      }
+    },
+    "reconciler": {
+      "fp": {
+        "trap: legitimate recurring / repeated amount": 41,
+        "trap: printed/UTC date differs from company-local date": 39,
+        "trap: period boundary in another time zone": 24,
+        "right documents, wrong type": 1
+      },
+      "fn": {
+        "fx_misconversion | wrong_date_rule=next_day_value_date | document=payment | interaction=fx_partial_payment": 4,
+        "period_cutoff | variant=early | interaction=cutoff_fx_boundary": 4,
+        "fx_misconversion | wrong_date_rule=posting_date | document=invoice | interaction=cutoff_fx_boundary": 3,
+        "fx_misconversion | wrong_date_rule=stale_rate_0d | document=payment": 3,
+        "period_cutoff | variant=early": 2,
+        "fx_misconversion | wrong_date_rule=previous_day | document=payment | interaction=fx_partial_payment": 1,
+        "fx_misconversion | wrong_date_rule=previous_day | document=payment": 1,
+        "fx_misconversion | wrong_date_rule=period_end_rate | document=payment": 1,
+        "fx_misconversion | wrong_date_rule=value_date_plus_2 | document=payment | interaction=fx_partial_payment": 1
+      },
+      "invalid": 0,
+      "truncated": 0,
+      "examples": {
+        "trap: legitimate recurring / repeated amount": "ep-1b7527ca16cf: duplicate_invoice ['INV-405852', 'INV-939313']",
+        "trap: period boundary in another time zone": "ep-1b7527ca16cf: period_cutoff ['INV-243801']",
+        "trap: printed/UTC date differs from company-local date": "ep-18df55595944: fx_misconversion ['INV-359578']",
+        "right documents, wrong type": "ep-5e7744992fde: fx_misconversion ['INV-890038']"
+      }
+    },
+    "flag_all": {
+      "fp": {
+        "cut-off claim on a correctly dated posting": 140,
+        "duplicate claim without identical documents": 129,
+        "allocation claim on an applied payment": 123,
+        "trap: no rate that day (weekend/holiday) -> previous business day": 107,
+        "fx claim on a correctly converted document": 43,
+        "trap: legitimate recurring / repeated amount": 31,
+        "trap: legitimate unapplied receipt / advance / refund": 15,
+        "trap: printed/UTC date differs from company-local date": 10,
+        "right issue, incomplete evidence": 2
+      },
+      "fn": {
+        "duplicate_invoice": 15,
+        "unallocated_payment | variant=missing": 7,
+        "unallocated_payment | variant=partial | interaction=fx_partial_payment": 6,
+        "period_cutoff | variant=early": 6,
+        "period_cutoff | variant=early | interaction=cutoff_fx_boundary": 5,
+        "unallocated_payment | variant=partial": 5,
+        "period_cutoff | variant=late": 5,
+        "fx_misconversion | wrong_date_rule=posting_date | document=invoice | interaction=cutoff_fx_boundary": 4,
+        "fx_misconversion | wrong_date_rule=next_day_value_date | document=payment | interaction=fx_partial_payment": 4,
+        "fx_misconversion | wrong_date_rule=stale_rate_0d | document=invoice": 3,
+        "fx_misconversion | wrong_date_rule=due_date | document=invoice": 3,
+        "fx_misconversion | wrong_date_rule=stale_rate_0d | document=payment": 3,
+        "fx_misconversion | wrong_date_rule=posting_date_minus_1 | document=invoice | interaction=cutoff_fx_boundary": 1,
+        "fx_misconversion | wrong_date_rule=previous_day | document=payment | interaction=fx_partial_payment": 1,
+        "fx_misconversion | wrong_date_rule=period_end_rate | document=invoice": 1,
+        "fx_misconversion | wrong_date_rule=previous_day | document=payment": 1,
+        "fx_misconversion | wrong_date_rule=period_end_rate | document=payment": 1,
+        "fx_misconversion | wrong_date_rule=value_date_plus_2 | document=payment | interaction=fx_partial_payment": 1,
+        "fx_misconversion | wrong_date_rule=previous_day | document=invoice": 1
+      },
+      "invalid": 0,
+      "truncated": 0,
+      "examples": {
+        "duplicate claim without identical documents": "ep-1b7527ca16cf: duplicate_invoice ['INV-141093']",
+        "trap: no rate that day (weekend/holiday) -> previous business day": "ep-1b7527ca16cf: fx_misconversion ['INV-141093']",
+        "cut-off claim on a correctly dated posting": "ep-1b7527ca16cf: period_cutoff ['INV-141093']",
+        "allocation claim on an applied payment": "ep-1b7527ca16cf: unallocated_payment ['INV-625499', 'PAY-392602']",
+        "trap: legitimate unapplied receipt / advance / refund": "ep-1b7527ca16cf: unallocated_payment ['INV-641432', 'PAY-022557']",
+        "fx claim on a correctly converted document": "ep-1b7527ca16cf: fx_misconversion ['INV-113505']",
+        "trap: legitimate recurring / repeated amount": "ep-1b7527ca16cf: duplicate_invoice ['INV-405852']",
+        "trap: printed/UTC date differs from company-local date": "ep-b49b953be0ff: fx_misconversion ['INV-859398']",
+        "right issue, incomplete evidence": "ep-0f01f8c85793: unallocated_payment ['INV-772061', 'PAY-850108']"
+      }
+    },
+    "oracle": {
+      "fp": {},
+      "fn": {},
+      "invalid": 0,
+      "truncated": 0,
+      "examples": {}
+    },
+    "expert": {
+      "fp": {},
+      "fn": {},
+      "invalid": 0,
+      "truncated": 0,
+      "examples": {}
     }
   },
   "baseline_sanity": {
@@ -708,6 +841,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -719,6 +854,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -730,6 +867,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -741,6 +880,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -752,6 +893,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -763,6 +906,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -774,6 +919,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -785,6 +932,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -796,6 +945,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -807,6 +958,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -818,6 +971,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -829,6 +984,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -840,6 +997,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -851,6 +1010,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -862,6 +1023,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -873,6 +1036,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -884,6 +1049,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -895,6 +1062,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -906,6 +1075,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       },
@@ -917,6 +1088,8 @@
         "relabel_oracle_reward_equal": true,
         "relabel_expert_reward_equal": true,
         "relabel_verifies": true,
+        "reexpress_relabel_verifies": true,
+        "reexpress_relabel_rewards_equal": true,
         "id_order_seed_same_world": true,
         "ok": true
       }
@@ -927,5 +1100,5 @@
     "hits": []
   },
   "ok": true,
-  "duration_s": 7.3
+  "duration_s": 12.0
 }

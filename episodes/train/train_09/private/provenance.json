@@ -92,6 +92,59 @@
     "payment:split": 2,
     "payment:unidentified": 2
   },
+  "document_tags": {
+    "INV-075637": [
+      "boundary"
+    ],
+    "INV-498034": [
+      "boundary"
+    ],
+    "INV-695900": [
+      "recurring"
+    ],
+    "INV-775709": [
+      "recurring"
+    ],
+    "PAY-025358": [
+      "multi"
+    ],
+    "PAY-026481": [
+      "multi"
+    ],
+    "PAY-068983": [
+      "multi"
+    ],
+    "PAY-119387": [
+      "split"
+    ],
+    "PAY-220225": [
+      "multi"
+    ],
+    "PAY-235349": [
+      "multi"
+    ],
+    "PAY-290388": [
+      "multi"
+    ],
+    "PAY-457934": [
+      "partial_open"
+    ],
+    "PAY-545657": [
+      "unidentified"
+    ],
+    "PAY-642621": [
+      "split"
+    ],
+    "PAY-661666": [
+      "advance"
+    ],
+    "PAY-738174": [
+      "unidentified"
+    ],
+    "PAY-867822": [
+      "partial_open"
+    ]
+  },
   "env_version": "1.0.0",
   "generation_attempt": 0,
   "ledger_diff_vs_clean": [

@@ -94,6 +94,78 @@
     "payment:split": 4,
     "payment:unidentified": 2
   },
+  "document_tags": {
+    "INV-085983": [
+      "boundary"
+    ],
+    "INV-246117": [
+      "recurring"
+    ],
+    "INV-485723": [
+      "recurring"
+    ],
+    "INV-552046": [
+      "boundary"
+    ],
+    "INV-554966": [
+      "recurring"
+    ],
+    "INV-628906": [
+      "duplicate"
+    ],
+    "INV-644097": [
+      "duplicate"
+    ],
+    "INV-950197": [
+      "recurring",
+      "repeated_amount"
+    ],
+    "INV-963162": [
+      "recurring"
+    ],
+    "PAY-096154": [
+      "multi"
+    ],
+    "PAY-127884": [
+      "multi"
+    ],
+    "PAY-275473": [
+      "unidentified"
+    ],
+    "PAY-336698": [
+      "partial_open"
+    ],
+    "PAY-504710": [
+      "partial_open"
+    ],
+    "PAY-630427": [
+      "split"
+    ],
+    "PAY-687226": [
+      "split"
+    ],
+    "PAY-771008": [
+      "partial_open"
+    ],
+    "PAY-809538": [
+      "unidentified"
+    ],
+    "PAY-819924": [
+      "split"
+    ],
+    "PAY-827050": [
+      "advance"
+    ],
+    "PAY-880272": [
+      "multi"
+    ],
+    "PAY-941641": [
+      "multi"
+    ],
+    "PAY-948173": [
+      "split"
+    ]
+  },
   "env_version": "1.0.0",
   "generation_attempt": 0,
   "ledger_diff_vs_clean": [

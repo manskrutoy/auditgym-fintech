@@ -75,6 +75,13 @@ def _copy(x):
     return json.loads(json.dumps(x))
 
 
+def _copy_safe(x):
+    try:
+        return _copy(x)
+    except (TypeError, ValueError):
+        return repr(x)[:200]
+
+
 class AuditEnv:
     metadata = {"render_modes": [], "env_version": ENV_VERSION}
 
@@ -183,6 +190,7 @@ class AuditEnv:
         g["terminated_by"] = reason or "submit"
         g["steps_used"] = self.steps_used
         g["wall_time_s"] = round(self._clock() - self._t0, 4)
+        g["submission"] = None if truncated else _copy_safe(submission)   # evaluator-side only
         self.last_grade = g
         self.evaluator_log.append(g)
         self.done = True

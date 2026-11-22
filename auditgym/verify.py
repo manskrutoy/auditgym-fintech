@@ -111,7 +111,7 @@ def check_balances(ep, rep):
         elif r["invoice_id"]:
             k = ("inv", r["invoice_id"])
         else:
-            k = ("other", r["timestamp"], r["entity_id"])
+            k = ("other", datetime.fromisoformat(r["timestamp"]).timestamp(), r["entity_id"])   # by instant
         d, c = groups.get(k, (0, 0))
         groups[k] = (d + r["debit_minor"], c + r["credit_minor"])
     for k, (d, c) in groups.items():

@@ -93,6 +93,56 @@
     "payment:split": 2,
     "payment:unidentified": 1
   },
+  "document_tags": {
+    "INV-013196": [
+      "boundary"
+    ],
+    "INV-195451": [
+      "recurring"
+    ],
+    "INV-211645": [
+      "boundary"
+    ],
+    "INV-285787": [
+      "duplicate"
+    ],
+    "INV-519879": [
+      "recurring"
+    ],
+    "INV-553426": [
+      "boundary"
+    ],
+    "PAY-028909": [
+      "split"
+    ],
+    "PAY-100953": [
+      "unidentified"
+    ],
+    "PAY-257037": [
+      "multi"
+    ],
+    "PAY-261830": [
+      "split"
+    ],
+    "PAY-291181": [
+      "partial_open"
+    ],
+    "PAY-502834": [
+      "advance"
+    ],
+    "PAY-679184": [
+      "partial_open"
+    ],
+    "PAY-702115": [
+      "partial_open"
+    ],
+    "PAY-878000": [
+      "multi"
+    ],
+    "PAY-944443": [
+      "multi"
+    ]
+  },
   "env_version": "1.0.0",
   "generation_attempt": 0,
   "ledger_diff_vs_clean": [

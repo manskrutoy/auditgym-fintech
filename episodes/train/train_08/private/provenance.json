@@ -94,6 +94,51 @@
     "payment:split": 2,
     "payment:was_duplicated": 1
   },
+  "document_tags": {
+    "INV-233981": [
+      "boundary"
+    ],
+    "INV-572391": [
+      "boundary"
+    ],
+    "INV-756569": [
+      "recurring"
+    ],
+    "INV-843068": [
+      "recurring"
+    ],
+    "PAY-223539": [
+      "refund"
+    ],
+    "PAY-265808": [
+      "partial_open"
+    ],
+    "PAY-285160": [
+      "split"
+    ],
+    "PAY-301482": [
+      "split"
+    ],
+    "PAY-376544": [
+      "multi"
+    ],
+    "PAY-553683": [
+      "multi"
+    ],
+    "PAY-570246": [
+      "was_duplicated"
+    ],
+    "PAY-577172": [
+      "multi"
+    ],
+    "PAY-595466": [
+      "multi"
+    ],
+    "PAY-606395": [
+      "dup_payment",
+      "refunded"
+    ]
+  },
   "env_version": "1.0.0",
   "generation_attempt": 0,
   "ledger_diff_vs_clean": [

@@ -173,3 +173,26 @@ class TestNoShortcutTells(unittest.TestCase):
         self.assertLess(aff_sec0 / aff_n, 0.08)
         self.assertLess(oth_eq / oth_n, 0.08)
         self.assertTrue(0.35 < aff_low / aff_n < 0.65)
+
+
+class TestHarmlessTransforms(unittest.TestCase):
+    def test_reexpressed_offsets_keep_truth_and_answers(self):
+        from auditgym.episode import reexpress_timestamps
+        for preset in ("interacting", "all_types", "clean"):
+            ep = episode(seed=71, preset=preset)
+            rx = relabel(reexpress_timestamps(ep, 5), 6)
+            self.assertTrue(verify_episode(rx).ok, preset)
+            self.assertEqual(grade(oracle_findings(rx), rx.truth, 0)["reward"], 1.0)
+            self.assertEqual(run_policy(rx, ExpertAuditor())[2]["grade"]["f1"],
+                             run_policy(ep, ExpertAuditor())[2]["grade"]["f1"])
+
+
+class TestFailureAnalysis(unittest.TestCase):
+    def test_reconciler_failures_are_attributed_to_traps(self):
+        from auditgym.analysis import analyse
+        from auditgym.evaluator import evaluate
+        eps = [generate_episode(8100 + s, {"preset": "interacting"}) for s in range(3)]
+        rows, _ = evaluate(eps, ("reconciler", "oracle"))
+        a = analyse(eps, rows)
+        self.assertEqual(a["oracle"]["fp"], {})
+        self.assertTrue(any(k.startswith("trap:") for k in a["reconciler"]["fp"]))

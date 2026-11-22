@@ -405,6 +405,13 @@ def _render(seed, cfg, attempt, w, lines, planned, clean_lines):
     for p in w.payments.values():
         for t in p.tags:
             tags["payment:" + t] = tags.get("payment:" + t, 0) + 1
+    doc_tags = {}
+    for k, inv in w.invoices.items():
+        if inv.tags:
+            doc_tags[inv_id[k]] = sorted(set(inv.tags))
+    for k, p in w.payments.items():
+        if p.tags:
+            doc_tags[pay_id[k]] = sorted(set(p.tags))
     provenance = {
         "env_version": ENV_VERSION,
         "seed": seed,
@@ -418,6 +425,7 @@ def _render(seed, cfg, attempt, w, lines, planned, clean_lines):
         "clean_trial_balance": {"debit_minor": sum(l.debit for l in clean_lines),
                                 "credit_minor": sum(l.credit for l in clean_lines)},
         "distractor_tags": dict(sorted(tags.items())),
+        "document_tags": dict(sorted(doc_tags.items())),
         "clean_ledger_lines": len(clean_lines),
         "dirty_ledger_lines": len(lines),
     }

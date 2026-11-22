@@ -93,6 +93,72 @@
     "payment:split": 2,
     "payment:unidentified": 1
   },
+  "document_tags": {
+    "INV-057215": [
+      "recurring"
+    ],
+    "INV-071755": [
+      "recurring"
+    ],
+    "INV-177335": [
+      "recurring"
+    ],
+    "INV-212015": [
+      "recurring"
+    ],
+    "INV-254920": [
+      "duplicate"
+    ],
+    "INV-440038": [
+      "recurring"
+    ],
+    "INV-449324": [
+      "recurring"
+    ],
+    "INV-607730": [
+      "boundary"
+    ],
+    "INV-738787": [
+      "boundary"
+    ],
+    "INV-836780": [
+      "recurring",
+      "repeated_amount"
+    ],
+    "PAY-213585": [
+      "multi"
+    ],
+    "PAY-234158": [
+      "advance"
+    ],
+    "PAY-285993": [
+      "multi"
+    ],
+    "PAY-316768": [
+      "unidentified"
+    ],
+    "PAY-368390": [
+      "split"
+    ],
+    "PAY-429918": [
+      "multi"
+    ],
+    "PAY-439643": [
+      "split"
+    ],
+    "PAY-494700": [
+      "multi"
+    ],
+    "PAY-573545": [
+      "multi"
+    ],
+    "PAY-670452": [
+      "multi"
+    ],
+    "PAY-673079": [
+      "multi"
+    ]
+  },
   "env_version": "1.0.0",
   "generation_attempt": 0,
   "ledger_diff_vs_clean": [

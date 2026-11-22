@@ -1,32 +1,155 @@
-"""Self-contained HTML replay of one episode (demo aid; no scoring impact).
+"""Self-contained HTML audit workpaper: replays an episode for one or more policies
+(demo aid; no effect on scoring).
 
-    python -m auditgym viewer --episode dev/dev_09 --policy expert --out reports/demo_dev_09.html
+    python -m auditgym viewer --episode dev/dev_09 --out reports/demo_dev_09.html
+
+Design: an auditor's columnar workpaper — pad-green ruled paper, graphite ink, green tick
+marks for agreed findings, red pencil for false accusations, blue reviewer pencil for misses.
+The 100-cell step budget is the one bold element.
 """
 
 import html
 import json
 
 from .env import AuditEnv
-from .matcher import compatible, validate_submission
 from .policies.scripted import POLICIES
 
-CSS = """
-:root{--bg:#0f1115;--panel:#171a21;--line:#262b36;--text:#e6e8ee;--mute:#8b93a7;--ok:#3ecf8e;--bad:#ff6b6b;--warn:#f5b94a;--acc:#7aa2ff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-main{max-width:1180px;margin:0 auto;padding:32px 24px 64px}
-h1{font-size:22px;margin:0 0 4px}h2{font-size:15px;margin:32px 0 12px;color:var(--mute);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
-.sub{color:var(--mute)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:20px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-.k{color:var(--mute);font-size:12px}.v{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
-table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
-th,td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-th{color:var(--mute);font-weight:500;font-size:12px}td.num{text-align:right;font-variant-numeric:tabular-nums}
-tr:last-child td{border-bottom:none}code{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;color:#c9d1e6}
-.tag{display:inline-block;padding:1px 8px;border-radius:99px;font-size:12px;font-weight:600}
-.tp{background:rgba(62,207,142,.15);color:var(--ok)}.fp{background:rgba(255,107,107,.15);color:var(--bad)}.fn{background:rgba(245,185,74,.15);color:var(--warn)}
-.steps{display:flex;flex-wrap:wrap;gap:4px}.s{width:26px;height:26px;border-radius:6px;display:grid;place-items:center;font-size:11px;background:#1f2430;color:var(--mute)}
-.s.l{background:rgba(122,162,255,.18);color:var(--acc)}.s.sub{background:rgba(62,207,142,.25);color:var(--ok)}.s.err{background:rgba(255,107,107,.2);color:var(--bad)}
-.note{color:var(--mute);font-size:12px;margin-top:8px}
+TYPE_RU = {
+    "duplicate_invoice": "Дубль счёта",
+    "unallocated_payment": "Нераспределённый платёж",
+    "fx_misconversion": "Неверный курс",
+    "period_cutoff": "Не тот период",
+}
+
+CSS = r"""
+:root{
+  --paper:#F3F7F1; --rule:#D3E3CF; --rule-strong:#A9C7A3; --ink:#23302A; --mute:#5E6F66;
+  --tick:#1E7B4F; --red:#B3261E; --blue:#2856A6; --card:#FBFDFA;
+  --serif:"Iowan Old Style","Charter","Palatino Linotype","Book Antiqua",Georgia,serif;
+  --sans:"Avenir Next","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{margin:0;color:var(--ink);font:15px/1.55 var(--sans);
+  background-image:repeating-linear-gradient(to bottom,transparent 0 27px,var(--rule) 27px 28px);
+  background-attachment:local}
+main{max-width:1120px;margin:0 auto;padding:40px 28px 80px;border-left:2px solid #E7B9B4;
+  background:linear-gradient(to right,transparent 0,transparent 100%)}
+a{color:var(--blue)}
+h1{font:600 34px/1.15 var(--serif);margin:0;letter-spacing:-.01em}
+h2{font:600 21px/1.3 var(--serif);margin:44px 0 6px}
+p.lead{margin:6px 0 0;color:var(--mute);max-width:72ch}
+.hint{color:var(--mute);font-size:13px;margin:0 0 14px;max-width:72ch}
+.head{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;flex-wrap:wrap}
+.sign{font-size:13px;color:var(--mute);text-align:right;line-height:1.7}
+.sign b{color:var(--ink);font-weight:600}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;margin-top:22px;
+  border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
+.fact{padding:10px 14px 12px;border-right:1px solid var(--rule-strong)}
+.fact:last-child{border-right:none}
+.fact span{display:block;font-size:12.5px;color:var(--mute)}
+.fact strong{font:600 19px/1.3 var(--serif);font-variant-numeric:tabular-nums lining-nums}
+.tabs{display:flex;gap:8px;margin:28px 0 0;flex-wrap:wrap}
+.tabs button{font:600 14px var(--sans);padding:8px 14px;border-radius:6px;border:1.5px solid var(--ink);
+  background:transparent;color:var(--ink);cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.tabs button:focus-visible,.cell:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.score{margin-top:18px;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px}
+.reward{font:600 54px/1 var(--serif);font-variant-numeric:tabular-nums lining-nums}
+.formula{font-size:15px;color:var(--mute);font-variant-numeric:tabular-nums}
+.formula b{color:var(--ink)}
+.budget{display:grid;grid-template-columns:repeat(20,1fr);gap:4px;margin-top:6px;max-width:640px}
+.cell{aspect-ratio:1;border-radius:3px;border:1px solid var(--rule-strong);background:transparent;
+  font:600 11px var(--sans);color:var(--ink);display:grid;place-items:center;padding:0;cursor:default}
+.cell.used{cursor:pointer;background:#E3EEE0;border-color:#8DB287}
+.cell.err{background:#F6DEDB;border-color:var(--red);color:var(--red)}
+.cell.sub{background:var(--tick);border-color:var(--tick);color:#fff}
+.cell.sel{box-shadow:0 0 0 2px var(--ink)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--mute);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px;border:1px solid var(--rule-strong)}
+.detail{margin-top:16px;background:var(--card);border:1px solid var(--rule-strong);border-radius:4px;padding:14px 16px}
+.detail h3{font:600 16px var(--serif);margin:0 0 8px}
+.detail .act{font-variant-numeric:tabular-nums;color:var(--mute);font-size:13.5px;word-break:break-all}
+.scroll{max-height:340px;overflow:auto;margin-top:10px;border-top:1px solid var(--rule-strong)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+th{font-weight:600;text-align:left;color:var(--mute);padding:7px 10px;border-bottom:1.5px solid var(--ink);background:var(--card);position:sticky;top:0}
+td{padding:6px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+td.n{text-align:right;white-space:nowrap}
+.ws{border-top:1.5px solid var(--ink);margin-top:6px}
+.mark{font:700 18px/1 var(--serif);width:34px;text-align:center}
+.m-ok{color:var(--tick)}.m-bad{color:var(--red)}.m-miss{color:var(--blue)}
+.why{color:var(--mute);font-size:13px}
+.ids{word-break:break-all}
+.err-msg{color:var(--red)}
+.foot{margin-top:48px;font-size:13px;color:var(--mute);max-width:72ch}
+@media (max-width:640px){.budget{grid-template-columns:repeat(10,1fr)}.reward{font-size:42px}main{padding:28px 16px 60px}}
+@media (prefers-reduced-motion:no-preference){.cell.used{transition:transform .12s}.cell.used:hover{transform:translateY(-1px)}}
+"""
+
+JS = r"""
+const D = JSON.parse(document.getElementById('data').textContent);
+const T = {duplicate_invoice:'Дубль счёта',unallocated_payment:'Нераспределённый платёж',fx_misconversion:'Неверный курс',period_cutoff:'Не тот период'};
+const el = (t,a={},...c)=>{const e=document.createElement(t);for(const[k,v]of Object.entries(a)){if(k==='class')e.className=v;else if(k==='text')e.textContent=v;else e.setAttribute(k,v)}for(const x of c)e.append(x);return e};
+const fmt = n => typeof n==='number' ? n.toLocaleString('ru-RU') : (n===null?'—':String(n));
+let run = Object.keys(D.runs)[0], sel = null;
+
+function renderTabs(){
+  const box=document.getElementById('tabs');box.innerHTML='';
+  for(const k of Object.keys(D.runs)){
+    const b=el('button',{type:'button','aria-pressed':String(k===run),text:D.runs[k].label});
+    b.onclick=()=>{run=k;sel=null;render()};box.append(b);
+  }
+}
+function renderScore(){
+  const g=D.runs[run].grade;
+  const ru=(x,d)=>x.toFixed(d).replace('.',',');
+  document.getElementById('reward').textContent=(g.reward>=0?'+':'−')+ru(Math.abs(g.reward),3);
+  document.getElementById('formula').innerHTML=
+    `= 2 × F1 <b>${ru(g.f1,2)}</b> − 1 − 0,002 × <b>${g.inspection_steps}</b> шагов. Верно ${g.tp}, ложно ${g.fp}, пропущено ${g.fn}.`;
+}
+function renderBudget(){
+  const box=document.getElementById('budget');box.innerHTML='';
+  const steps=D.runs[run].steps;
+  for(let i=1;i<=100;i++){
+    const s=steps[i-1];
+    const c=el('button',{type:'button',class:'cell'+(s?(' used'+(s.cls?' '+s.cls:'')):''),'aria-label':s?`Шаг ${i}: ${s.label}`:`Шаг ${i} не использован`});
+    if(s){c.textContent=s.short;c.onclick=()=>{sel=i;renderBudget();renderDetail()};if(sel===i)c.classList.add('sel')}
+    else c.disabled=true;
+    box.append(c);
+  }
+}
+function table(rows){
+  if(!rows.length)return el('p',{class:'hint',text:'Пустая страница.'});
+  const cols=Object.keys(rows[0]).filter(k=>k!=='line_items');
+  const t=el('table'),h=el('tr');cols.forEach(c=>h.append(el('th',{text:c})));t.append(el('thead',{},h));
+  const b=el('tbody');
+  rows.forEach(r=>{const tr=el('tr');cols.forEach(c=>{const v=r[c];const td=el('td',{class:typeof v==='number'?'n':'',text:Array.isArray(v)?v.map(x=>x.invoice_id+': '+fmt(x.amount_minor)).join(', '):fmt(v)});tr.append(td)});b.append(tr)});
+  t.append(b);return el('div',{class:'scroll'},t);
+}
+function renderDetail(){
+  const box=document.getElementById('detail');box.innerHTML='';
+  if(!sel){box.append(el('p',{class:'hint',text:'Нажмите на любой использованный шаг, чтобы увидеть, что агент запросил и что ему вернула среда.'}));return}
+  const s=D.runs[run].steps[sel-1],o=s.obs;
+  box.append(el('h3',{text:`Шаг ${sel} из 100 — ${s.label}`}));
+  box.append(el('div',{class:'act',text:JSON.stringify(s.action).slice(0,600)}));
+  if(o.error){box.append(el('p',{class:'err-msg',text:`Ошибка ${o.error.code}: ${o.error.message}`}));return}
+  const r=o.result||{};
+  if(r.records){box.append(el('p',{class:'hint',text:`Таблица ${r.table}: получено ${r.records.length} из ${r.total_records}. Следующий курсор: ${r.next_cursor||'конец таблицы'}.`}));box.append(table(r.records))}
+  else if(r.record){box.append(table([r.record]))}
+  else if(r.document){box.append(table([r.document]))}
+  else box.append(el('p',{class:'hint',text:JSON.stringify(r)}));
+}
+function renderFindings(){
+  const tb=document.getElementById('findings');tb.innerHTML='';
+  const R=D.runs[run];
+  const rows=[];
+  R.findings.forEach(f=>rows.push({m:f.tp?'✓':'✗',cls:f.tp?'m-ok':'m-bad',t:f.type,ids:f.affected_ids.join(', '),amt:fmt(f.claimed_amount_minor)+' '+f.currency,why:f.tp?'Совпало с эталоном: тип, ID, сумма, валюта и доказательства.':'Ложное обвинение: в эталоне такой ошибки нет.'}));
+  D.truth.forEach(t=>{if(!R.found.includes(t.issue_id))rows.push({m:'○',cls:'m-miss',t:t.type,ids:t.affected_ids.join(', '),amt:fmt(t.expected_amount_minor)+' '+t.currency,why:'Пропущено: ошибка есть, агент её не заявил. '+(t.cause||'')})});
+  if(!rows.length){tb.append(el('tr',{},el('td',{colspan:'5',class:'why',text:'Книги чистые, и агент правильно ничего не заявил.'})));return}
+  rows.forEach(r=>{const tr=el('tr');tr.append(el('td',{class:'mark '+r.cls,text:r.m}),el('td',{text:T[r.t]||r.t}),el('td',{class:'ids',text:r.ids}),el('td',{class:'n',text:r.amt}),el('td',{class:'why',text:r.why}));tb.append(tr)});
+}
+function render(){renderTabs();renderScore();renderBudget();renderDetail();renderFindings()}
+render();
 """
 
 
@@ -34,70 +157,94 @@ def _e(x):
     return html.escape(str(x))
 
 
-def build(ep, policy="expert"):
+def _run(ep, policy):
     env = AuditEnv(mode="train", record_trajectory=True)
     obs, _ = env.reset(episode=ep)
     pol = POLICIES[policy]()
     pol.reset(obs)
-    sub = None
     while True:
-        act = pol.act(obs)
-        if act.get("action") == "submit":
-            sub = act["findings"]
-        obs, r, te, tr, info = env.step(act)
+        obs, r, te, tr, info = env.step(pol.act(obs))
         if te or tr:
             break
     g = env.last_grade
-    m = ep.manifest
-    issues = ep.truth["issues"]
-    findings = sub["findings"] if sub else []
-    norm = validate_submission(sub, ep.episode_id) if sub else []
-    matched_issue = {mm["finding"]: mm["issue_id"] for mm in g["matches"]}
-
+    sub = g.get("submission") or {"findings": []}
+    matched = {m["finding"]: m["issue_id"] for m in g["matches"]}
     steps = []
     for t in env.trajectory[1:]:
-        a = (t["action"] or {}).get("action")
-        cls = "sub" if a == "submit" else ("err" if t["observation"]["error"] else "l")
-        label = {"list_records": "L", "get_record": "R", "get_document": "D", "calculator": "C", "submit": "✓"}.get(a, "?")
-        title = json.dumps(t["action"])[:160]
-        steps.append('<div class="s %s" title="%s">%s</div>' % (cls, _e(title), label))
+        a = t["action"] or {}
+        name = a.get("action")
+        o = t["observation"]
+        short = {"list_records": "L", "get_record": "R", "get_document": "D", "calculator": "C", "submit": "✓"}.get(name, "?")
+        label = {"list_records": "просмотр таблицы %s" % a.get("table"), "get_record": "запись %s" % a.get("id"),
+                 "get_document": "документ %s" % a.get("doc_id"), "calculator": "калькулятор",
+                 "submit": "отправка выводов"}.get(name, "неизвестное действие")
+        steps.append({"short": short, "label": label, "cls": "sub" if name == "submit" else ("err" if o["error"] else ""),
+                      "action": a, "obs": o})
+    findings = []
+    for i, f in enumerate(sub.get("findings", []) if isinstance(sub, dict) else []):
+        findings.append(dict(f, tp=i in matched))
+    labels = {"expert": "Скриптовый эксперт", "reconciler": "Простая сверка", "random": "Случайный агент",
+              "flag_all": "Атака «пометить всё»"}
+    return {"label": labels.get(policy, policy), "steps": steps, "findings": findings,
+            "found": sorted(matched.values()),
+            "grade": {k: g[k] for k in ("reward", "f1", "tp", "fp", "fn", "inspection_steps")}}
 
-    frows = []
-    for i, f in enumerate(findings):
-        tag = '<span class="tag tp">TP</span>' if i in matched_issue else '<span class="tag fp">FP</span>'
-        frows.append("<tr><td>%s</td><td><code>%s</code></td><td><code>%s</code></td><td class=num>%s %s</td><td><code>%s</code></td><td>%s</td></tr>" % (
-            tag, _e(f["type"]), _e(", ".join(f["affected_ids"])), _e(f["claimed_amount_minor"]), _e(f["currency"]),
-            _e(", ".join(f["evidence_ids"])), _e(f["explanation"])))
-    found = set(matched_issue.values())
-    trows = []
-    for iss in issues:
-        tag = '<span class="tag tp">найдено</span>' if iss["issue_id"] in found else '<span class="tag fn">пропуск</span>'
-        trows.append("<tr><td>%s</td><td><code>%s</code></td><td><code>%s</code></td><td class=num>%s %s</td><td>%s</td></tr>" % (
-            tag, _e(iss["type"]), _e(", ".join(iss["affected_ids"])), _e(iss["expected_amount_minor"]), _e(iss["currency"]),
-            _e(iss["interaction_group"] or "—")))
-    muts = "".join("<tr><td><code>%s</code></td><td>%s</td></tr>" % (
-        _e(mu["mutation"]), _e(", ".join("%s=%s" % (k, v) for k, v in mu.items() if k not in ("mutation", "issue_id"))))
-        for mu in ep.provenance.get("mutations", []))
 
-    cards = [("Награда", "%+.3f" % g["reward"]), ("F1", "%.2f" % g["f1"]), ("TP / FP / FN", "%d / %d / %d" % (g["tp"], g["fp"], g["fn"])),
-             ("Шаги проверки", g["inspection_steps"]), ("Проводки", m["counts"]["ledger_rows"]), ("Документы", m["counts"]["documents"])]
-    doc = """<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AuditGym — демо %(eid)s</title><style>%(css)s</style></head><body><main>
-<h1>AuditGym · %(company)s</h1>
-<div class="sub">Эпизод <code>%(eid)s</code> · период %(ps)s … %(pe)s (UTC%(tz)s) · базовая валюта %(base)s · политика <code>%(pol)s</code></div>
-<div class="grid">%(cards)s</div>
-<h2>Траектория агента</h2><div class="card"><div class="steps">%(steps)s</div>
-<div class="note">L — list_records, R — get_record, D — get_document, C — calculator, ✓ — submit. Наведите курсор, чтобы увидеть действие.</div></div>
-<h2>Выводы агента</h2><table><tr><th></th><th>тип</th><th>affected_ids</th><th>сумма</th><th>доказательства</th><th>объяснение</th></tr>%(frows)s</table>
-<h2>Закрытый эталон (показан только в демо)</h2><table><tr><th></th><th>тип</th><th>affected_ids</th><th>сумма</th><th>взаимодействие</th></tr>%(trows)s</table>
-<h2>Записанные причины ошибок (provenance)</h2><table><tr><th>мутация</th><th>детали</th></tr>%(muts)s</table>
-<div class="note">Данные полностью вымышлены. Сгенерировано командой python -m auditgym viewer.</div>
-</main></body></html>""" % {
-        "eid": _e(m["episode_id"]), "css": CSS, "company": _e(m["company_name"]), "ps": _e(m["period_start"]),
-        "pe": _e(m["period_end"]), "tz": _e(m["timezone"]), "base": _e(m["base_currency"]), "pol": _e(policy),
-        "cards": "".join('<div class="card"><div class="k">%s</div><div class="v">%s</div></div>' % (_e(k), _e(v)) for k, v in cards),
-        "steps": "".join(steps), "frows": "".join(frows) or '<tr><td colspan=6 class="sub">нет выводов</td></tr>',
-        "trows": "".join(trows) or '<tr><td colspan=5 class="sub">чистая компания — ошибок нет</td></tr>',
-        "muts": muts or '<tr><td colspan=2 class="sub">нет</td></tr>',
+def build(ep, policies=("expert", "reconciler")):
+    if isinstance(policies, str):
+        policies = (policies,)
+    m = ep.manifest
+    muts = {mu["issue_id"]: mu for mu in ep.provenance.get("mutations", [])}
+    cause_ru = {
+        "duplicate_document_posted": "Копия счёта с новыми номерами проведена второй раз.",
+        "allocation_not_applied": "Платёж по remittance относится к счёту, но в книге лежит в 1190.",
+        "wrong_rate_date": "Курс взят не на ту дату (%s).",
+        "wrong_posting_period": "Счёт проведён не в своём периоде (%s).",
     }
-    return doc
+    truth = []
+    for iss in ep.truth["issues"]:
+        mu = muts.get(iss["issue_id"], {})
+        c = cause_ru.get(mu.get("mutation"), "")
+        if "%s" in c:
+            c = c % (mu.get("wrong_date_rule") or mu.get("variant") or "")
+        truth.append(dict(iss, cause=c))
+    data = {"runs": {p: _run(ep, p) for p in policies}, "truth": truth}
+    blob = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+    c = m["counts"]
+    facts = [("Компания", m["company_name"]), ("Период", "%s — %s" % (m["period_start"], m["period_end"])),
+             ("Пояс компании", "UTC" + m["timezone"]), ("Базовая валюта", m["base_currency"]),
+             ("Проводки", "%d" % c["ledger_rows"]), ("Документы", "%d" % c["documents"]),
+             ("Ошибок в эталоне", "%d" % len(ep.truth["issues"]))]
+    facts_html = "".join('<div class="fact"><span>%s</span><strong>%s</strong></div>' % (_e(k), _e(v)) for k, v in facts)
+    return """<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AuditGym — рабочий документ %(eid)s</title><style>%(css)s</style></head>
+<body><main>
+<div class="head">
+  <div><h1>Рабочий документ аудита</h1>
+  <p class="lead">Эпизод AuditGym: вымышленная компания за один отчётный период. Агент расследует книги через инструменты среды,
+  отправляет выводы с доказательствами, а закрытый оценщик сверяет их с эталоном.</p></div>
+  <div class="sign">Эпизод <b>%(eid)s</b><br>Подготовил: агент<br>Проверил: закрытый оценщик</div>
+</div>
+<div class="facts">%(facts)s</div>
+
+<h2>Итог проверки</h2>
+<div class="tabs" id="tabs" role="group" aria-label="Политика"></div>
+<div class="score"><div class="reward" id="reward"></div><div class="formula" id="formula"></div></div>
+
+<h2>Бюджет шагов</h2>
+<p class="hint">Сто клеток — это весь бюджет эпизода. Каждый вызов инструмента, включая ошибочный, тратит одну клетку; отправка выводов — последняя.</p>
+<div class="budget" id="budget"></div>
+<div class="legend"><span><i style="background:#E3EEE0;border-color:#8DB287"></i>чтение (L — таблица, R — запись, D — документ)</span>
+<span><i style="background:#F6DEDB;border-color:#B3261E"></i>ошибка вызова</span><span><i style="background:#1E7B4F;border-color:#1E7B4F"></i>отправка</span></div>
+<div class="detail" id="detail" aria-live="polite"></div>
+
+<h2>Сверка выводов с эталоном</h2>
+<p class="hint">✓ — вывод совпал с эталоном, ✗ — ложное обвинение, ○ — пропущенная ошибка. Эталон закрыт от агента и показан здесь только для демонстрации.</p>
+<table class="ws"><thead><tr><th></th><th>Тип</th><th>Затронутые ID</th><th>Сумма</th><th>Пояснение</th></tr></thead><tbody id="findings"></tbody></table>
+
+<p class="foot">Все компании, документы и суммы вымышлены. Файл создан командой <code>python -m auditgym viewer</code> и открывается без интернета.</p>
+</main>
+<script type="application/json" id="data">%(blob)s</script>
+<script>%(js)s</script>
+</body></html>""" % {"eid": _e(m["episode_id"]), "css": CSS, "facts": facts_html, "blob": blob, "js": JS}

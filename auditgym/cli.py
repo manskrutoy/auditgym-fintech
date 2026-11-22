@@ -22,7 +22,7 @@ import zlib
 
 from .config import canonical_json
 from .constants import ENV_VERSION, ISSUE_TYPES
-from .episode import Episode, relabel
+from .episode import Episode, reexpress_timestamps, relabel
 from .evaluator import WorkerProcess, evaluate, run_episode, summarize
 from .generator import generate_episode
 from .verify import verify_episode
@@ -173,7 +173,7 @@ def cmd_viewer(a):
     out = a.out or os.path.join(ROOT, "reports", "demo_%s.html" % name)
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     with open(out, "w", encoding="utf-8") as f:
-        f.write(build(ep, a.policy))
+        f.write(build(ep, tuple(a.policy)))
     print("wrote", out)
 
 
@@ -233,6 +233,14 @@ def paired_checks(entries, n=20):
         r["relabel_oracle_reward_equal"] = g_or["reward"] == g_or2["reward"] == 1.0
         r["relabel_expert_reward_equal"] = abs(g_ex2["f1"] - g1["f1"]) < 1e-12
         r["relabel_verifies"] = verify_episode(rl).ok
+
+        # harmless transformation 2: re-express every timestamp in random UTC offsets,
+        # then relabel ids and permute order on top of it
+        rx = relabel(reexpress_timestamps(ep1, seed=zlib.crc32(e["name"].encode()) + 1), seed=31 + len(results))
+        g_rx, _ = run_episode(rx, "oracle")
+        _, _, g_ex3 = replay(rx)
+        r["reexpress_relabel_verifies"] = verify_episode(rx).ok
+        r["reexpress_relabel_rewards_equal"] = g_rx["reward"] == 1.0 and abs(g_ex3["f1"] - g1["f1"]) < 1e-12
 
         cfg2 = dict(e["config"], id_seed=12345 + len(results), order_seed=777 + len(results))
         ep3 = generate_episode(e["seed"], cfg2)
@@ -309,11 +317,18 @@ def cmd_check(a):
     print("      %d episodes, failures=%d" % (len(ver), sum(not v["ok"] for v in ver)))
 
     print("[4/6] baseline policies (separate processes, eval mode) ...", flush=True)
+    os.makedirs(os.path.join(ROOT, "reports"), exist_ok=True)
     base = {}
     for split in ("dev", "local_holdout"):
         rows, _ = evaluate(split_eps[split], BASELINES + ("expert",))
         base[split] = summarize(rows)
     report["baselines"] = base
+    from .analysis import analyse, render as render_fa
+    rows_h, _ = evaluate(split_eps["local_holdout"], BASELINES + ("expert",))
+    fa = analyse(split_eps["local_holdout"], rows_h)
+    report["failure_analysis"] = fa
+    with open(os.path.join(ROOT, "reports", "failure_analysis.md"), "w") as f:
+        f.write(render_fa(fa, "local_holdout (20 episodes, eval mode)"))
     hold = base["local_holdout"]
     sanity = {
         "oracle_max_reward": hold["oracle"]["mean_return"] == 1.0,
@@ -409,7 +424,8 @@ def main(argv=None):
     s.set_defaults(fn=cmd_serve)
     s = sub.add_parser("viewer")
     s.add_argument("--episode", default="dev/dev_09")
-    s.add_argument("--policy", default="expert", choices=["expert", "reconciler", "random", "flag_all"])
+    s.add_argument("--policy", nargs="+", default=["expert", "reconciler", "flag_all"],
+                   choices=["expert", "reconciler", "random", "flag_all"])
     s.add_argument("--out", default=None)
     s.set_defaults(fn=cmd_viewer)
     s = sub.add_parser("demo")

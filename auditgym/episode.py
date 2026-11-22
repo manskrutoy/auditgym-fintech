@@ -186,3 +186,26 @@ def relabel(ep: Episode, seed: int, shuffle: bool = True) -> "Episode":
                   truth, prov)
     new.id_mapping = mapping
     return new
+
+
+def reexpress_timestamps(ep: Episode, seed: int) -> "Episode":
+    """Harmless transformation: print every timestamp (documents AND ledger) in a random
+    UTC offset.  Instants do not change, so truth must stay valid and answers unchanged."""
+    from datetime import datetime, timedelta, timezone
+    from .constants import DOC_OFFSETS
+    rng = random.Random(seed)
+
+    def rx(s):
+        off = rng.choice(DOC_OFFSETS)
+        return datetime.fromisoformat(s).astimezone(timezone(timedelta(minutes=off))).isoformat(timespec="seconds")
+
+    t = ep.tables
+    ledger = [dict(r, timestamp=rx(r["timestamp"])) for r in t["ledger"]]
+    invoices = [dict(d, issued_at=rx(d["issued_at"]), due_at=rx(d["due_at"])) for d in t["invoices"]]
+    payments = [dict(d, timestamp=rx(d["timestamp"])) for d in t["payments"]]
+    new = Episode(json.loads(json.dumps(ep.manifest)), ep.policy,
+                  {"ledger": ledger, "invoices": invoices, "payments": payments, "fx": [dict(r) for r in t["fx"]]},
+                  json.loads(json.dumps(ep.truth)) if ep.truth is not None else None,
+                  {"reexpressed_from": ep.episode_id, "seed": seed})
+    new.id_mapping = {}
+    return new
