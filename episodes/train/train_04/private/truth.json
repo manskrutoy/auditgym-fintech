@@ -1,0 +1,44 @@
+{
+  "episode_id": "ep-0214f8047c58",
+  "issues": [
+    {
+      "affected_ids": [
+        "INV-196346",
+        "INV-646041"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "GBP",
+      "evidence_sets": [
+        [
+          "DOC-204285d7",
+          "DOC-88d01e2b",
+          "ROW-af540ffd",
+          "ROW-b444dbea"
+        ]
+      ],
+      "expected_amount_minor": 34200,
+      "interaction_group": null,
+      "issue_id": "ep-0214f8047c58-I01",
+      "type": "duplicate_invoice"
+    },
+    {
+      "affected_ids": [
+        "INV-502243",
+        "PAY-946102"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "GBP",
+      "evidence_sets": [
+        [
+          "DOC-0c026d9a",
+          "ROW-eee92749"
+        ]
+      ],
+      "expected_amount_minor": 1427689,
+      "interaction_group": null,
+      "issue_id": "ep-0214f8047c58-I02",
+      "type": "unallocated_payment"
+    }
+  ],
+  "schema_version": "1.0"
+}

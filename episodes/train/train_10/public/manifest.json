@@ -1,0 +1,29 @@
+{
+  "base_currency": "EUR",
+  "company_name": "Saryarka Agro BV",
+  "counts": {
+    "documents": 133,
+    "fx_rates": 186,
+    "invoices": 86,
+    "ledger_rows": 925,
+    "payments": 47
+  },
+  "currency_exponents": {
+    "CHF": 2,
+    "CNY": 2,
+    "EUR": 2,
+    "KZT": 2
+  },
+  "env_version": "1.0.0",
+  "episode_id": "ep-28f61cfb533e",
+  "ledger_window_end": "2025-09-05",
+  "period_end": "2025-08-31",
+  "period_start": "2025-08-01",
+  "rounding": {
+    "fx_conversion": "half_even",
+    "fx_rate_format": "decimal string",
+    "money": "integer minor units; exponent per currency in currency_exponents"
+  },
+  "schema_version": "1.0",
+  "timezone": "-05:00"
+}

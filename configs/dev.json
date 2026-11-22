@@ -1,0 +1,88 @@
+{
+  "split": "dev",
+  "env_version": "1.0.0",
+  "description": "Open dev episodes. Seeds and configs are public; closed evaluation uses different seeds and parameter combinations.",
+  "episodes": [
+    {
+      "name": "dev_01",
+      "seed": 20011,
+      "config": {
+        "preset": "clean"
+      }
+    },
+    {
+      "name": "dev_02",
+      "seed": 27930,
+      "config": {
+        "preset": "clean"
+      }
+    },
+    {
+      "name": "dev_03",
+      "seed": 35849,
+      "config": {
+        "preset": "single"
+      }
+    },
+    {
+      "name": "dev_04",
+      "seed": 43768,
+      "config": {
+        "preset": "mixed"
+      }
+    },
+    {
+      "name": "dev_05",
+      "seed": 51687,
+      "config": {
+        "preset": "mixed",
+        "base_currency": "KZT",
+        "foreign_share": 0.6,
+        "errors": {
+          "duplicate_invoice": 2,
+          "unallocated_payment": [
+            1,
+            2
+          ],
+          "fx_misconversion": 2,
+          "period_cutoff": 0
+        }
+      }
+    },
+    {
+      "name": "dev_06",
+      "seed": 59606,
+      "config": {
+        "preset": "all_types"
+      }
+    },
+    {
+      "name": "dev_07",
+      "seed": 67525,
+      "config": {
+        "preset": "all_types"
+      }
+    },
+    {
+      "name": "dev_08",
+      "seed": 75444,
+      "config": {
+        "preset": "interacting"
+      }
+    },
+    {
+      "name": "dev_09",
+      "seed": 83363,
+      "config": {
+        "preset": "interacting"
+      }
+    },
+    {
+      "name": "dev_10",
+      "seed": 91282,
+      "config": {
+        "preset": "hard"
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "base_currency": "EUR",
+  "company_name": "Jade Studios JSC",
+  "counts": {
+    "documents": 60,
+    "fx_rates": 120,
+    "invoices": 38,
+    "ledger_rows": 336,
+    "payments": 22
+  },
+  "currency_exponents": {
+    "EUR": 2,
+    "KZT": 2
+  },
+  "env_version": "1.0.0",
+  "episode_id": "ep-da20fd30402f",
+  "ledger_window_end": "2025-12-05",
+  "period_end": "2025-11-30",
+  "period_start": "2025-11-01",
+  "rounding": {
+    "fx_conversion": "half_up",
+    "fx_rate_format": "decimal string",
+    "money": "integer minor units; exponent per currency in currency_exponents"
+  },
+  "schema_version": "1.0",
+  "timezone": "+00:00"
+}

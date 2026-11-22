@@ -1,0 +1,28 @@
+{
+  "base_currency": "KZT",
+  "company_name": "Saryarka Freight BV",
+  "counts": {
+    "documents": 121,
+    "fx_rates": 118,
+    "invoices": 74,
+    "ledger_rows": 491,
+    "payments": 47
+  },
+  "currency_exponents": {
+    "CHF": 2,
+    "GBP": 2,
+    "KZT": 2
+  },
+  "env_version": "1.0.0",
+  "episode_id": "ep-0214f8047c58",
+  "ledger_window_end": "2025-07-05",
+  "period_end": "2025-06-30",
+  "period_start": "2025-06-01",
+  "rounding": {
+    "fx_conversion": "half_even",
+    "fx_rate_format": "decimal string",
+    "money": "integer minor units; exponent per currency in currency_exponents"
+  },
+  "schema_version": "1.0",
+  "timezone": "+06:00"
+}

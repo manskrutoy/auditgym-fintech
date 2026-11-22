@@ -1,0 +1,27 @@
+{
+  "base_currency": "GBP",
+  "company_name": "Lumen Labs JSC",
+  "counts": {
+    "documents": 76,
+    "fx_rates": 183,
+    "invoices": 51,
+    "ledger_rows": 264,
+    "payments": 25
+  },
+  "currency_exponents": {
+    "GBP": 2,
+    "KWD": 3
+  },
+  "env_version": "1.0.0",
+  "episode_id": "ep-d6ab37140446",
+  "ledger_window_end": "2026-09-05",
+  "period_end": "2026-08-31",
+  "period_start": "2026-08-01",
+  "rounding": {
+    "fx_conversion": "half_up",
+    "fx_rate_format": "decimal string",
+    "money": "integer minor units; exponent per currency in currency_exponents"
+  },
+  "schema_version": "1.0",
+  "timezone": "+00:00"
+}

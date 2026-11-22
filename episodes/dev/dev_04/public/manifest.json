@@ -1,0 +1,27 @@
+{
+  "base_currency": "USD",
+  "company_name": "Orbit Textiles GmbH",
+  "counts": {
+    "documents": 135,
+    "fx_rates": 61,
+    "invoices": 92,
+    "ledger_rows": 374,
+    "payments": 43
+  },
+  "currency_exponents": {
+    "CHF": 2,
+    "USD": 2
+  },
+  "env_version": "1.0.0",
+  "episode_id": "ep-9536227aa6a1",
+  "ledger_window_end": "2025-12-05",
+  "period_end": "2025-11-30",
+  "period_start": "2025-11-01",
+  "rounding": {
+    "fx_conversion": "half_even",
+    "fx_rate_format": "decimal string",
+    "money": "integer minor units; exponent per currency in currency_exponents"
+  },
+  "schema_version": "1.0",
+  "timezone": "+03:00"
+}

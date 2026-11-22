@@ -1,0 +1,27 @@
+{
+  "base_currency": "JPY",
+  "company_name": "Steppe Agro GmbH",
+  "counts": {
+    "documents": 131,
+    "fx_rates": 186,
+    "invoices": 80,
+    "ledger_rows": 367,
+    "payments": 51
+  },
+  "currency_exponents": {
+    "GBP": 2,
+    "JPY": 0
+  },
+  "env_version": "1.0.0",
+  "episode_id": "ep-d10ed44bc050",
+  "ledger_window_end": "2026-02-05",
+  "period_end": "2026-01-31",
+  "period_start": "2026-01-01",
+  "rounding": {
+    "fx_conversion": "half_even",
+    "fx_rate_format": "decimal string",
+    "money": "integer minor units; exponent per currency in currency_exponents"
+  },
+  "schema_version": "1.0",
+  "timezone": "+00:00"
+}

@@ -31,11 +31,11 @@ def experimental_reward(tp, fp, fn, n_truth, inspection_steps):
     return clip(2.0 * fb - 1.0 - STEP_COST * inspection_steps)
 
 
-def grade(submission, truth, inspection_steps: int):
-    """Grade a submission (None = empty answer, e.g. truncation).  Returns a full report dict
+def grade(submission, truth, inspection_steps: int, no_answer: bool = False):
+    """Grade a submission.  no_answer=True means the episode was truncated (empty answer).  Returns a full report dict
     that stays with the evaluator; only `reward` may be returned to a policy in train mode."""
     issues = truth["issues"]
-    if submission is None:
+    if no_answer:
         findings = []
     else:
         try:
@@ -56,6 +56,7 @@ def grade(submission, truth, inspection_steps: int):
         "n_findings": len(findings),
         "matches": [{"finding": i, "issue_id": issues[j].get("issue_id")} for i, j in pairs],
         "false_positive_findings": fps,
+        "fp_types": [findings[i]["type"] for i in fps],
         "missed_issue_ids": [issues[j].get("issue_id") for j in fns],
         "missed_types": [issues[j]["type"] for j in fns],
     }

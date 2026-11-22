@@ -1,0 +1,165 @@
+{
+  "env_version": "1.0.0",
+  "episodes": [
+    {
+      "split": "train",
+      "name": "train_01",
+      "episode_id": "ep-c887063070b4",
+      "public_sha256": "f21d6f7bb5a7599278ba56f9df445d99ebd3c617fe838c1331d550f709056a0e",
+      "full_sha256": "18312cfeb897a7561c9c76df6f024fdcf268907a311e9a471808ed5424c1e011",
+      "issues": 0
+    },
+    {
+      "split": "train",
+      "name": "train_02",
+      "episode_id": "ep-50d0840f5898",
+      "public_sha256": "c6c255e8788a7e8687f14c2da8dcd111c41b3a2a63f03a36de0fefb210bd22c4",
+      "full_sha256": "834093bec1f85021ca9523e00faeaa135992e859bc78e655d2f24808edcbf540",
+      "issues": 0
+    },
+    {
+      "split": "train",
+      "name": "train_03",
+      "episode_id": "ep-3c2533534bd8",
+      "public_sha256": "7e622e57f54f58837e19ec05370a1bafd7900d126709fc9400b96e96091d31f3",
+      "full_sha256": "d558d07fa1518f1534444a3592ed1bd138a76be835b2ab6d59e1426931a38a49",
+      "issues": 3
+    },
+    {
+      "split": "train",
+      "name": "train_04",
+      "episode_id": "ep-0214f8047c58",
+      "public_sha256": "4ec2e7766e3b8ee14aa09b37f742bc9c5c5aea2b96c19c960566600bbff756c9",
+      "full_sha256": "3c60c2d4f393b7899c351c410963b0956e4f71ad03eb1ab103f697a70351b772",
+      "issues": 2
+    },
+    {
+      "split": "train",
+      "name": "train_05",
+      "episode_id": "ep-525a2b46e2eb",
+      "public_sha256": "d12c65f9f47fd33914ac9bf6feec8d596f412213dabca0c97bdca2376a82107b",
+      "full_sha256": "a062d5b58ac6af2f9867fbcc31c8c1d8422b2f9ecae457c07faf0a2638ab4184",
+      "issues": 6
+    },
+    {
+      "split": "train",
+      "name": "train_06",
+      "episode_id": "ep-ab389406fb41",
+      "public_sha256": "1b07bed53b636f3c78af26aeb9ce4190cf743a4ab38195b01fb6fdfc974f71dd",
+      "full_sha256": "8eb3e875b01f47b024bd0c8b5dd85142cb9dd9a547e1ce70b36b3258819be6e4",
+      "issues": 6
+    },
+    {
+      "split": "train",
+      "name": "train_07",
+      "episode_id": "ep-728cff6a62f2",
+      "public_sha256": "114d3fac7e79eb6051c007f79f3fcafd852b777990d5e08b0bbf359e1540e90f",
+      "full_sha256": "f434e08c5f0f987f13448a29443b30b715e62319fc21a6ba454a2f355cb110e9",
+      "issues": 4
+    },
+    {
+      "split": "train",
+      "name": "train_08",
+      "episode_id": "ep-57b45ab4133d",
+      "public_sha256": "f81858c45d98703f1ad88750bac456af80eefe158323603301576855f6d0f8ac",
+      "full_sha256": "2b45455f5699f4db6cf2b8cfbe3fd88daa4d445f20a55c8639f98c3ff1973a1f",
+      "issues": 8
+    },
+    {
+      "split": "train",
+      "name": "train_09",
+      "episode_id": "ep-a99fdff75c0f",
+      "public_sha256": "290e8fdc13a991408d28e01e4dcd190567e26fba3e3a3afe9498fc919b86e6a3",
+      "full_sha256": "204ddb56b59000ee975172eff82b4ac76f3b76bb31ddeb0fb2556e6c59d4e85b",
+      "issues": 5
+    },
+    {
+      "split": "train",
+      "name": "train_10",
+      "episode_id": "ep-28f61cfb533e",
+      "public_sha256": "9fc73e0063b5cdae3438ba8d89627f912d9246ba7ed8449b3eae599391ffdcee",
+      "full_sha256": "347689c6d7f8eeeb18bf67d45c3c76f4e1f31e4fbc43c4eebc9ede475715e878",
+      "issues": 9
+    },
+    {
+      "split": "dev",
+      "name": "dev_01",
+      "episode_id": "ep-d6ab37140446",
+      "public_sha256": "419fafd7a07c3285f4405fc7890d2de1777dd28c47035ae66b20f29acc851ac0",
+      "full_sha256": "936e8f7b19f5cdb5956c53243722ef66ee77cab75a91dd690b26c9cd5e25debb",
+      "issues": 0
+    },
+    {
+      "split": "dev",
+      "name": "dev_02",
+      "episode_id": "ep-da20fd30402f",
+      "public_sha256": "3deae138c02777908f58ae49ceb6c29e3e7a2a7049526a8a2f4319733d81533c",
+      "full_sha256": "ee4007133591231f9a1753054860871bea376473d15ffa0f7ec9db1625fcb3e6",
+      "issues": 0
+    },
+    {
+      "split": "dev",
+      "name": "dev_03",
+      "episode_id": "ep-f71fa94cf126",
+      "public_sha256": "4e069ada08c641c7436d1bbd4383f35841f439776a462bd6acafb30bfd9e0b83",
+      "full_sha256": "bbd1cea1107022f8ecfb9e35369b263714471069965063364cb102b0e619e6e7",
+      "issues": 1
+    },
+    {
+      "split": "dev",
+      "name": "dev_04",
+      "episode_id": "ep-9536227aa6a1",
+      "public_sha256": "dcc7b9ce3a23211736ded05422193afef30f5e08bb1b927bb7d1295cad76c946",
+      "full_sha256": "3f29f72964e5c2f40dac51d733d02cec90947ae26db46dd870ba10629beaaaa4",
+      "issues": 4
+    },
+    {
+      "split": "dev",
+      "name": "dev_05",
+      "episode_id": "ep-a19a723b2577",
+      "public_sha256": "b30d184970cd815329236df66759c57853d77adf5d88fa0469d9db6025414f20",
+      "full_sha256": "97d41c84b7c05aae96c9687588e576afb4ab4a445a417149cc8bad224f845f93",
+      "issues": 5
+    },
+    {
+      "split": "dev",
+      "name": "dev_06",
+      "episode_id": "ep-d10ed44bc050",
+      "public_sha256": "db519d4368a1061bcf18319e4f74f50208c0e2e6ee8e8e4266dc4cd88784d230",
+      "full_sha256": "353aef43422d8df4407e8dd8a41dfb2aaf5390c7be17ef0eed474ffcf331489e",
+      "issues": 4
+    },
+    {
+      "split": "dev",
+      "name": "dev_07",
+      "episode_id": "ep-cdabfd030f2a",
+      "public_sha256": "bb8125df145ed1eae8084439297cde1f5af948d6bd5fead7f6653dcdaf374849",
+      "full_sha256": "228e13e1c1a13020ea2962164b92e2fac6cf02835a3f2a789df44becf2571c28",
+      "issues": 4
+    },
+    {
+      "split": "dev",
+      "name": "dev_08",
+      "episode_id": "ep-dd48559b2442",
+      "public_sha256": "9f902e9c42469f749a1b3e527d7c76a9ef1f5bcdbebfc72bb3eeac2f51bdbb33",
+      "full_sha256": "90394cb7950f419174c02cf4ff9b3e0ea1a433690bb7fba8120110893ac8f5a2",
+      "issues": 5
+    },
+    {
+      "split": "dev",
+      "name": "dev_09",
+      "episode_id": "ep-38f4dda7645d",
+      "public_sha256": "b1fb4d4e1e6c5018bded3e30b4fb851836379c4df82e657e1be981d8f3b26c8c",
+      "full_sha256": "236f802fbfe7b7cad7f8e1bbca6236019b268f95c46f5800913ec03c189d862f",
+      "issues": 7
+    },
+    {
+      "split": "dev",
+      "name": "dev_10",
+      "episode_id": "ep-b541fdf87d78",
+      "public_sha256": "7e97ae51ba58516e067f607696d1a773a939b91dcc625a4a86a86b85d7937847",
+      "full_sha256": "e9457998cf35105b9f223b8afcbf404a5ce51d5025c810fdf888f78fe3278e5e",
+      "issues": 8
+    }
+  ]
+}

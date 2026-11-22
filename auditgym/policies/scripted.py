@@ -173,7 +173,8 @@ class Oracle(Policy):
     def act(self, obs):
         fs = [finding(i["type"], i["affected_ids"], i["expected_amount_minor"], i["currency"],
                       i["evidence_sets"][0], "oracle") for i in self.truth["issues"]]
-        return {"action": "submit", "findings": {"episode_id": self.eid, "findings": fs}}
+        eid = obs.get("episode_id") or self.eid
+        return {"action": "submit", "findings": {"episode_id": eid, "findings": fs}}
 
 
 # --------------------------------------------------------------------------- 5. expert (demo)

@@ -1,7 +1,7 @@
 """Arithmetic-only calculator (no names, calls, attributes, code or files)."""
 
 import ast
-from decimal import Decimal, DivisionByZero, InvalidOperation, localcontext
+from decimal import ROUND_FLOOR, Decimal, DivisionByZero, InvalidOperation, localcontext
 
 from .constants import MAX_CALC_LEN
 
@@ -62,10 +62,10 @@ def _eval(node, src):
             return a * b
         if op is ast.Div:
             return a / b
-        if op is ast.FloorDiv:
-            return a // b
+        if op is ast.FloorDiv:                 # Python semantics: floor, not truncation
+            return (a / b).to_integral_value(rounding=ROUND_FLOOR)
         if op is ast.Mod:
-            return a % b
+            return a - b * (a / b).to_integral_value(rounding=ROUND_FLOOR)
         if op is ast.Pow:
             if b != b.to_integral_value() or abs(b) > 64:
                 raise CalcError("exponent must be an integer with |exp| <= 64")

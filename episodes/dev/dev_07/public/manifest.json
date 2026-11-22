@@ -1,0 +1,27 @@
+{
+  "base_currency": "USD",
+  "company_name": "Orbit Foods Ltd",
+  "counts": {
+    "documents": 126,
+    "fx_rates": 59,
+    "invoices": 77,
+    "ledger_rows": 353,
+    "payments": 49
+  },
+  "currency_exponents": {
+    "KZT": 2,
+    "USD": 2
+  },
+  "env_version": "1.0.0",
+  "episode_id": "ep-cdabfd030f2a",
+  "ledger_window_end": "2025-03-05",
+  "period_end": "2025-02-28",
+  "period_start": "2025-02-01",
+  "rounding": {
+    "fx_conversion": "half_up",
+    "fx_rate_format": "decimal string",
+    "money": "integer minor units; exponent per currency in currency_exponents"
+  },
+  "schema_version": "1.0",
+  "timezone": "+09:00"
+}

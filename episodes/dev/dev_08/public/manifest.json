@@ -1,0 +1,27 @@
+{
+  "base_currency": "JPY",
+  "company_name": "Esil Labs JSC",
+  "counts": {
+    "documents": 114,
+    "fx_rates": 61,
+    "invoices": 77,
+    "ledger_rows": 508,
+    "payments": 37
+  },
+  "currency_exponents": {
+    "GBP": 2,
+    "JPY": 0
+  },
+  "env_version": "1.0.0",
+  "episode_id": "ep-dd48559b2442",
+  "ledger_window_end": "2025-02-05",
+  "period_end": "2025-01-31",
+  "period_start": "2025-01-01",
+  "rounding": {
+    "fx_conversion": "half_even",
+    "fx_rate_format": "decimal string",
+    "money": "integer minor units; exponent per currency in currency_exponents"
+  },
+  "schema_version": "1.0",
+  "timezone": "+09:00"
+}

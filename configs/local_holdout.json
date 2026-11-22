@@ -1,0 +1,146 @@
+{
+  "split": "local_holdout",
+  "description": "Self-check suite mimicking the closed evaluation mix (5 clean, 5 interacting, 10 other). NOT the organisers' hidden seeds.",
+  "episodes": [
+    {
+      "name": "hold_01",
+      "seed": 7000000000,
+      "config": {
+        "preset": "clean"
+      }
+    },
+    {
+      "name": "hold_02",
+      "seed": 7000104729,
+      "config": {
+        "preset": "clean"
+      }
+    },
+    {
+      "name": "hold_03",
+      "seed": 7000209458,
+      "config": {
+        "preset": "clean"
+      }
+    },
+    {
+      "name": "hold_04",
+      "seed": 7000314187,
+      "config": {
+        "preset": "clean"
+      }
+    },
+    {
+      "name": "hold_05",
+      "seed": 7000418916,
+      "config": {
+        "preset": "clean"
+      }
+    },
+    {
+      "name": "hold_06",
+      "seed": 7000523645,
+      "config": {
+        "preset": "interacting"
+      }
+    },
+    {
+      "name": "hold_07",
+      "seed": 7000628374,
+      "config": {
+        "preset": "interacting"
+      }
+    },
+    {
+      "name": "hold_08",
+      "seed": 7000733103,
+      "config": {
+        "preset": "interacting"
+      }
+    },
+    {
+      "name": "hold_09",
+      "seed": 7000837832,
+      "config": {
+        "preset": "interacting"
+      }
+    },
+    {
+      "name": "hold_10",
+      "seed": 7000942561,
+      "config": {
+        "preset": "interacting"
+      }
+    },
+    {
+      "name": "hold_11",
+      "seed": 7001047290,
+      "config": {
+        "preset": "mixed"
+      }
+    },
+    {
+      "name": "hold_12",
+      "seed": 7001152019,
+      "config": {
+        "preset": "mixed"
+      }
+    },
+    {
+      "name": "hold_13",
+      "seed": 7001256748,
+      "config": {
+        "preset": "mixed"
+      }
+    },
+    {
+      "name": "hold_14",
+      "seed": 7001361477,
+      "config": {
+        "preset": "mixed"
+      }
+    },
+    {
+      "name": "hold_15",
+      "seed": 7001466206,
+      "config": {
+        "preset": "all_types"
+      }
+    },
+    {
+      "name": "hold_16",
+      "seed": 7001570935,
+      "config": {
+        "preset": "all_types"
+      }
+    },
+    {
+      "name": "hold_17",
+      "seed": 7001675664,
+      "config": {
+        "preset": "all_types"
+      }
+    },
+    {
+      "name": "hold_18",
+      "seed": 7001780393,
+      "config": {
+        "preset": "hard"
+      }
+    },
+    {
+      "name": "hold_19",
+      "seed": 7001885122,
+      "config": {
+        "preset": "hard"
+      }
+    },
+    {
+      "name": "hold_20",
+      "seed": 7001989851,
+      "config": {
+        "preset": "single"
+      }
+    }
+  ]
+}

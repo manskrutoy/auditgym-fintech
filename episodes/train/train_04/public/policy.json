@@ -1,0 +1,69 @@
+{
+  "accounts": {
+    "1000": "Cash at bank",
+    "1100": "Accounts receivable",
+    "1190": "Unapplied receipts (suspense)",
+    "2300": "Customer advances",
+    "3900": "Opening balance equity",
+    "4000": "Revenue",
+    "6100": "Rent",
+    "6200": "Payroll",
+    "6300": "Utilities",
+    "6400": "Software subscriptions",
+    "6500": "Travel",
+    "6600": "Professional services",
+    "7900": "Realised FX gain/loss"
+  },
+  "findings": {
+    "affected_ids": {
+      "duplicate_invoice": "invoice_id of the original AND of the duplicate (order irrelevant)",
+      "fx_misconversion": "the invoice_id or payment_id whose base amount used a wrong rate",
+      "period_cutoff": "invoice_id posted in the wrong period",
+      "unallocated_payment": "payment_id and the invoice_id whose allocation was not applied"
+    },
+    "amount": {
+      "duplicate_invoice": "total_minor of the duplicate invoice, invoice currency",
+      "fx_misconversion": "|recorded base amount - correctly converted base amount| of the AR debit row (invoice) or cash row (payment), base currency",
+      "period_cutoff": "base amount of the AR debit row posted in the wrong period, base currency",
+      "unallocated_payment": "amount_minor of the unapplied invoice_ref, payment currency"
+    },
+    "amount_tolerance_minor": {
+      "duplicate_invoice": 0,
+      "fx_misconversion": 1,
+      "period_cutoff": 0,
+      "unallocated_payment": 0
+    },
+    "evidence": {
+      "duplicate_invoice": "doc_id of both invoices + row_id of both AR (1100) debit rows",
+      "fx_misconversion": "doc_id + row_id of the converted row (AR debit or cash) + fx_id of the rate the policy requires",
+      "period_cutoff": "doc_id of the invoice + row_id of its AR (1100) debit row",
+      "unallocated_payment": "doc_id of the payment + row_id of its 1190 suspense row"
+    },
+    "types": [
+      "duplicate_invoice",
+      "unallocated_payment",
+      "fx_misconversion",
+      "period_cutoff"
+    ]
+  },
+  "fx": {
+    "ar_relief": "AR is relieved at the invoice's recorded base amount (pro rata for partial allocations, remaining balance on the allocation that completes the invoice); the difference to the cash line goes to 7900",
+    "conversion": "base_minor = round(amount_minor / 10^exp(source) * rate * 10^exp(base))",
+    "quote": "rate = units of target_currency for 1 major unit of source_currency",
+    "rate_date": "calendar date of the document timestamp in manifest.timezone; if no rate is published for that date, use the latest earlier published date",
+    "rounding": "half_even"
+  },
+  "period": {
+    "ledger_window": "ledger.csv holds rows dated period_start..ledger_window_end; rows after period_end are subsequent-period postings shown for cut-off testing. Invoices issued before period_start appear as opening balances (account 3900) posted at period_start.",
+    "rule": "A record belongs to the reporting period when its calendar date in manifest.timezone is between period_start and period_end inclusive. Invoices are dated by issued_at, payments by timestamp, ledger rows by timestamp. Timestamps carry their own UTC offset; convert to manifest.timezone before taking the date."
+  },
+  "policy_version": "1.0",
+  "posting": {
+    "expense": "Dr 6xxx / Cr 1000, no documents in this extract",
+    "invoice": "Dr 1100 AR (base amount at invoice rate) / Cr 4000 revenue per line item",
+    "payment_with_refs": "Dr 1000 cash at payment rate / Cr 1100 for each applied invoice_ref; a ref that is not applied sits in 1190; difference to 7900",
+    "payment_without_refs_known_customer": "Dr 1000 / Cr 2300 customer advance",
+    "payment_without_refs_unknown_payer": "Dr 1000 / Cr 1190 unapplied receipt",
+    "refund": "negative amount_minor; Dr 2300 / Cr 1000"
+  }
+}

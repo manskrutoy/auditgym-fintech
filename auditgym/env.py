@@ -169,9 +169,16 @@ class AuditEnv:
         self._record(action, obs, 0.0, False, False)
         return obs, 0.0, False, False, self._info()
 
+    def force_truncate(self, reason="time_limit"):
+        """Used by the evaluator when a policy process does not answer in time."""
+        if self._ep is None or self.done:
+            return None
+        self.inspection_steps = self.steps_used
+        return self._finish(None, truncated=True, action={"action": None}, reason=reason)
+
     # ------------------------------------------------------------------ internals
     def _finish(self, submission, truncated, action, result=None, err=None, reason=None):
-        g = grade(None if truncated else submission, self._truth, self.inspection_steps)
+        g = grade(submission, self._truth, self.inspection_steps, no_answer=truncated)
         g["episode_id"] = self._ep.episode_id
         g["terminated_by"] = reason or "submit"
         g["steps_used"] = self.steps_used

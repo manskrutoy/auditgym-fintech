@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "auditgym/manifest.schema.json",
+  "title": "manifest.json",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "env_version",
+    "episode_id",
+    "company_name",
+    "base_currency",
+    "currency_exponents",
+    "timezone",
+    "period_start",
+    "period_end",
+    "ledger_window_end",
+    "counts",
+    "rounding"
+  ],
+  "properties": {
+    "timezone": {
+      "type": "string",
+      "pattern": "^[+-]\\d\\d:\\d\\d$"
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "currency_exponents": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer"
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": [
+        "ledger_rows",
+        "invoices",
+        "payments",
+        "documents",
+        "fx_rates"
+      ]
+    },
+    "rounding": {
+      "type": "object",
+      "required": [
+        "money",
+        "fx_conversion",
+        "fx_rate_format"
+      ],
+      "properties": {
+        "fx_conversion": {
+          "enum": [
+            "half_even",
+            "half_up"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "episode_id": "ep-525a2b46e2eb",
+  "issues": [
+    {
+      "affected_ids": [
+        "INV-320020",
+        "INV-749819"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "DOC-4f1efaed",
+          "DOC-adbf4529",
+          "ROW-3ce6eb9f",
+          "ROW-f5e9f6a1"
+        ]
+      ],
+      "expected_amount_minor": 1907100,
+      "interaction_group": null,
+      "issue_id": "ep-525a2b46e2eb-I01",
+      "type": "duplicate_invoice"
+    },
+    {
+      "affected_ids": [
+        "INV-428133",
+        "INV-746186"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "DOC-2539ebe3",
+          "DOC-7141ddd8",
+          "ROW-468888f9",
+          "ROW-c59bbb2f"
+        ]
+      ],
+      "expected_amount_minor": 171050,
+      "interaction_group": null,
+      "issue_id": "ep-525a2b46e2eb-I02",
+      "type": "duplicate_invoice"
+    },
+    {
+      "affected_ids": [
+        "INV-129824"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "DOC-55de6c54",
+          "ROW-256253b0"
+        ]
+      ],
+      "expected_amount_minor": 525895,
+      "interaction_group": null,
+      "issue_id": "ep-525a2b46e2eb-I03",
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "INV-630731"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "DOC-18520e1f",
+          "ROW-52347249"
+        ]
+      ],
+      "expected_amount_minor": 960049,
+      "interaction_group": null,
+      "issue_id": "ep-525a2b46e2eb-I04",
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "INV-102904",
+        "PAY-988431"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "DOC-c9e3c3bb",
+          "ROW-23131c85"
+        ]
+      ],
+      "expected_amount_minor": 1044200,
+      "interaction_group": null,
+      "issue_id": "ep-525a2b46e2eb-I05",
+      "type": "unallocated_payment"
+    },
+    {
+      "affected_ids": [
+        "INV-943357",
+        "PAY-012620"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "EUR",
+      "evidence_sets": [
+        [
+          "DOC-33ff5051",
+          "ROW-046ea8d6"
+        ]
+      ],
+      "expected_amount_minor": 1279497,
+      "interaction_group": null,
+      "issue_id": "ep-525a2b46e2eb-I06",
+      "type": "unallocated_payment"
+    }
+  ],
+  "schema_version": "1.0"
+}

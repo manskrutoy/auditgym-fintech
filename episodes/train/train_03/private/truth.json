@@ -1,0 +1,61 @@
+{
+  "episode_id": "ep-3c2533534bd8",
+  "issues": [
+    {
+      "affected_ids": [
+        "INV-272256",
+        "INV-706526"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "GBP",
+      "evidence_sets": [
+        [
+          "DOC-b19fd078",
+          "DOC-c9833b71",
+          "ROW-392eccce",
+          "ROW-dacc5843"
+        ]
+      ],
+      "expected_amount_minor": 514788,
+      "interaction_group": null,
+      "issue_id": "ep-3c2533534bd8-I01",
+      "type": "duplicate_invoice"
+    },
+    {
+      "affected_ids": [
+        "INV-859742"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "GBP",
+      "evidence_sets": [
+        [
+          "DOC-203ade12",
+          "ROW-443013d3"
+        ]
+      ],
+      "expected_amount_minor": 234100,
+      "interaction_group": null,
+      "issue_id": "ep-3c2533534bd8-I02",
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "INV-496778",
+        "PAY-691985"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "DOC-6ac067d8",
+          "ROW-cc09464b"
+        ]
+      ],
+      "expected_amount_minor": 100050,
+      "interaction_group": null,
+      "issue_id": "ep-3c2533534bd8-I03",
+      "type": "unallocated_payment"
+    }
+  ],
+  "schema_version": "1.0"
+}

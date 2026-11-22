@@ -1,0 +1,27 @@
+{
+  "base_currency": "KZT",
+  "company_name": "Nova Media SA",
+  "counts": {
+    "documents": 113,
+    "fx_rates": 183,
+    "invoices": 73,
+    "ledger_rows": 297,
+    "payments": 40
+  },
+  "currency_exponents": {
+    "JPY": 0,
+    "KZT": 2
+  },
+  "env_version": "1.0.0",
+  "episode_id": "ep-38f4dda7645d",
+  "ledger_window_end": "2026-05-05",
+  "period_end": "2026-04-30",
+  "period_start": "2026-04-01",
+  "rounding": {
+    "fx_conversion": "half_even",
+    "fx_rate_format": "decimal string",
+    "money": "integer minor units; exponent per currency in currency_exponents"
+  },
+  "schema_version": "1.0",
+  "timezone": "+05:30"
+}

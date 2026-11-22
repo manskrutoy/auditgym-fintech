@@ -1,0 +1,97 @@
+{
+  "episode_id": "ep-dd48559b2442",
+  "issues": [
+    {
+      "affected_ids": [
+        "INV-482556",
+        "INV-705054"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "GBP",
+      "evidence_sets": [
+        [
+          "DOC-92a28f7e",
+          "DOC-dcf0c73b",
+          "ROW-1c73267f",
+          "ROW-4c1e8732"
+        ]
+      ],
+      "expected_amount_minor": 184099,
+      "interaction_group": null,
+      "issue_id": "ep-dd48559b2442-I01",
+      "type": "duplicate_invoice"
+    },
+    {
+      "affected_ids": [
+        "INV-690249"
+      ],
+      "amount_tolerance_minor": 1,
+      "currency": "JPY",
+      "evidence_sets": [
+        [
+          "DOC-70e87f4e",
+          "FX-2025-01-31-GBP-JPY",
+          "ROW-ff04a1e4"
+        ]
+      ],
+      "expected_amount_minor": 2312,
+      "interaction_group": "cutoff_fx_boundary",
+      "issue_id": "ep-dd48559b2442-I02",
+      "type": "fx_misconversion"
+    },
+    {
+      "affected_ids": [
+        "PAY-838611"
+      ],
+      "amount_tolerance_minor": 1,
+      "currency": "JPY",
+      "evidence_sets": [
+        [
+          "DOC-555970bd",
+          "FX-2025-01-31-GBP-JPY",
+          "ROW-05bf52d4"
+        ]
+      ],
+      "expected_amount_minor": 3630,
+      "interaction_group": "fx_partial_payment",
+      "issue_id": "ep-dd48559b2442-I03",
+      "type": "fx_misconversion"
+    },
+    {
+      "affected_ids": [
+        "INV-690249"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "JPY",
+      "evidence_sets": [
+        [
+          "DOC-70e87f4e",
+          "ROW-ff04a1e4"
+        ]
+      ],
+      "expected_amount_minor": 739539,
+      "interaction_group": "cutoff_fx_boundary",
+      "issue_id": "ep-dd48559b2442-I04",
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "INV-442936",
+        "PAY-838611"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "GBP",
+      "evidence_sets": [
+        [
+          "DOC-555970bd",
+          "ROW-81025e76"
+        ]
+      ],
+      "expected_amount_minor": 194398,
+      "interaction_group": "fx_partial_payment",
+      "issue_id": "ep-dd48559b2442-I05",
+      "type": "unallocated_payment"
+    }
+  ],
+  "schema_version": "1.0"
+}

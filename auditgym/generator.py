@@ -360,6 +360,19 @@ def _render(seed, cfg, attempt, w, lines, planned, clean_lines):
         story = iss.pop("_story")
         mutations.append(_render_story(story, inv_id, pay_id, w, iss["issue_id"]))
 
+    # ---- causal record: every ledger line that differs from the clean counterpart
+    dirty_idx = {l.role: i for i, l in enumerate(lines)}
+    clean_by_role = {l.role: l for l in clean_lines}
+    ledger_diff = []
+    for role in sorted(set(dirty_idx) | set(clean_by_role), key=lambda r: repr(r)):
+        c = clean_by_role.get(role)
+        d = lines[dirty_idx[role]] if role in dirty_idx else None
+        sig = lambda l: None if l is None else {"account": l.account, "debit_minor": l.debit,
+                                                "credit_minor": l.credit, "timestamp": iso(l.ts)}
+        if sig(c) != sig(d):
+            ledger_diff.append({"row_id": row_id[dirty_idx[role]] if d is not None else None,
+                                "line_role": role[0], "clean": sig(c), "recorded": sig(d)})
+
     used_cur = sorted({w.base} | {i["currency"] for i in invoices} | {p["currency"] for p in payments})
     manifest = {
         "schema_version": SCHEMA_VERSION,
@@ -400,6 +413,9 @@ def _render(seed, cfg, attempt, w, lines, planned, clean_lines):
                   "foreign_currencies": w.foreign, "customers": len(w.customers),
                   "period": [w.period_start.isoformat(), w.period_end.isoformat()]},
         "mutations": mutations,
+        "ledger_diff_vs_clean": ledger_diff,
+        "clean_trial_balance": {"debit_minor": sum(l.debit for l in clean_lines),
+                                "credit_minor": sum(l.credit for l in clean_lines)},
         "distractor_tags": dict(sorted(tags.items())),
         "clean_ledger_lines": len(clean_lines),
         "dirty_ledger_lines": len(lines),

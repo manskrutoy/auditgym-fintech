@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "auditgym/observation.schema.json",
+  "title": "step observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "step",
+    "remaining_steps",
+    "action",
+    "result",
+    "error"
+  ],
+  "properties": {
+    "step": {
+      "type": "integer"
+    },
+    "remaining_steps": {
+      "type": "integer"
+    },
+    "action": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "result": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "error": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_action",
+            "unknown_action",
+            "invalid_arguments",
+            "unknown_table",
+            "not_found",
+            "invalid_cursor",
+            "calc_error",
+            "episode_finished",
+            "time_limit"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 200
+        }
+      }
+    }
+  }
+}

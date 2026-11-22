@@ -1,0 +1,24 @@
+{
+  "episode_id": "ep-f71fa94cf126",
+  "issues": [
+    {
+      "affected_ids": [
+        "PAY-836180"
+      ],
+      "amount_tolerance_minor": 1,
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "DOC-32045223",
+          "FX-2025-08-18-KWD-USD",
+          "ROW-54c1b660"
+        ]
+      ],
+      "expected_amount_minor": 791,
+      "interaction_group": null,
+      "issue_id": "ep-f71fa94cf126-I01",
+      "type": "fx_misconversion"
+    }
+  ],
+  "schema_version": "1.0"
+}

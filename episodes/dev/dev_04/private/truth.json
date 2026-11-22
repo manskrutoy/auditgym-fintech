@@ -1,0 +1,76 @@
+{
+  "episode_id": "ep-9536227aa6a1",
+  "issues": [
+    {
+      "affected_ids": [
+        "INV-970213"
+      ],
+      "amount_tolerance_minor": 1,
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "DOC-82d4e1ec",
+          "FX-2025-11-12-CHF-USD",
+          "ROW-76556732"
+        ]
+      ],
+      "expected_amount_minor": 234,
+      "interaction_group": null,
+      "issue_id": "ep-9536227aa6a1-I01",
+      "type": "fx_misconversion"
+    },
+    {
+      "affected_ids": [
+        "PAY-466966"
+      ],
+      "amount_tolerance_minor": 1,
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "DOC-816fd09b",
+          "FX-2025-11-05-CHF-USD",
+          "ROW-6be98a40"
+        ]
+      ],
+      "expected_amount_minor": 542,
+      "interaction_group": null,
+      "issue_id": "ep-9536227aa6a1-I02",
+      "type": "fx_misconversion"
+    },
+    {
+      "affected_ids": [
+        "INV-268593"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "DOC-256a4519",
+          "ROW-edb81bd8"
+        ]
+      ],
+      "expected_amount_minor": 181083,
+      "interaction_group": null,
+      "issue_id": "ep-9536227aa6a1-I03",
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "INV-667042"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "DOC-736cfc58",
+          "ROW-7fb4b5da"
+        ]
+      ],
+      "expected_amount_minor": 1006697,
+      "interaction_group": null,
+      "issue_id": "ep-9536227aa6a1-I04",
+      "type": "period_cutoff"
+    }
+  ],
+  "schema_version": "1.0"
+}

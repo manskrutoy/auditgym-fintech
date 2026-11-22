@@ -1,0 +1,113 @@
+{
+  "episode_id": "ep-ab389406fb41",
+  "issues": [
+    {
+      "affected_ids": [
+        "INV-443750"
+      ],
+      "amount_tolerance_minor": 1,
+      "currency": "JPY",
+      "evidence_sets": [
+        [
+          "DOC-6ed075cc",
+          "FX-2026-07-14-CNY-JPY",
+          "ROW-0f588f86"
+        ]
+      ],
+      "expected_amount_minor": 3060,
+      "interaction_group": null,
+      "issue_id": "ep-ab389406fb41-I01",
+      "type": "fx_misconversion"
+    },
+    {
+      "affected_ids": [
+        "PAY-140269"
+      ],
+      "amount_tolerance_minor": 1,
+      "currency": "JPY",
+      "evidence_sets": [
+        [
+          "DOC-7bb81c60",
+          "FX-2026-07-01-USD-JPY",
+          "ROW-39edb3e8"
+        ]
+      ],
+      "expected_amount_minor": 16696,
+      "interaction_group": null,
+      "issue_id": "ep-ab389406fb41-I02",
+      "type": "fx_misconversion"
+    },
+    {
+      "affected_ids": [
+        "PAY-330215"
+      ],
+      "amount_tolerance_minor": 1,
+      "currency": "JPY",
+      "evidence_sets": [
+        [
+          "DOC-2ece0b9e",
+          "FX-2026-07-13-CNY-JPY",
+          "ROW-c8ef32e7"
+        ]
+      ],
+      "expected_amount_minor": 3939,
+      "interaction_group": null,
+      "issue_id": "ep-ab389406fb41-I03",
+      "type": "fx_misconversion"
+    },
+    {
+      "affected_ids": [
+        "INV-739506"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "JPY",
+      "evidence_sets": [
+        [
+          "DOC-e74ec9b5",
+          "ROW-0841e9d8"
+        ]
+      ],
+      "expected_amount_minor": 3218000,
+      "interaction_group": null,
+      "issue_id": "ep-ab389406fb41-I04",
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "INV-300087",
+        "PAY-160593"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "JPY",
+      "evidence_sets": [
+        [
+          "DOC-217bb821",
+          "ROW-a26e865d"
+        ]
+      ],
+      "expected_amount_minor": 350000,
+      "interaction_group": null,
+      "issue_id": "ep-ab389406fb41-I05",
+      "type": "unallocated_payment"
+    },
+    {
+      "affected_ids": [
+        "INV-307191",
+        "PAY-179201"
+      ],
+      "amount_tolerance_minor": 0,
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "DOC-633c339c",
+          "ROW-9e611978"
+        ]
+      ],
+      "expected_amount_minor": 989293,
+      "interaction_group": null,
+      "issue_id": "ep-ab389406fb41-I06",
+      "type": "unallocated_payment"
+    }
+  ],
+  "schema_version": "1.0"
+}

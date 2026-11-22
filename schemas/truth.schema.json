@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "auditgym/truth.schema.json",
+  "title": "truth.json (CLOSED, evaluator only)",
+  "type": "object",
+  "required": [
+    "episode_id",
+    "schema_version",
+    "issues"
+  ],
+  "properties": {
+    "issues": {
+      "type": "array",
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "required": [
+          "issue_id",
+          "type",
+          "affected_ids",
+          "expected_amount_minor",
+          "currency",
+          "amount_tolerance_minor",
+          "evidence_sets",
+          "interaction_group"
+        ],
+        "properties": {
+          "evidence_sets": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "interaction_group": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

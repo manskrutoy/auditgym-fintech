@@ -1,0 +1,28 @@
+{
+  "base_currency": "EUR",
+  "company_name": "Willow Logistics Co",
+  "counts": {
+    "documents": 76,
+    "fx_rates": 118,
+    "invoices": 49,
+    "ledger_rows": 574,
+    "payments": 27
+  },
+  "currency_exponents": {
+    "CNY": 2,
+    "EUR": 2,
+    "KZT": 2
+  },
+  "env_version": "1.0.0",
+  "episode_id": "ep-525a2b46e2eb",
+  "ledger_window_end": "2026-03-05",
+  "period_end": "2026-02-28",
+  "period_start": "2026-02-01",
+  "rounding": {
+    "fx_conversion": "half_up",
+    "fx_rate_format": "decimal string",
+    "money": "integer minor units; exponent per currency in currency_exponents"
+  },
+  "schema_version": "1.0",
+  "timezone": "+05:00"
+}
