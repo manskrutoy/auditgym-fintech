@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<!-- AuditGym launch film · built with onetake (PolyForm Noncommercial 1.0.0, github.com/feitangyuan/onetake) -->
+<html lang="ru"><head><meta charset="utf-8"><title>AuditGym · one tick</title>
+<style>
+@font-face{font-family:'T';src:url(Inter.ttf);font-weight:100 900}
+@font-face{font-family:'M';src:url(GeistMono.ttf);font-weight:100 900}
+@font-face{font-family:'D';src:url(InstrumentSerif.ttf)}
+:root{--ground:#f8f8f6;--deep:#ededea;--card:#fff;--line:#e4e4e0;--mute:#83837f;--ink:#161616;--accent:#17a05e;--accent2:#b42323}
+html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:var(--ground)}
+body{font-family:'T',sans-serif;color:var(--ink)}
+#stage{position:absolute;inset:0;overflow:hidden;background:var(--ground)}
+canvas#lat{position:absolute;inset:0}
+#world{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
+.abs{position:absolute;left:0;top:0;will-change:transform,opacity}
+/* ledger in world space */
+#ledger{position:absolute;left:380px;top:250px;width:1160px;background:var(--card);border:1px solid var(--line);border-radius:16px;
+  box-shadow:0 30px 70px -30px rgba(20,20,20,.25)}
+#ledger .hd{height:54px;display:flex;align-items:center;padding:0 28px;font:500 19px 'M',monospace;color:var(--mute);border-bottom:1.5px solid var(--ink)}
+.row{position:relative;height:60px;display:flex;align-items:center;padding:0 28px;font:400 22px 'M',monospace;border-bottom:1px solid var(--line);overflow:hidden}
+.row span{display:inline-block}
+.row .c1{width:200px;color:var(--mute)}.row .c2{width:120px}.row .c3{width:260px}.row .c4{width:330px}.row .c5{width:170px;text-align:right}
+.row .strike{position:absolute;left:20px;height:3px;top:29px;background:var(--accent2);border-radius:2px;transform-origin:0 50%}
+.row .wash{position:absolute;inset:0;background:var(--accent);opacity:0}
+.note{position:absolute;font:500 22px 'T';white-space:nowrap;background:var(--card);border:1.5px solid currentColor;border-radius:999px;padding:8px 18px;box-shadow:0 12px 30px -14px rgba(0,0,0,.25)}
+#tick{position:absolute;left:0;top:0;width:64px;height:64px;transform-origin:50% 50%}
+#tick path{fill:none;stroke:var(--accent);stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+/* hook words (screen space) */
+#hook{position:absolute;left:0;right:0;top:600px;text-align:center;font:500 62px 'T';letter-spacing:-.02em}
+#hook span{display:inline-block;margin:0 .14em}
+/* evidence chips + finding card (world) */
+.chip{position:absolute;padding:10px 16px;border-radius:999px;background:var(--card);border:1.5px solid var(--ink);font:500 19px 'M',monospace;white-space:nowrap}
+#card{position:absolute;background:var(--card);border:1.5px solid var(--ink);border-radius:18px;overflow:hidden;box-shadow:0 30px 70px -30px rgba(20,20,20,.3)}
+#card pre{margin:0;padding:30px 34px;font:400 25px/1.55 'M',monospace;white-space:pre;color:var(--ink)}
+#card pre b{color:var(--accent);font-weight:500}
+#card .btn{position:absolute;right:24px;bottom:22px;padding:10px 22px;border-radius:999px;background:var(--ink);color:#fff;font:600 19px 'T'}
+/* scorer (screen) */
+#scorer{position:absolute;inset:0;background:var(--card);opacity:0}
+#formula{position:absolute;left:0;right:0;top:330px;text-align:center;font:400 40px 'T';color:var(--mute)}
+#formula span{display:inline-block;margin:0 .18em}
+#num{position:absolute;left:0;right:0;top:420px;text-align:center;font:400 230px/1 'D';letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+#bars{position:absolute;left:470px;top:300px;width:980px}
+.bar{position:relative;height:96px}
+.bar .lab{position:absolute;left:0;top:10px;font:500 26px 'T';white-space:nowrap}
+.bar .val{position:absolute;right:0;top:10px;font:400 30px 'D';font-variant-numeric:tabular-nums}
+.bar .fill{position:absolute;left:0;top:56px;height:16px;border-radius:8px;transform-origin:0 50%}
+.bar .axis{position:absolute;left:0;right:0;top:63px;height:2px;background:var(--line)}
+#stac{position:absolute;left:0;right:0;top:470px;text-align:center;font:700 92px 'T';letter-spacing:-.02em}
+#term{position:absolute;left:460px;top:430px;width:1000px;font:400 34px/1.6 'M',monospace;white-space:pre}
+#term .ok{color:var(--accent);font-weight:600}
+#mark{position:absolute;left:0;right:0;top:390px;text-align:center;font:400 190px/1 'D';letter-spacing:-.01em}
+#mark span{display:inline-block;transform-origin:50% 88%}
+#tag{position:absolute;left:0;right:0;top:620px;text-align:center;font:500 34px 'T'}
+#url{position:absolute;left:0;right:0;top:690px;text-align:center;font:400 24px 'M',monospace;color:var(--mute)}
+</style></head><body>
+<div id="stage">
+  <canvas id="lat" width="1920" height="1080"></canvas>
+  <div id="world">
+    <div id="ledger"><div class="hd"><span style="width:200px">row_id</span><span style="width:120px">счёт</span><span style="width:260px">дата</span><span style="width:330px">документ</span><span style="width:170px;text-align:right">сумма</span></div><div id="rows"></div></div>
+    <div id="notes"></div>
+    <div id="chips"></div>
+    <div id="card"><pre id="cardtxt"></pre><div class="btn" id="btn">submit</div></div>
+    <svg id="tick" viewBox="0 0 64 64"><path id="tp" d="M12 34 L26 47 L53 17"/></svg>
+  </div>
+  <div id="hook"><span>Как проверить</span><span>ИИ-аудитора?</span></div>
+  <div id="scorer">
+    <div id="formula"><span>2 × F1</span><span>− 1</span><span>− 0,002 × шаги</span></div>
+    <div id="num"></div>
+    <div id="bars"></div>
+  </div>
+  <div id="stacbg" style="position:absolute;inset:0;opacity:0"></div><div id="stac"></div>
+  <div id="term"></div>
+  <svg id="tick2" viewBox="0 0 64 64" style="position:absolute;left:0;top:0;width:64px;height:64px;opacity:0"><path d="M12 34 L26 47 L53 17" style="fill:none;stroke:var(--accent);stroke-width:9;stroke-linecap:round;stroke-linejoin:round"/></svg><div id="mark"></div><div id="tag">RL-среда для обучения ИИ-аудиторов</div><div id="url">github.com/manskrutoy/auditgym-fintech</div>
+</div>
+<script src="motion.js"></script>
+<script>
+const DUR=25; window.__meta={dur:DUR,fps:30,w:1920,h:1080,inFrame:[]};
+const {clamp,lerp,seg,sstep,ssstep,ease,spring,ring,tween}=OM;
+const $=id=>document.getElementById(id);
+
+// ───────── beats (seconds) — shot lengths vary ≥4× (0.25 s hits next to 1.4 s holds) ─────────
+const T_DRAW=0.25, HOOK=[0.95,1.3], HOOK_OUT=2.35;
+const PULL=[2.35,3.45], ROWS_IN=2.55, ROW_DT=0.06;
+const RED=[[3.95,2],[4.32,5],[4.58,7]], NOTE1=[4.95,5.75];
+const HOPS=[[5.85,6.25,-1,3],[6.45,6.85,3,4],[7.95,8.35,4,2]];   // [t0,t1,fromRow,toRow]
+const NO=6.95, TRAP=[7.0,7.85], LAND=8.35;
+const CHIPS_T=[8.95,9.7], CARD=[9.6,10.25], TYPE0=10.3, HOLD=[11.4,13.3], SUBMIT=13.35;
+const ZOOM=[13.45,14.05], FORM=[14.1,14.3,14.5], COUNT=[14.65,15.45], BARS=16.25, BARS_OUT=18.4;
+const STAC=[[18.55,'78 тестов'],[18.8,'20 / 20 парных проверок'],[19.05,'0 утечек эталона'],[19.3,'одна команда']], STAC_END=19.8;
+const TERM0=19.9, PASS=21.2, MARK=22.4, TAG=23.05, URL=23.35;
+
+// ───────── ledger rows (taken from a real dev episode, shortened) ─────────
+const ROWS=[
+ ['ROW-ed3485','1100','2025-06-02','INV-360846','145 077'],
+ ['ROW-619141','1100','2025-06-04','INV-657474','82 000'],
+ ['ROW-a92ab3','1100','2025-06-09','INV-943462','242 000'],   // duplicate of INV-329697
+ ['ROW-0617af','1100','2025-06-11','INV-224174','259 000'],
+ ['ROW-3348f5','1100','2025-06-11','INV-670351','259 000'],   // same amount — a monthly subscription, legit
+ ['ROW-b10c77','1100','2025-06-17','INV-431798','212 831'],   // wrong FX date
+ ['ROW-55e2d0','1000','2025-06-20','PAY-103505','678 000'],
+ ['ROW-c71f09','1100','2025-06-30','INV-899412','497 200'],   // period cut-off
+ ['ROW-2d4e61','4000','2025-06-30','INV-899412','497 200'],
+];
+const rowEls=ROWS.map(r=>{const d=document.createElement('div');d.className='row';
+  d.innerHTML=`<div class="wash"></div><span class="c1">${r[0]}</span><span class="c2">${r[1]}</span><span class="c3">${r[2]}</span><span class="c4">${r[3]}</span><span class="c5">${r[4]}</span><div class="strike"></div>`;
+  $('rows').appendChild(d);return d;});
+const LX=380, LY=250+54, RH=61;                                  // ledger left, first row top (world), row pitch
+const rowY=i=>LY+i*RH+RH/2;
+const TX=320;                                                    // tick column (left margin of the ledger)
+const NOTES=[{id:'n1',x:LX+560,y:rowY(5)-74,html:'ошибки внесены — у каждой записана причина',color:'var(--accent2)'},
+             {id:'n2',x:LX+470,y:rowY(4)-74,html:'ловушка: та же сумма — это подписка, не дубль',color:'var(--mute)'}];
+NOTES.forEach(n=>{const d=document.createElement('div');d.className='note';d.id=n.id;d.innerHTML=n.html;d.style.color=n.color;d.style.left=n.x+'px';d.style.top=n.y+'px';$('notes').appendChild(d);});
+const CHIPS=['DOC-ea11e5','ROW-a92ab3','DOC-9fcc8d'];
+const chipEls=CHIPS.map(c=>{const d=document.createElement('div');d.className='chip';d.textContent=c;$('chips').appendChild(d);return d;});
+const CARD_TXT=`{ "type": "<b>duplicate_invoice</b>",\n  "affected_ids": ["INV-329697", "INV-943462"],\n  "claimed_amount_minor": 242000,\n  "currency": "JPY",\n  "evidence_ids": [ 4 ]  }`;
+const CARD_RECT={x:1600,y:450,w:1010,h:350,r:18};
+const BARDATA=[['Oracle — видит эталон','+1,000',1.0,'var(--ink)'],['Агент по правилам, без эталона','+0,969',0.969,'var(--accent)'],
+            ['Простая сверка','−0,101',-0.101,'var(--mute)'],['Атака «пометить всё»','−1,000',-1.0,'var(--accent2)']];
+const barEls=BARDATA.map(b=>{const d=document.createElement('div');d.className='bar';d.innerHTML=`<div class="lab">${b[0]}</div><div class="val">${b[1]}</div><div class="axis"></div><div class="fill" style="background:${b[3]}"></div>`;$('bars').appendChild(d);return d;});
+const markEl=$('mark'); const ML=[...'AuditGym'].map(ch=>{const s=document.createElement('span');s.textContent=ch;markEl.appendChild(s);return s;});
+const TERM_CMD='$ python -m auditgym check';
+
+// ───────── camera (world → screen), keyed and operated ─────────
+const TICK0={x:960,y:520};                                       // where the tick is born (world)
+const CAMK=[
+ {t:0,    x:TICK0.x, y:TICK0.y+40, zoom:2.1},
+ {t:PULL[0], x:TICK0.x, y:TICK0.y+40, zoom:2.1},
+ {t:PULL[1], x:960, y:560, zoom:1.0, curve:ease.expoInOut},
+ {t:5.7,  x:960, y:560, zoom:1.0},
+ {t:6.3,  x:900, y:rowY(3), zoom:1.25, curve:ease.sineInOut},
+ {t:7.9,  x:920, y:rowY(4), zoom:1.3, curve:ease.sineInOut},
+ {t:8.3,  x:860, y:rowY(2)+10, zoom:1.55, curve:ease.expoInOut},
+ {t:9.2,  x:880, y:rowY(2)+10, zoom:1.5},
+ {t:10.3, x:CARD_RECT.x+CARD_RECT.w/2-60, y:CARD_RECT.y+CARD_RECT.h/2, zoom:1.25, curve:ease.cubicInOut},
+ {t:13.3, x:CARD_RECT.x+CARD_RECT.w/2-50, y:CARD_RECT.y+CARD_RECT.h/2, zoom:1.32},
+];
+const handFloat=t=>{ const still=(t>HOLD[0]&&t<HOLD[1])||t<PULL[0]; const a=still?0:1; return {x:a*(3*Math.sin(t*0.9)+2*Math.sin(t*1.7)), y:a*(2.5*Math.sin(t*0.7+1)+1.5*Math.sin(t*1.3))}; };
+function cam(t){ const c=OM.camera(t,CAMK); const h=handFloat(t); let sx=0,sy=0;
+  for(const [tt] of RED){ const s=OM.shake(t,tt,{amp:5,decay:10}); sx+=s.x; sy+=s.y; }
+  { const s=OM.shake(t,LAND,{amp:9,decay:9}); sx+=s.x; sy+=s.y; }
+  return {x:c.x+h.x+sx/c.zoom, y:c.y+h.y+sy/c.zoom, zoom:c.zoom, rot:c.rot}; }
+
+// ───────── the tick: the one element that carries the film ─────────
+function tickPos(t){
+  if(t<PULL[0]) return {x:TICK0.x, y:TICK0.y, s:1, rot:0};
+  if(t<HOPS[0][0]) { const k=tween(t,PULL[0],PULL[1],ease.expoInOut); return {x:lerp(TICK0.x,TX,k), y:lerp(TICK0.y,rowY(-1)+6,k), s:lerp(1,0.62,k), rot:0}; }
+  let p={x:TX,y:rowY(-1)+6,s:0.62,rot:0};
+  for(const [t0,t1,a,b] of HOPS){ if(t>=t0){ const h=OM.hop(t,t0,t1,{x:TX,y:rowY(a)},{x:TX,y:rowY(b)},{height:70,curve:ease.smoother}); p={x:h.x,y:h.y,s:0.62,rot:0}; } }
+  const no=ring(t-NO,6,24); p.rot=(t>NO&&t<NO+1)?no*0.5:0;                 // the "no" shake at the trap
+  const im=OM.impact(t,LAND,{sqx:0.2,sqy:0.25}); p.sx=im.sx; p.sy=im.sy;
+  return p;
+}
+
+// ───────── seek ─────────
+const latCtx=$('lat').getContext('2d');
+let lastTick=null;
+function seek(t){
+  const c=cam(t), M=OM.view(c);
+  $('world').style.transform=`matrix(${M.map(v=>v.toFixed(5)).join(',')})`;
+  const worldOn = t<ZOOM[1]+0.05;
+  $('world').style.opacity=worldOn?1:0;
+  // far lattice so camera moves read on empty ground
+  { const L=OM.lattice(c,{depth:1.2,spacing:56,px:1.3}); const g=latCtx; g.setTransform(1,0,0,1,0,0); g.clearRect(0,0,1920,1080);
+    if(worldOn){ g.setTransform(...L.matrix); g.fillStyle='#dcdcd6'; for(let x=L.x0;x<=L.x1;x+=L.spacing) for(let y=L.y0;y<=L.y1;y+=L.spacing){ g.beginPath(); g.arc(x,y,L.r,0,6.283); g.fill(); } } }
+  // tick: drawn on, then travels
+  const tp=$('tp'); const draw=tween(t,T_DRAW,T_DRAW+0.45,ease.cubicOut); tp.style.strokeDasharray='80'; tp.style.strokeDashoffset=(80*(1-draw)).toFixed(2);
+  const p=tickPos(t); const tk=$('tick');
+  tk.style.opacity = (t<PASS-0.6 && worldOn)?1:0;
+  tk.style.transform=`translate(${(p.x-32).toFixed(1)}px,${(p.y-32).toFixed(1)}px) rotate(${p.rot.toFixed(3)}rad) scale(${(p.s*(p.sx||1)).toFixed(4)},${(p.s*(p.sy||1)).toFixed(4)})`;
+  // hook words
+  { const out=ssstep(HOOK_OUT,HOOK_OUT+0.25,t); const h=$('hook'); h.style.opacity=1-out; h.style.transform=`translateY(${(out*-30).toFixed(1)}px)`;
+    [...h.children].forEach((s,i)=>{ const w=OM.wordRise(t,HOOK[i]); s.style.opacity=w.op; s.style.transform=`translateY(${w.y.toFixed(1)}px) scale(${w.s.toFixed(4)})`; }); }
+  // ledger appears row by row under the pull-back
+  { const L=$('ledger'); const e=OM.popIn(t,ROWS_IN-0.1,{rise:20}); L.style.opacity=t>=ROWS_IN-0.15?e.op:0; L.style.transform=`translateY(${e.dy.toFixed(1)}px)`;
+    rowEls.forEach((r,i)=>{ const m=OM.maskRise(t,ROWS_IN,i,{stagger:ROW_DT,dist:20}); r.style.opacity=m.visible?clamp(m.k*1.4,0,1):0; r.style.transform=`translateY(${m.y.toFixed(1)}px)`; }); }
+  // red pencil: three injected errors
+  RED.forEach(([tt,ri])=>{ const s=rowEls[ri].querySelector('.strike'); const k=tween(t,tt,tt+0.18,ease.expoOut); s.style.width='1120px'; s.style.transform=`scaleX(${k.toFixed(4)})`;
+    const fixed = ri===2 && t>=LAND; s.style.opacity = fixed?1-ssstep(LAND,LAND+0.3,t):1; });
+  // notes
+  { const n1=$('n1'); const e=OM.popIn(t,NOTE1[0]), o=OM.liftOut(t,NOTE1[1]); n1.style.opacity=t>=NOTE1[0]?e.op*o.op:0; n1.style.transform=`translateY(${(e.dy*0.5+o.dy*0.3).toFixed(1)}px)`;
+    const n2=$('n2'); const e2=OM.popIn(t,TRAP[0]), o2=OM.liftOut(t,TRAP[1]); n2.style.opacity=t>=TRAP[0]?e2.op*o2.op:0; n2.style.transform=`translateY(${(e2.dy*0.5+o2.dy*0.3).toFixed(1)}px)`; }
+  // landing: the duplicate row turns green
+  { const w=rowEls[2].querySelector('.wash'); w.style.opacity=(t>=LAND?0.16*(1-0.5*ssstep(LAND+0.4,LAND+1.2,t)):0).toFixed(3);
+    const r=ring(t-LAND,8,26); rowEls[2].style.transform+=` scale(${(1+r*0.012).toFixed(4)})`; }
+  // evidence chips leave the row and gather; the card grows out of them
+  const gatherTo={x:CARD_RECT.x+80,y:CARD_RECT.y+40};
+  chipEls.forEach((ch,i)=>{ const from={x:LX+700+i*70,y:rowY(2)-18}, to={x:gatherTo.x+i*12,y:gatherTo.y+i*8};
+    const vis=t>=CHIPS_T[0]-0.05&&t<CARD[1]; const g=OM.gather(t,CHIPS_T[0],CHIPS_T[1],i,3,from,to,{stagger:0.08,arc:90});
+    const out=sstep(CARD[0]+0.25,CARD[1],t); const pop=OM.popIn(t,CHIPS_T[0]-0.05+i*0.08,{rise:10});
+    ch.style.opacity=vis?pop.op*(1-out):0; ch.style.transform=`translate(${g.x.toFixed(1)}px,${g.y.toFixed(1)}px) rotate(${g.rot.toFixed(3)}rad) scale(${pop.s.toFixed(3)})`; });
+  { const A={x:gatherTo.x,y:gatherTo.y,w:220,h:48,r:24}; const m=OM.morphRect(t,CARD[0],CARD[1],A,CARD_RECT,{curve:ease.expoOut});
+    const cd=$('card'); cd.style.opacity=t>=CARD[0]?1:0; Object.assign(cd.style,{left:m.x.toFixed(1)+'px',top:m.y.toFixed(1)+'px',width:m.w.toFixed(1)+'px',height:m.h.toFixed(1)+'px',borderRadius:m.r.toFixed(1)+'px'});
+    const ty=OM.typeOn(t,TYPE0,CARD_TXT.replace(/<\/?b>/g,''),{cps:120}); let s=ty.str; const raw=CARD_TXT;
+    // keep the <b> highlight while typing
+    let out='',ci=0; for(let i=0;i<raw.length&&ci<s.length;){ if(raw.startsWith('<b>',i)){out+='<b>';i+=3;continue;} if(raw.startsWith('</b>',i)){out+='</b>';i+=4;continue;} out+=raw[i]; i++; ci++; }
+    if(out.includes('<b>')&&!out.includes('</b>')) out+='</b>';
+    $('cardtxt').innerHTML=out.replace('[ 4 ]','[ 4 ✓ ]');
+    const pr=OM.press(t,SUBMIT); const b=$('btn'); b.style.transform=`scale(${pr.s.toFixed(3)})`; b.style.background=pr.active?'var(--accent)':'var(--ink)';
+    b.style.opacity=t>=TYPE0+0.6?1:0; }
+  // zoom through the card into the scorer
+  { const sc=$('scorer'); const k=tween(t,ZOOM[0],ZOOM[1],ease.expoInOut);
+    if(t>=ZOOM[0]&&t<ZOOM[1]){ // push the camera into the card: scale world around the card centre
+      const s=lerp(1,6,k); $('world').style.transform+=` `; const C=OM.project(M,CARD_RECT.x+CARD_RECT.w/2,CARD_RECT.y+CARD_RECT.h/2);
+      $('world').style.transform=`translate(${C[0].toFixed(1)}px,${C[1].toFixed(1)}px) scale(${s.toFixed(4)}) translate(${(-C[0]).toFixed(1)}px,${(-C[1]).toFixed(1)}px) matrix(${M.map(v=>v.toFixed(5)).join(',')})`; }
+    const on=t>=ZOOM[0]+0.35 && t<BARS_OUT+0.25; sc.style.opacity=on?(t<ZOOM[1]?sstep(ZOOM[0]+0.35,ZOOM[1],t):1-ssstep(BARS_OUT,BARS_OUT+0.22,t)):0;
+    [...$('formula').children].forEach((s,i)=>{ const w=OM.wordRise(t,FORM[i]); const out=ssstep(BARS-0.2,BARS,t); s.style.opacity=(w.op*(1-out)).toFixed(3); s.style.transform=`translateY(${w.y.toFixed(1)}px)`; });
+    const k2=tween(t,COUNT[0],COUNT[1],ease.expoOut); const v=0.969*k2; const nm=$('num');
+    nm.textContent=(t<COUNT[0]?'':'+'+v.toFixed(3).replace('.',','));
+    const im=OM.impact(t,COUNT[1],{sqx:0.06,sqy:0.07}); const up=ssstep(BARS-0.35,BARS+0.1,t);
+    nm.style.transform=`translateY(${(-up*160).toFixed(1)}px) scale(${(im.sx*lerp(1,0.0001,up)).toFixed(4)},${(im.sy*lerp(1,0.0001,up)).toFixed(4)})`; nm.style.opacity=1-up;
+    barEls.forEach((b,i)=>{ const e=OM.popIn(t,BARS+i*0.12,{rise:24}); b.style.opacity=t>=BARS+i*0.12?e.op:0; b.style.transform=`translateY(${e.dy.toFixed(1)}px)`;
+      const f=b.querySelector('.fill'); const g=tween(t,BARS+0.1+i*0.12,BARS+0.75+i*0.12,ease.expoOut); const val=BARDATA[i][2];
+      const W=980/2; f.style.width=(Math.abs(val)*W).toFixed(1)+'px'; f.style.left=(val>=0?W:W-Math.abs(val)*W).toFixed(1)+'px';
+      f.style.transformOrigin=val>=0?'0 50%':'100% 50%'; f.style.transform=`scaleX(${g.toFixed(4)})`; }); }
+  // staccato burst (hard cuts)
+  { const w=OM.staccato(t,STAC); const on=t>=STAC[0][0]&&t<STAC_END; $('stac').textContent=w.word; $('stac').style.opacity=on?1:0;
+    const dark=w.i%2===0; $('stacbg').style.opacity=on?1:0; $('stacbg').style.background=dark?'var(--ink)':'var(--ground)'; $('stac').style.color=dark?'#fff':'var(--ink)';
+    const im=OM.impact(t,w.i>=0?STAC[w.i][0]:99,{sqx:0.04,sqy:0.05}); $('stac').style.transform=`scale(${im.sx.toFixed(4)},${im.sy.toFixed(4)})`; }
+  // terminal: one command, then the tick lands as the check
+  { const on=t>=TERM0&&t<MARK-0.15; const tm=$('term'); tm.style.opacity=on?1:0;
+    const ty=OM.typeOn(t,TERM0,TERM_CMD,{cps:30}); let txt=ty.str+(ty.done?'':'▍');
+    if(t>=PASS){ txt+=`\n<span class="ok">   CHECK PASSED</span>`; }
+    tm.innerHTML=txt; const im=OM.impact(t,PASS,{sqx:0.03,sqy:0.04}); tm.style.transform=`scale(${im.sx.toFixed(4)},${im.sy.toFixed(4)})`; }
+  // the tick lands on CHECK PASSED, then hops up to sit above the wordmark
+  { const t2=$('tick2'); const A={x:460+12,y:430+54+12}, B={x:960+330,y:330};
+    const on=t>=PASS-0.35; const land=OM.hop(t,PASS-0.35,PASS,{x:A.x+60,y:A.y-260},A,{height:-40,curve:ease.expoOut});
+    const up=OM.hop(t,MARK-0.25,MARK+0.35,A,B,{height:160,curve:ease.smoother}); const p=t<MARK-0.25?land:up;
+    const im=OM.impact(t,PASS,{sqx:0.22,sqy:0.28}), im2=OM.impact(t,MARK+0.35,{sqx:0.18,sqy:0.22}); const sc=0.62*(t<MARK?im.sx:im2.sx), sy=0.62*(t<MARK?im.sy:im2.sy);
+    t2.style.opacity=on?1:0; t2.style.transform=`translate(${(p.x-32).toFixed(1)}px,${(p.y-32).toFixed(1)}px) scale(${sc.toFixed(4)},${sy.toFixed(4)})`; }
+  // wordmark
+  { const on=t>=MARK; markEl.style.opacity=on?1:0;
+    ML.forEach((s,i)=>{ const d=OM.letterDrop(t,MARK,i); s.style.opacity=d.op; s.style.transform=`translateY(${d.y.toFixed(1)}px) scale(${d.sx.toFixed(4)},${d.sy.toFixed(4)})`;
+      if(i===5) s.style.color = t>=MARK+0.6 ? 'var(--accent)' : 'var(--ink)'; });
+    const tg=OM.wordRise(t,TAG); $('tag').style.opacity=t>=TAG?tg.op:0; $('tag').style.transform=`translateY(${tg.y.toFixed(1)}px)`;
+    const u=OM.wordRise(t,URL); $('url').style.opacity=t>=URL?u.op:0; $('url').style.transform=`translateY(${u.y.toFixed(1)}px)`; }
+  return Promise.resolve();
+}
+// travel per frame for render.py's shutter: camera + the tick
+window.__motion=(t0,t1)=>{ const c0=cam(t0),c1=cam(t1),cm=cam((t0+t1)/2); let d=OM.screenTravel(c0,c1,cm);
+  const a=tickPos(t0),b=tickPos(t1); d=Math.max(d,Math.hypot(a.x-b.x,a.y-b.y)*c1.zoom); if(t1>ZOOM[0]&&t0<ZOOM[1]) d=Math.max(d,400); return d; };
+window.__events=()=>[
+  {t:T_DRAW,kind:'draw'},{t:HOOK[0],kind:'word'},{t:HOOK[1],kind:'word'},{t:PULL[0],kind:'whoosh'},
+  ...RED.map(([tt])=>({t:tt,kind:'pencil'})),{t:HOPS[0][1],kind:'hop'},{t:HOPS[1][1],kind:'hop'},{t:NO,kind:'no'},{t:LAND,kind:'land'},
+  {t:CHIPS_T[0],kind:'chips'},{t:CARD[0],kind:'card'},{t:SUBMIT,kind:'click'},{t:ZOOM[0],kind:'whoosh'},{t:COUNT[1],kind:'number'},
+  {t:BARS,kind:'bars'},...STAC.map(([tt])=>({t:tt,kind:'hit'})),{t:PASS,kind:'pass'},{t:MARK,kind:'mark'}];
+window.__seek=async t=>{ await seek(t); return true; };
+window.__ready=document.fonts.ready.then(()=>seek(0));
+const q=new URLSearchParams(location.search);
+if(q.has('t')) __ready.then(()=>seek(parseFloat(q.get('t'))));
+if(q.has('play')) __ready.then(()=>{const t0=performance.now();(function loop(){seek(((performance.now()-t0)/1000)%DUR);requestAnimationFrame(loop);})();});
+</script></body></html>
