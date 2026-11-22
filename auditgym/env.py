@@ -71,6 +71,20 @@ class ToolError(Exception):
 _CURSOR_RE = re.compile(r"c1:(ledger|invoices|payments|fx):([0-9]{1,9})")
 
 
+def _normalize_action(action):
+    """Accept both {"action": name, ...args} and the jury's {"name": name, "args": {...}}."""
+    if isinstance(action, dict) and "action" not in action and "name" in action:
+        args = action.get("args", {})
+        if args is None:
+            args = {}
+        if not isinstance(args, dict) or set(action) - {"name", "args"}:
+            return {"action": action.get("name"), "__malformed__": True}
+        out = {"action": action["name"]}
+        out.update(args)
+        return out
+    return action
+
+
 def _short(x):
     s = x if isinstance(x, str) else json.dumps(x, default=str)
     return s if len(s) <= 40 else s[:37] + "..."
@@ -110,6 +124,20 @@ class AuditEnv:
         if options:
             config = options.get("config", config)
             episode = options.get("episode", episode)
+        # jury adapter convention: config={"mode": "closed"|"train", "episode_dir": ..., "team_config": {...}}
+        if isinstance(config, dict) and ({"mode", "episode_dir", "team_config"} & set(config)):
+            mode = config.get("mode")
+            if mode is not None:
+                if mode not in ("closed", "eval", "train"):
+                    raise ValueError("mode must be 'closed' or 'train'")
+                self.mode = "eval" if mode in ("closed", "eval") else "train"
+            if config.get("episode_dir") and episode is None:
+                from .episode import Episode
+                episode = Episode.load(config["episode_dir"])
+            gen_cfg = config.get("team_config")
+            if gen_cfg is None:
+                gen_cfg = {k: v for k, v in config.items() if k not in ("mode", "episode_dir", "team_config")} or None
+            config = gen_cfg
         if episode is None:
             if seed is None:
                 seed = int.from_bytes(os.urandom(8), "big")
@@ -120,6 +148,12 @@ class AuditEnv:
         for t in TABLES:
             key = TABLE_KEYS[t]
             self._index[t] = {r[key]: r for r in episode.tables[t]}
+        self._known_ids = set()
+        for t in TABLES:
+            for r in episode.tables[t]:
+                for k in ("row_id", "doc_id", "invoice_id", "payment_id", "fx_id"):
+                    if r.get(k):
+                        self._known_ids.add(r[k])
         self._docs = {}
         for r in episode.tables["invoices"]:
             self._docs[r["doc_id"]] = ("invoice", r)
@@ -155,6 +189,7 @@ class AuditEnv:
             obs = self._obs(None, None, ToolError("episode_finished", "episode already finished; call reset()"))
             return obs, 0.0, self._terminated, self._truncated, self._info()
         self.steps_used += 1
+        action = _normalize_action(action)
         name = action.get("action") if isinstance(action, dict) else None
 
         if self.time_limit_s is not None and self._clock() - self._t0 > self.time_limit_s:
@@ -190,7 +225,7 @@ class AuditEnv:
 
     # ------------------------------------------------------------------ internals
     def _finish(self, submission, truncated, action, result=None, err=None, reason=None):
-        g = grade(submission, self._truth, self.inspection_steps, no_answer=truncated)
+        g = grade(submission, self._truth, self.inspection_steps, no_answer=truncated, known_ids=self._known_ids)
         g["episode_id"] = self._ep.episode_id
         g["terminated_by"] = reason or "submit"
         g["steps_used"] = self.steps_used

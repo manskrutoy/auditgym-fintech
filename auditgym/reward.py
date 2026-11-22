@@ -31,7 +31,7 @@ def experimental_reward(tp, fp, fn, n_truth, inspection_steps):
     return clip(2.0 * fb - 1.0 - STEP_COST * inspection_steps)
 
 
-def grade(submission, truth, inspection_steps: int, no_answer: bool = False):
+def grade(submission, truth, inspection_steps: int, no_answer: bool = False, known_ids=None):
     """Grade a submission.  no_answer=True means the episode was truncated (empty answer).  Returns a full report dict
     that stays with the evaluator; only `reward` may be returned to a policy in train mode."""
     issues = truth["issues"]
@@ -39,12 +39,12 @@ def grade(submission, truth, inspection_steps: int, no_answer: bool = False):
         findings = []
     else:
         try:
-            findings = validate_submission(submission, truth["episode_id"])
+            findings = validate_submission(submission, truth.get("episode_id"))
         except SchemaError as e:
             return {"valid": False, "error": str(e), "reward": -1.0, "experimental_reward": -1.0,
                     "tp": 0, "fp": 0, "fn": len(issues), "precision": 0.0, "recall": 0.0, "f1": 0.0,
                     "inspection_steps": inspection_steps, "matches": [], "n_findings": None}
-    pairs, fps, fns = match(findings, issues)
+    pairs, fps, fns = match(findings, issues, known_ids)
     tp, fp, fn = len(pairs), len(fps), len(fns)
     p, r, f1 = metrics(tp, fp, fn)
     return {

@@ -13,6 +13,16 @@ def R(ep, findings, steps=0):
     return grade(sub(ep, findings), ep.truth, steps)
 
 
+def _known(ep):
+    ids = set()
+    for rows in ep.tables.values():
+        for r in rows:
+            for k in ("row_id", "doc_id", "invoice_id", "payment_id", "fx_id"):
+                if r.get(k):
+                    ids.add(r[k])
+    return ids
+
+
 class TestMetrics(unittest.TestCase):
     def test_edge_cases(self):
         self.assertEqual(metrics(0, 0, 0), (0.0, 0.0, 1.0))      # empty truth, empty answer
@@ -127,7 +137,9 @@ class TestAttacks(unittest.TestCase):
         for iss in self.ep.truth["issues"]:
             other = "XXX" if iss["currency"] != "XXX" else "YYY"
             self.assertEqual(R(self.ep, [finding_from_issue(iss, currency=other)])["tp"], 0)
-            self.assertEqual(R(self.ep, [finding_from_issue(iss, currency=" " + iss["currency"].lower())])["tp"], 1)
+            # jury convention: currency is compared exactly (no case folding, no trimming)
+            self.assertEqual(R(self.ep, [finding_from_issue(iss, currency=iss["currency"].lower())])["tp"], 0)
+            self.assertEqual(R(self.ep, [finding_from_issue(iss, currency=" " + iss["currency"])])["tp"], 0)
 
     def test_amount_tolerance(self):
         fx = self.issues["fx_misconversion"]
@@ -151,11 +163,24 @@ class TestAttacks(unittest.TestCase):
                                              explanation="trust me, this is the duplicate invoice " * 5)])
         self.assertEqual(bad["tp"], 0)
 
-    def test_normalisation(self):
+    def test_sets_exact_ids_and_existing_evidence(self):
         dup = self.issues["duplicate_invoice"]
-        f = finding_from_issue(dup, affected_ids=[" " + x + " " for x in reversed(dup["affected_ids"])],
+        # order and repeats do not matter (sets)
+        f = finding_from_issue(dup, affected_ids=list(reversed(dup["affected_ids"])),
                                evidence_ids=list(reversed(dup["evidence_sets"][0])) + [dup["evidence_sets"][0][0]])
         self.assertEqual(R(self.ep, [f])["tp"], 1)
+        # ids are exact: no trimming, case-sensitive
+        f = finding_from_issue(dup, affected_ids=[" " + x for x in dup["affected_ids"]])
+        self.assertEqual(R(self.ep, [f])["tp"], 0)
+        f = finding_from_issue(dup, affected_ids=[x.lower() for x in dup["affected_ids"]])
+        self.assertEqual(R(self.ep, [f])["tp"], 0)
+        # extra EXISTING evidence is fine, evidence that does not exist is not
+        ok = dup["evidence_sets"][0] + [self.ep.tables["ledger"][0]["row_id"]]
+        self.assertEqual(grade(sub(self.ep, [finding_from_issue(dup, evidence_ids=ok)]), self.ep.truth, 0,
+                               known_ids=_known(self.ep))["tp"], 1)
+        bad = dup["evidence_sets"][0] + ["ROW-doesnotexist"]
+        self.assertEqual(grade(sub(self.ep, [finding_from_issue(dup, evidence_ids=bad)]), self.ep.truth, 0,
+                               known_ids=_known(self.ep))["tp"], 0)
 
 
 class TestSchema(unittest.TestCase):
@@ -170,22 +195,32 @@ class TestSchema(unittest.TestCase):
         return R(self.ep, [f])
 
     def test_invalid_structures_give_minus_one(self):
-        cases = [
-            {"type": "made_up"}, {"claimed_amount_minor": -1}, {"claimed_amount_minor": True},
-            {"claimed_amount_minor": 1.5}, {"claimed_amount_minor": "5"}, {"currency": "US"},
-            {"currency": 840}, {"affected_ids": []}, {"affected_ids": "INV-1"}, {"affected_ids": [1]},
-            {"evidence_ids": ["x"] * 11}, {"explanation": "x" * 1001}, {"affected_ids": ["x"] * 11},
+        structural = [
+            {"claimed_amount_minor": True}, {"claimed_amount_minor": 1.5}, {"claimed_amount_minor": "5"},
+            {"currency": 840}, {"affected_ids": "INV-1"}, {"affected_ids": [1]}, {"type": 7},
+            {"evidence_ids": ["x"] * 11}, {"explanation": "x" * 1001}, {"evidence_ids": "E1"},
         ]
-        for c in cases:
+        for c in structural:
             g = self.bad(**c)
             self.assertFalse(g["valid"], c)
             self.assertEqual(g["reward"], -1.0)
-        f = dict(self.good, extra_field=1)
+        f = dict(self.good)
+        del f["currency"]
         self.assertEqual(R(self.ep, [f])["reward"], -1.0)
         self.assertEqual(R(self.ep, [self.good] * 31)["reward"], -1.0)
         self.assertEqual(grade({"episode_id": "other", "findings": []}, self.ep.truth, 0)["reward"], -1.0)
-        self.assertEqual(grade({"findings": []}, self.ep.truth, 0)["reward"], -1.0)
-        self.assertEqual(grade([], self.ep.truth, 0)["reward"], -1.0)
+        self.assertEqual(grade({"episode_id": self.ep.episode_id}, self.ep.truth, 0)["reward"], -1.0)
+        self.assertEqual(grade("not json", self.ep.truth, 0)["reward"], -1.0)
+
+    def test_wrong_content_is_only_a_false_positive(self):
+        # jury convention: wrong content does not invalidate the submit
+        for c in [{"type": "made_up"}, {"claimed_amount_minor": -1}, {"currency": "US"}, {"affected_ids": []},
+                  {"affected_ids": ["x"] * 11}]:
+            g = self.bad(**c)
+            self.assertTrue(g["valid"], c)
+            self.assertEqual(g["fp"], 1, c)
+        f = dict(self.good, extra_field=1)
+        self.assertTrue(R(self.ep, [f])["valid"])
 
     def test_limits_exactly_allowed(self):
         f = dict(self.good, evidence_ids=["E%d" % i for i in range(10)], explanation="x" * 1000)
@@ -211,12 +246,12 @@ class TestMatching(unittest.TestCase):
         self.assertEqual(len(pairs), 2)
         self.assertEqual(len(fp), 1)
 
-    def test_validate_normalises(self):
+    def test_validate_keeps_ids_exact(self):
         out = validate_submission({"episode_id": "e", "findings": [{"type": "period_cutoff", "affected_ids": [" A ", "A"],
                                    "claimed_amount_minor": 1, "currency": "usd", "evidence_ids": [" B"], "explanation": ""}]}, "e")
-        self.assertEqual(out[0]["affected"], frozenset(["A"]))
-        self.assertEqual(out[0]["currency"], "USD")
-        self.assertEqual(out[0]["evidence"], frozenset(["B"]))
+        self.assertEqual(out[0]["affected"], frozenset([" A ", "A"]))
+        self.assertEqual(out[0]["currency"], "usd")
+        self.assertEqual(out[0]["evidence"], frozenset([" B"]))
 
 
 if __name__ == "__main__":

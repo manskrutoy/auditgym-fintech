@@ -3,6 +3,18 @@
 Таблица для жюри. Для каждого требования указано, где оно реализовано и какой тест или шаг
 `python -m auditgym check` это подтверждает. Тесты лежат в `tests/` и запускаются внутри `check`.
 
+## Определения проверок жюри (genesis-exe.com/fintech-checks.html)
+
+| блок | что проверяется | как подключено / доказательство |
+|---|---|---|
+| Адаптер | `generate_episode(seed, config, output_dir)`, `make_env()`, `score_episode(episode_dir, findings, inspection_steps)` | `judge_adapter.py`; `tests/test_judge_adapter.py` |
+| Режимы | `config={"mode":"closed","episode_dir":...,"team_config":{...}}` / `mode="train"` | `AuditEnv.reset`; `test_name_args_actions_and_closed_mode`, `test_train_mode_returns_reward` |
+| Действия | `{"name": ..., "args": {...}}`, таблицы ledger/invoices/payments/fx | `env._normalize_action` |
+| C01–C20 | формат reset, первое наблюдение, manifest, пагинация по 50, повторяемость курсора, get_record/get_document, калькулятор (0.1+0.2 → 0.3, отказ доступа к файлам), неизвестные действия, бюджет, submit, тайм-аут, награда в closed, изоляция | `test_env_contract.py`, `test_judge_adapter.py`, песочница `evaluator.policy_sandbox` |
+| D01–D20 | 6 условий на эпизод: книги до ошибки, проверяемое расхождение, верный эталон, полный набор доказательств, формат, непротиворечивость | `verify.py` (включая `clean_ledger.csv`), шаг 3 `check` |
+| M01–M12 и блок 3 | множества, лишние существующие и несуществующие доказательства, регистр валюты, допуск, bool-суммы, два вывода на две ошибки, дубли; 0.98 / −1 / 0.98 / 47/150 / −0.8295 / 1–0.90–0.80 / лимиты 31–11–1001 | `TestBlock3Fixture`, `test_reward.py` |
+| P01–P20 | перестановка, замена ID и обе вместе в копии `episode_dir` | `TestFileLevelPairedChecks`, шаг 5 `check` |
+
 ## 02. Сложность
 
 | требование | реализация | доказательство |
@@ -67,7 +79,7 @@
 | Генератор, среда, matcher, траектории без эталона, офлайн без GPU, контейнер и одна команда | `auditgym/`, `Dockerfile`, `python -m auditgym check` |
 | Исходники, лицензия, зафиксированные зависимости | `LICENSE`, `pyproject.toml`, `requirements.txt` (только stdlib) |
 | 10 train + 10 dev эпизодов | `episodes/`, `configs/train.json`, `configs/dev.json`, хэши в `episodes/index.json` |
-| Тесты | `tests/` (67) |
+| Тесты | `tests/` (78) |
 | 4 адаптера базовых политик | `auditgym/policies/scripted.py`, `auditgym/worker.py` |
 | trajectories.jsonl с episode_id, step, action, observation, reward, terminated, truncated | `trajectories/trajectories.jsonl` (+ поле policy), `test_trajectory_fields` |
 | Записка о дизайне и демо | `DESIGN.md`; `python -m auditgym demo`, `reports/demo_dev_09.html` |

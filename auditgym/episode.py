@@ -58,10 +58,25 @@ class Episode:
             # books before error injection (same row_ids where the line still exists)
             _write_csv(os.path.join(priv, "clean_ledger.csv"), LEDGER_COLS, self.clean_ledger)
 
+    def save_flat(self, path: str):
+        """All files directly in `path` (layout used by judge_adapter.generate_episode)."""
+        os.makedirs(path, exist_ok=True)
+        _write_json(os.path.join(path, "manifest.json"), self.manifest)
+        _write_json(os.path.join(path, "policy.json"), self.policy)
+        _write_csv(os.path.join(path, "ledger.csv"), LEDGER_COLS, self.tables["ledger"])
+        _write_csv(os.path.join(path, "fx.csv"), FX_COLS, self.tables["fx"])
+        _write_jsonl(os.path.join(path, "invoices.jsonl"), self.tables["invoices"])
+        _write_jsonl(os.path.join(path, "payments.jsonl"), self.tables["payments"])
+        _write_json(os.path.join(path, "truth.json"), self.truth)
+        _write_json(os.path.join(path, "provenance.json"), self.provenance)
+
     @classmethod
     def load(cls, path: str, with_private: bool = True) -> "Episode":
-        pub = os.path.join(path, "public")
-        priv = os.path.join(path, "private")
+        if os.path.exists(os.path.join(path, "manifest.json")):      # flat layout
+            pub = priv = path
+        else:
+            pub = os.path.join(path, "public")
+            priv = os.path.join(path, "private")
         manifest = _read_json(os.path.join(pub, "manifest.json"))
         policy = _read_json(os.path.join(pub, "policy.json"))
         tables = {
@@ -73,7 +88,8 @@ class Episode:
         truth = provenance = None
         if with_private:
             truth = _read_json(os.path.join(priv, "truth.json"))
-            provenance = _read_json(os.path.join(priv, "provenance.json"))
+            pp = os.path.join(priv, "provenance.json")
+            provenance = _read_json(pp) if os.path.exists(pp) else {}
         ep = cls(manifest, policy, tables, truth, provenance)
         cl = os.path.join(priv, "clean_ledger.csv")
         if with_private and os.path.exists(cl):

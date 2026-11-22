@@ -269,9 +269,12 @@ class TestRedTeamRegressions(unittest.TestCase):
         o = self.env.step({"action": "get_record", "table": "ledger", "id": b"bytes"})[0]
         self.assertIsNotNone(o["error"])
 
-    def test_non_ascii_currency_rejected(self):
+    def test_lookalike_currency_never_matches(self):
         from auditgym.reward import grade
-        ep = episode(seed=909, preset="single")
-        f = {"type": "period_cutoff", "affected_ids": ["X"], "claimed_amount_minor": 1, "currency": "UſD",
-             "evidence_ids": [], "explanation": ""}
-        self.assertFalse(grade({"episode_id": ep.episode_id, "findings": [f]}, ep.truth, 0)["valid"])
+        ep = episode(seed=909, preset="all_types")
+        iss = ep.truth["issues"][0]
+        f = {"type": iss["type"], "affected_ids": iss["affected_ids"], "claimed_amount_minor": iss["expected_amount_minor"],
+             "currency": iss["currency"][:-1] + "ſ", "evidence_ids": iss["evidence_sets"][0], "explanation": ""}
+        g = grade({"episode_id": ep.episode_id, "findings": [f]}, ep.truth, 0)
+        self.assertTrue(g["valid"])
+        self.assertEqual(g["tp"], 0)
