@@ -402,7 +402,7 @@ def _cmd_check(a):
         print("      holdout %-10s F1=%.3f return=%+.3f steps=%.1f time=%.3fs" % (
             pol, s["mean_f1"], s["mean_return"], s["mean_steps"], s["mean_wall_time_s"]))
 
-    print("[5/6] paired checks (replay, relabel+permute, id/order seeds) ...", flush=True)
+    print("[5/6] paired checks (replay, relabel+permute, offset re-expression, id/order seeds) ...", flush=True)
     pc = paired_checks(load_split("local_holdout"), 20)
     report["paired_checks"] = {"passed": sum(r["ok"] for r in pc), "total": len(pc), "details": pc}
     ok &= all(r["ok"] for r in pc)

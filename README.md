@@ -135,7 +135,9 @@ docker run --rm --network none -e AUDITGYM_SECRET=<secret> \
 | Четыре адаптера базовых политик | `auditgym/policies/scripted.py`: `RandomExplorer`, `SimpleReconciler`, `FlagAll`, `Oracle` (+ демо `ExpertAuditor`) |
 | Траектории | `trajectories/trajectories.jsonl` (train-эпизоды, 4 политики, train-режим) |
 | Записка о дизайне | `DESIGN.md` |
-| Демо | `python3 -m auditgym demo` (скриптовая политика, без модели); HTML-просмотр `reports/demo_dev_09.html` |
+| Видео-демо | `docs/auditgym_demo.mp4` (82 с, с подписями; текст для озвучки — `docs/VIDEO_SCRIPT.md`) |
+| Описание | `docs/DESCRIPTION.md` |
+| Демо вживую | `python3 -m auditgym demo` (скриптовая политика, без модели); HTML-просмотр `reports/demo_dev_09.html` |
 
 ## 3. Контракт среды
 
